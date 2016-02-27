@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    // return view('welcome');
 });
 
 /*
@@ -27,5 +27,6 @@ Route::get('/', function () {
 */
 
 Route::group(['middleware' => ['web']], function () {
-    //
+    Route::get('/', 'HomeController@showHome')->name('home');
+    Route::get('contact/', 'HomeController@showContact')->name('contact');
 });

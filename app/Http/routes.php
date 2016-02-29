@@ -30,4 +30,16 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/', 'HomeController@showHome')->name('home');
     Route::get('contact', 'HomeController@showContact')->name('contact');
     Route::post('contact_request','HomeController@getContactForm')->name('contact');
+
+    Route::get('user/login','UserController@showLogin')->name('login');
+    Route::post('user/login_request','UserController@getLoginForm')->name('login_request');
+    
+    Route::get('user/register','UserController@showRegister')->name('register');
+    Route::post('user/register_request','UserController@getRegisterForm')->name('register_request');
+
+
+});
+
+Route::group(['namespace' => 'admin'], function () {
+    Route::get('admin/login', 'AdminController@showLogin');
 });

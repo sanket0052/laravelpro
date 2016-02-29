@@ -1,6 +1,6 @@
 	@extends('layouts.master')
 
-	@section('title', 'Home')
+	@section('title', 'Contact Us')
 		
 	@section('content')
 	
@@ -12,16 +12,24 @@
 			</li>
 		</ol>
 
+		<!-- Main Heading Starts -->
+		<h2 class="main-heading text-center">
+			Contact Us
+		</h2>
+		<!-- Main Heading Ends -->
+
 		<div class="row"> 
 			<div class="col-md-12"> 
 				<div id="googleMap" style="width:100%;height:200px;"></div>
 				{{ Html::script('https://maps.googleapis.com/maps/api/js') }}
 				{{ Html::script('assets/js/googleMap.js') }}
-				<h2> We love to help. </h2>
-				<p> We like to create thing with fun, open minded people. Feel Free to say hello.</p>
+				<div class="text-center"> 
+					<h2> We love to help. </h2>
+					<p> We like to create thing with fun, open minded people. Feel Free to say hello.</p>
+				</div>
 				<hr>
 			</div>
-			<div class="col-md-8"> 
+			<div class="col-md-6"> 
 				{!! Form::open(array('url' => 'contact_request', 'role' => 'form')) !!}
 
 					@if (Session::has('success'))
@@ -44,10 +52,11 @@
 						{{ Form::textarea('message', '', array('class' => 'form-control', 'placeholder' => 'Enter Email', 'row' => '5')) }}
 					</div>
 
-					{{ Form::submit('Submit', array('class' => 'btn btn-success btn-lg pull-right', 'id' => 'form-submit')) }}
+					{{ Form::submit('Submit', array('class' => 'btn btn-success btn-lg btn-block pull-right', 'id' => 'form-submit')) }}
 
 				{!! Form::close() !!}
 			</div>
 		</div>
+		<hr/>
 	</div>
 	@endsection

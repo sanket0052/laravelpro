@@ -69,8 +69,13 @@
 							</ul>
 						</li>
 						<li>
-						<?php echo link_to('contact', $title = 'Contact', $attributes = array(), $secure = null); ?>
-						<!-- <a href="#">Contact</a> -->
+							{{ link_to('contact', $title = 'Contact', $attributes = array(), $secure = null) }}
+						</li>
+						<li>
+							{{ link_to('user/login', $title = 'Login', $attributes = array(), $secure = null) }}
+						</li>
+						<li>
+							{{ link_to('user/register', $title = 'Register', $attributes = array(), $secure = null) }}
 						</li>
 					</ul>
 					<form class="navbar-form navbar-left lno-search-form visible-xs" role="search">

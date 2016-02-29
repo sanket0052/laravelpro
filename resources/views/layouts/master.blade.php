@@ -477,6 +477,117 @@
 			@yield('content')
 		</section>
 
+					 
+		<div class="clear-fix"></div>
+
+		<!-- Footer Section Starts -->
+		<footer id="footer-area">
+			<!-- Footer Links Starts -->
+			<div class="footer-links">
+				<!-- Container Starts -->
+				<div class="container">
+					<!-- Information Links Starts -->
+					<div class="col-md-2 col-sm-4 col-xs-12">
+						<h5>Information</h5>
+						<ul>
+							<li><a href="about.html">About Us</a></li>
+							<li><a href="#">Delivery Information</a></li>
+							<li><a href="#">Privacy Policy</a></li>
+							<li><a href="#">Terms &amp; Conditions</a></li>
+						</ul>
+					</div>
+					<!-- Information Links Ends -->
+					<!-- My Account Links Starts -->
+					<div class="col-md-2 col-sm-4 col-xs-12">
+						<h5>My Account</h5>
+						<ul>
+							<li><a href="#">My orders</a></li>
+							<li><a href="#">My merchandise returns</a></li>
+							<li><a href="#">My credit slips</a></li>
+							<li><a href="#">My addresses</a></li>
+							<li><a href="#">My personal info</a></li>
+						</ul>
+					</div>
+					<!-- My Account Links Ends -->
+					<!-- Customer Service Links Starts -->
+					<div class="col-md-2 col-sm-4 col-xs-12">
+						<h5>Service</h5>
+						<ul>
+							<li><a href="contact.html">Contact Us</a></li>
+							<li><a href="#">Returns</a></li>
+							<li><a href="#">Site Map</a></li>
+							<li><a href="#">Affiliates</a></li>
+							<li><a href="#">Specials</a></li>
+						</ul>
+					</div>
+					<!-- Customer Service Links Ends -->
+					<!-- Follow Us Links Starts -->
+					<div class="col-md-2 col-sm-4 col-xs-12">
+						<h5>Follow Us</h5>
+						<ul>
+							<li><a href="#">Facebook</a></li>
+							<li><a href="#">Twitter</a></li>
+							<li><a href="#">RSS</a></li>
+							<li><a href="#">YouTube</a></li>
+						</ul>
+					</div>
+					<!-- Follow Us Links Ends -->
+					<!-- Contact Us Starts -->
+					<div class="col-md-4 col-sm-8 col-xs-12 last">
+						<h5>Contact Us</h5>
+						<ul>
+							<li>My Company</li>
+							<li>
+								1247 LB Nagar Road, Hyderabad, Telangana - 35
+							</li>
+							<li>
+								Email: <a href="#">info@demolink.com</a>
+							</li>								
+						</ul>
+						<h4 class="lead">
+							Tel: <span>1(234) 567-9842</span>
+						</h4>
+					</div>
+					<!-- Contact Us Ends -->
+				</div>
+				<!-- Container Ends -->
+			</div>
+			<!-- Footer Links Ends -->
+			<!-- Copyright Area Starts -->
+			<div class="copyright">
+				<!-- Container Starts -->
+				<div class="container">
+					<!-- Starts -->
+					<p class="pull-left">
+						&copy; <?php echo date('Y'); ?> Line Stores. Designed By <a href="">Sanket Jadav</a>
+					</p>
+					<!-- Ends -->
+					<!-- Payment Gateway Links Starts -->
+					<ul class="pull-right list-inline">
+						<li>
+							{{ Html::image('assets/images/payment-icon/cirrus.png') }}
+						</li>
+						<li>
+							{{ Html::image('assets/images/payment-icon/paypal.png') }}
+						</li>
+						<li>
+							{{ Html::image('assets/images/payment-icon/visa.png') }}
+						</li>
+						<li>
+							{{ Html::image('assets/images/payment-icon/mastercard.png') }}
+						</li>
+						<li>
+							{{ Html::image('assets/images/payment-icon/americanexpress.png') }}
+						</li>
+					</ul>
+					<!-- Payment Gateway Links Ends -->
+				</div>
+				<!-- Container Ends -->
+			</div>
+			<!-- Copyright Area Ends -->
+		</footer>
+		<!-- Footer Section Ends -->
+
 		<!-- Le javaScript
 		================================================== -->
 		<!-- Placed at the end of the document so the pages load faster -->
@@ -486,15 +597,5 @@
 		{{ Html::script('assets/js/jquery.touchSwipe.min.js') }}
 		{{ Html::script('assets/js/jquery.randomColor.js') }}
 		{{ Html::script('assets/js/line.js') }}
-
-		<!-- Histats.com  START (hidden counter)-->
-		<script type="text/javascript">document.write(unescape("%3Cscript src=%27http://s10.histats.com/js15.js%27 type=%27text/javascript%27%3E%3C/script%3E"));</script>
-		<a href="http://www.histats.com" target="_blank" title="site stats" ><script  type="text/javascript" >
-		try {Histats.start(1,2586830,4,0,0,0,"");
-		Histats.track_hits();} catch(err){};
-		</script></a>
-		<noscript><a href="http://www.histats.com" target="_blank"><img  src="http://sstatic1.histats.com/0.gif?2586830&101" alt="site stats" border="0"></a></noscript>
-		<!-- Histats.com  END  -->
-
 	</body>
 </html>

@@ -28,5 +28,6 @@ Route::get('/', function () {
 
 Route::group(['middleware' => ['web']], function () {
     Route::get('/', 'HomeController@showHome')->name('home');
-    Route::get('contact/', 'HomeController@showContact')->name('contact');
+    Route::get('contact', 'HomeController@showContact')->name('contact');
+    Route::post('contact_request','HomeController@getContactForm')->name('contact');
 });

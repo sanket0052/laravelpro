@@ -38,7 +38,7 @@
 								{!! Form::open(array('url' => 'user/login_request', 'role' => 'form', 'id' => 'login-form')) !!}
 
 									<div class="form-group">
-										{{ Form::text('name', '', array('class' => 'form-control', 'placeholder' => 'Enter Username', 'tabindex' => '1')) }}
+										{{ Form::text('username', '', array('class' => 'form-control', 'placeholder' => 'Enter Username', 'tabindex' => '1')) }}
 										<!-- Username input field  -->
 									</div>
 									<div class="form-group">

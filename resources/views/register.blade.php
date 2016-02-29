@@ -47,7 +47,7 @@
 									</div>
 									
 									<div class="form-group">
-										{{ Form::password('confirmpassword', array('class' => 'form-control', 'placeholder' => 'Enter Confirm Password', 'tabindex' => '4')) }}
+										{{ Form::password('password_confirmation', array('class' => 'form-control', 'placeholder' => 'Enter Confirm Password', 'tabindex' => '4')) }}
 									</div>
 
 									{{ Form::submit('Register', array('class' => 'btn btn-main', 'id' => 'form-submit', 'tabindex' => '5')) }}

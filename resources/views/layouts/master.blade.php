@@ -60,23 +60,22 @@
 				<div class="collapse navbar-collapse" id="line-navbar-collapse-1">
 					<ul class="nav navbar-nav">
 						<li><a href="#">Shop</a></li>
-						<li><a href="#">Blog</a></li>
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Legal <span class="caret"></span></a>
-							<ul class="dropdown-menu" role="menu">
-								<li><a href="#">About</a></li>
-								<li><a href="#">Rules </a></li>
-							</ul>
-						</li>
 						<li>
 							{{ link_to('contact', $title = 'Contact', $attributes = array(), $secure = null) }}
 						</li>
-						<li>
-							{{ link_to('user/login', $title = 'Login', $attributes = array(), $secure = null) }}
-						</li>
-						<li>
-							{{ link_to('user/register', $title = 'Register', $attributes = array(), $secure = null) }}
-						</li>
+
+						@if(Session::has('userid') && Session::has('username'))
+							<li>
+								{{ link_to('user/logout', $title = 'Logout', $attributes = array()) }}
+							</li>							
+						@else
+							<li>
+								{{ link_to('user/login', $title = 'Login', $attributes = array(), $secure = null) }}
+							</li>
+							<li>
+								{{ link_to('user/register', $title = 'Register', $attributes = array(), $secure = null) }}
+							</li>
+						@endif
 					</ul>
 					<form class="navbar-form navbar-left lno-search-form visible-xs" role="search">
 						<div class="form-group">

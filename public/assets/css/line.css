@@ -13,8 +13,14 @@
 / -------------------------------------------------- */
 
 body {
+	font-family: 'Raleway', sans-serif;
 	background-color: #F7F7F7;
 }
+hr{
+	border-color: #333;
+	border-width:1px;
+}
+
 /* Line navbar one (lno)
 / -------------------------------------------------- */
 .line-navbar-one {

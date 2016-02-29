@@ -13,16 +13,25 @@
 		</ol>
 
 		<div class="row"> 
-
+			<div class="col-md-12"> 
+				<div id="googleMap" style="width:100%;height:200px;"></div>
+				{{ Html::script('https://maps.googleapis.com/maps/api/js') }}
+				{{ Html::script('assets/js/googleMap.js') }}
+				<h2> We love to help. </h2>
+				<p> We like to create thing with fun, open minded people. Feel Free to say hello.</p>
+				<hr>
+			</div>
 			<div class="col-md-8"> 
+				{!! Form::open(array('url' => 'contact_request', 'role' => 'form')) !!}
 
-				{!! Form::open(array('url' => 'contact_request', 'class' => 'form-color')) !!}
-
+					@if (Session::has('success'))
+					    <div class="alert alert-success" ><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>{{ Session::get('success') }}</div>
+					@endif
 
 					@if (count($errors) > 0)
-							@foreach ($errors->all() as $error)
-								<div class="alert alert-danger" ><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>{{ $error }}</div>
-							@endforeach
+						@foreach ($errors->all() as $error)
+							<div class="alert alert-danger" ><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>{{ $error }}</div>
+						@endforeach
 					@endif
 
 					<div class="form-group">
@@ -38,16 +47,7 @@
 					{{ Form::submit('Submit', array('class' => 'btn btn-success btn-lg pull-right', 'id' => 'form-submit')) }}
 
 				{!! Form::close() !!}
-
 			</div>
-
-			<div class="col-md-4"> 
-				<div id="googleMap" style="width:100%;height:380px;"></div>
-				{{ Html::script('https://maps.googleapis.com/maps/api/js') }}
-				{{ Html::script('assets/js/googleMap.js') }}
-			</div>
-
 		</div>
-
 	</div>
 	@endsection

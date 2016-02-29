@@ -14,6 +14,7 @@
 		<!-- Bootstrap core and other CSS -->
 		{{ Html::style('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css') }}
 		{{ Html::style('https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css') }}
+		{{ Html::style('https://fonts.googleapis.com/css?family=Raleway') }}
 		{{ Html::style('assets/css/line.css') }}
 		<!-- <link href="css/line.css" rel="stylesheet"> -->
 

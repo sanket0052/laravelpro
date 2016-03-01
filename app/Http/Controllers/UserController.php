@@ -30,9 +30,25 @@ class UserController extends Controller
 		$username = $request->input('username');
 		$password = $request->input('password');
 		$password = Hash::make($password);
-		// echo $username.$password;
-		
-		// //Retrive Data From User Table
+		echo $username.'<br/>'.$password.'<br/>';
+			
+		$user = User::where('username', '=', $username)->first();
+		if(Hash::check($password, $user->password)){
+			echo '<pre>';
+			echo 'dssdf';
+		}else{
+			echo 'saasas';
+		}
+		echo "<br/>";
+		// print_r($user);
+		// echo $result;
+		// print_r($result);
+		//Retrive Data From User Table
+
+		// $usermodel = new User;
+		// $usermodel->username = $username;
+		// $usermodel->password = $password;
+
 		// if(User::attempt(['username'=> $username, 'password' => $password])){
 		// 	echo 'dsdfdf';
 		// }

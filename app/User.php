@@ -14,6 +14,13 @@ class User extends Model
     protected $table = 'users'; // put your table name here
 
     /**
+     * The attributes excluded from the model's JSON form.
+     *
+     * @var array
+     */
+    protected $hidden = ['password', 'remember_token'];
+ 
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -22,7 +29,6 @@ class User extends Model
     	'name',
     	'username',
     	'email',
-    	'message',
     	'password'
     ];
 }

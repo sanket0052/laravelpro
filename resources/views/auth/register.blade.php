@@ -32,7 +32,8 @@
 								<!-- Display flashdata -->
 
 								<!-- Register Form Starts -->
-								{!! Form::open(array('url' => 'user/register_request', 'role' => 'form', 'id' => 'register-form')) !!}
+								{!! Form::open(array('url' => 'auth/register', 'role' => 'form', 'id' => 'register-form')) !!}
+								{!! csrf_field() !!}
 
 									<div class="form-group">
 										{{ Form::text('username', '', array('class' => 'form-control', 'placeholder' => 'Enter User Name', 'tabindex' => '1')) }}

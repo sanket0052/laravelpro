@@ -27,6 +27,7 @@ class UserRegister extends Request
             'username' => 'required',
             'email' => 'required|email',
             'password' => 'required|min:6|confirmed',
+            
         ];
     }
 }

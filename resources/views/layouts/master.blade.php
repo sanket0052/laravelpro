@@ -66,14 +66,14 @@
 
 						@if(Session::has('userid') && Session::has('username'))
 							<li>
-								{{ link_to('user/logout', $title = 'Logout', $attributes = array()) }}
+								{{ link_to('auth/logout', $title = 'Logout', $attributes = array()) }}
 							</li>							
 						@else
 							<li>
-								{{ link_to('user/login', $title = 'Login', $attributes = array(), $secure = null) }}
+								{{ link_to('auth/login', $title = 'Login', $attributes = array(), $secure = null) }}
 							</li>
 							<li>
-								{{ link_to('user/register', $title = 'Register', $attributes = array(), $secure = null) }}
+								{{ link_to('auth/register', $title = 'Register', $attributes = array(), $secure = null) }}
 							</li>
 						@endif
 					</ul>

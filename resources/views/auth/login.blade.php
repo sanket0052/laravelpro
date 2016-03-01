@@ -35,10 +35,11 @@
 								<!-- Display flashdata -->
 
 								<!-- Login Form Starts -->
-								{!! Form::open(array('url' => 'user/login_request', 'role' => 'form', 'id' => 'login-form')) !!}
+								{!! Form::open(array('url' => 'auth/login', 'role' => 'form', 'id' => 'login-form')) !!}
+								{!! csrf_field() !!}
 
 									<div class="form-group">
-										{{ Form::text('username', '', array('class' => 'form-control', 'placeholder' => 'Enter Username', 'tabindex' => '1')) }}
+										{{ Form::email('email', '', array('class' => 'form-control', 'placeholder' => 'Enter Email', 'tabindex' => '1')) }}
 										<!-- Username input field  -->
 									</div>
 									<div class="form-group">

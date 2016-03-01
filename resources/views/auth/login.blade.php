@@ -26,6 +26,10 @@
 									Please login using your existing account
 								</p>
 
+								@if (Session::has('error'))
+								    <div class="alert alert-danger" ><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>{{ Session::get('error') }}</div>
+								@endif
+
 								<!-- Display flashdata -->
 								@if (count($errors) > 0)
 									@foreach ($errors->all() as $error)
@@ -39,7 +43,7 @@
 								{!! csrf_field() !!}
 
 									<div class="form-group">
-										{{ Form::email('email', '', array('class' => 'form-control', 'placeholder' => 'Enter Email', 'tabindex' => '1')) }}
+										{{ Form::email('email', '', array('class' => 'form-control', 'placeholder' => 'Enter Username', 'tabindex' => '1')) }}
 										<!-- Username input field  -->
 									</div>
 									<div class="form-group">

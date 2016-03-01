@@ -17,7 +17,7 @@ class HomeController extends Controller
 	}
 	
 	public function showContact(){
-		return view('contact');
+		return view('contactmodel');
 	}
 
 	public function getContactForm(StoreContactRequest $request){

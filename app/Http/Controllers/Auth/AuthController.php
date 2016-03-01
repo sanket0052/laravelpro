@@ -2,11 +2,18 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Auth;
+use Hash;
+use Session;
 use App\User;
-use Validator;
-use App\Http\Controllers\Controller;
+use Illuminate\Routing\Controller;
+use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Contracts\Auth\Registrar;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use App\Http\Requests\UserLogin;
+use App\Http\Requests\UserRegister;
 
 class AuthController extends Controller
 {
@@ -37,7 +44,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
+        $this->middleware($this->guestMiddleware(), ['except' => 'getLogout']);
     }
 
     /**
@@ -46,14 +53,14 @@ class AuthController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function validator(array $data)
-    {
-        return Validator::make($data, [
-            'username' => 'required|max:255|unique:users',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|confirmed|min:6',
-        ]);
-    }
+    // protected function validator(array $data)
+    // {
+    //     return Validator::make($data, [
+    //         // 'username' => 'required|max:255|unique:users',
+    //         'email' => 'required|email|max:255|unique:users',
+    //         'password' => 'required|confirmed|min:6',
+    //     ]);
+    // }
 
     /**
      * Create a new user instance after a valid registration.
@@ -69,4 +76,49 @@ class AuthController extends Controller
             'password' => bcrypt($data['password']),
         ]);
     }
+
+    /**
+     * User Login.
+     * 
+     * @param  UserLogin $request [description]
+     * @return [type]             [description]
+     */
+    protected function postLogin(UserLogin $request)
+    {
+        $email = $request->get('email');
+        $password = $request->get('password');
+
+        $credentials = [
+            'email' => $email,
+            'password' => $password
+        ];
+        $remember = $request->has('remember');
+        if (Auth::attempt($credentials, $remember))
+        {
+            return Redirect::to('/');
+        }
+        else
+        {
+            return redirect('auth/login')->with('error', 'Email And Password Does Not Match');
+        }
+    }
+
+    protected function postRegister(UserRegister $request)
+    {
+        $request['password'] = Hash::make($request['password']);
+        $user = User::create($request->all());
+
+        Auth::login($user);
+
+        return redirect('/');
+    }
+
+    protected function getLogout()
+    {
+        Auth::logout();
+        Session::flush();
+
+        return redirect('auth/login');
+    }
+
 }

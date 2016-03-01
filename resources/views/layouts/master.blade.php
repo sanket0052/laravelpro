@@ -63,8 +63,8 @@
 						<li>
 							{{ link_to('contact', $title = 'Contact', $attributes = array(), $secure = null) }}
 						</li>
-
-						@if(Session::has('userid') && Session::has('username'))
+						<?php  $user = Auth::user(); ?>
+						@if(isset($user->id) && isset($user->username))
 							<li>
 								{{ link_to('auth/logout', $title = 'Logout', $attributes = array()) }}
 							</li>							
@@ -84,6 +84,7 @@
 						<button type="submit" class="btn btn-search"><span class="fa fa-search"></span></button>
 					</form>
 					<ul class="nav navbar-nav navbar-right lno-socials">
+						<li><a href="#" class="facebook"><span class=""></span></a></li>
 						<li><a href="#" class="facebook"><span class="fa fa-facebook"></span></a></li>
 						<li><a href="#" class="twitter"><span class="fa fa-twitter"></span></a></li>
 						<li><a href="#" class="google-plus"><span class="fa fa-google-plus"></span></a></li>

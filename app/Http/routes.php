@@ -36,17 +36,10 @@ Route::group(['middleware' => ['web']], function () {
 	Route::post('auth/login', 'Auth\AuthController@postLogin');
 	Route::get('auth/logout', 'Auth\AuthController@getLogout');
 
-    // Route::get('user/login','UserController@showLogin')->name('login');
-    // Route::post('user/login_request','UserController@getLoginForm')->name('login_request');
-
     // Registration routes...
 	Route::get('auth/register', 'Auth\AuthController@getRegister');
 	Route::post('auth/register', 'Auth\AuthController@postRegister');
 
-    // Route::get('user/register','UserController@showRegister')->name('register');
-    // Route::post('user/register_request','UserController@getRegisterForm')->name('register_request');
-
-	// Route::get('user/logout','UserController@userLogout')->name('user_logout');    
 });
 
 Route::group(['namespace' => 'admin'], function () {

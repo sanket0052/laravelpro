@@ -58,7 +58,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="index.html">SB Admin v2.0</a>
+				<a class="navbar-brand" href="index.html">Line Shop Admin</a>
 			</div>
 			<!-- /.navbar-header -->
 
@@ -266,8 +266,14 @@
 						</li>
 						<li class="divider"></li>
 						<li>
+							<?php  $user = Auth::user(); ?>
+							@if(isset($user->id) && isset($user->username))
+								<!-- <li><i class="fa fa-sign-out fa-fw"></i> -->
+									{{ link_to('auth/logout', $title = 'Logout', $attributes = array()) }}
+								</li>							
+							@endif
 							<?php 
-								echo anchor('admin/logout', '<i class="fa fa-sign-out fa-fw"></i> Logout', array('title' => 'Logout'))
+								//echo anchor('admin/logout', 'Logout', array('title' => 'Logout'))
 							?>
 						</li>
 					</ul>
@@ -292,12 +298,18 @@
                             <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Charts<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-tags"></i> Catalog<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
-                                <li>
+                                <li>	
+                                	{{ link_to('auth/logout', $title = 'Categories', $attributes = array()) }}
                                     <a href="flot.html">Flot Charts</a>
                                 </li>
                                 <li>
+                                	{{ link_to('auth/logout', $title = 'Products', $attributes = array()) }}
+                                    <a href="morris.html">Morris.js Charts</a>
+                                </li>
+                                <li>
+                                	{{ link_to('auth/logout', $title = 'Brands', $attributes = array()) }}
                                     <a href="morris.html">Morris.js Charts</a>
                                 </li>
                             </ul>
@@ -394,7 +406,9 @@
 			<div class="page-header">
 				<div class="row page-title">
 					<div class="col-md-12">
-						@yield('heading')
+						<h1 class="page-header">
+							<h3>@yield('heading')</h3>
+						</h1>
 					</div>
 				</div>
 				<div class="row">
@@ -418,9 +432,9 @@
 		<!-- Morris Charts JavaScript -->
 		{{ Html::script('assets/admin/bower_components/raphael/raphael-min.js') }}
 		
-		<!--<script src="<?php echo base_url('assets/admin/bower_components/morrisjs/morris.min.js');?>"></script>
+		<!--<script src="<?php //echo base_url('assets/admin/bower_components/morrisjs/morris.min.js');?>"></script>
 		
-		<script src="<?php echo base_url('assets/admin/js/morris-data.js');?>"></script>-->
+		<script src="<?php //echo base_url('assets/admin/js/morris-data.js');?>"></script>-->
 
 		<!-- Custom Theme JavaScript -->
 		{{ Html::script('assets/admin/dist/js/sb-admin-2.js') }}

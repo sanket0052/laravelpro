@@ -70,7 +70,7 @@
 							</li>							
 						@else
 							<li>
-								{{ link_to('auth/login', $title = 'Login', $attributes = array(), $secure = null) }}
+								{{ link_to('auth/userlogin', $title = 'Login', $attributes = array(), $secure = null) }}
 							</li>
 							<li>
 								{{ link_to('auth/register', $title = 'Register', $attributes = array(), $secure = null) }}

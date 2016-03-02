@@ -38,4 +38,21 @@ class User extends Model implements AuthenticatableContract
     	'email',
     	'password'
     ];
+
+    /**
+     * [isAdmin description]
+     * @return boolean [description]
+     */
+    public function isAdmin()
+    {
+        // $this->access;
+        if(\Auth::user()->access == '0')
+        {
+            return true;
+        }
+        else
+        {
+            return false;    
+        }
+    }
 }

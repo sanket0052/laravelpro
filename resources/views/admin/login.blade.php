@@ -30,28 +30,29 @@
 			<div class="col-md-4 col-md-offset-4">
 				<div class="login-panel panel panel-default">
 					<div class="panel-heading">
-						<?php echo heading('Please Sign In', 5	, array('class'=>'panel-title', 'style'=>'font-size:18px;')); ?>
+						<h5 style="font-size:18px;"> Please Sign In </h5>
 					</div>
 					<div class="panel-body">
 						
-						{!! Form::open(array('url' => 'contact_request', 'role' => 'form')) !!}
-
+						{!! Form::open(array('url' => 'auth/adminlogin', 'role' => 'form')) !!}
+						{!! csrf_field() !!}
 							<!-- Display flashdata -->
 							@if (count($errors) > 0)
 								@foreach ($errors->all() as $error)
-									<div class="alert alert-danger" ><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>{{ $error }}</div>
+									<div class="alert alert-danger" ><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>{{$error}}</div>
 								@endforeach
 							@endif
 							<!-- Display flashdata -->
 							
 							<div class="form-group">
-								{{ Form::text('username', '', array('class' => 'form-control', 'placeholder' => 'Username', 'autofocus' => 'autofocus')) }}
+								{{ Form::email('email', '', array('class' => 'form-control', 'placeholder' => 'Email', 'autofocus' => 'autofocus')) }}
 							</div>
 							
 							<div class="form-group">
-								{{ Form::password('password', '', array('class' => 'form-control', 'placeholder' => 'Password')) }}
+								{{ Form::password('password', array('class' => 'form-control', 'placeholder' => 'Password')) }}
 							</div>
 
+							{{ Form::hidden('type', 'admin') }}
 							{{ Form::submit('Login', array('class' => 'btn btn-lg btn-success btn-block')) }}
 
 						{!! Form::close() !!}

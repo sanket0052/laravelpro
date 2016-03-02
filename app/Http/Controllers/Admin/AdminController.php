@@ -1,35 +1,23 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Redirect;
 
 class AdminController extends Controller
 {
-    /**
-     * Instantiate a new UserController instance.
-     */
-    // public function __construct()
-    // {
-    //     $this->middleware('auth');
-
-    //     $this->middleware('log', ['only' => ['fooAction', 'barAction']]);
-
-    //     $this->middleware('subscribed', ['except' => ['fooAction', 'barAction']]);
-    // }
-
     public function showDashboard()
     {
-    	return view('admin/index.php');
+        return view('admin.index');
     }
     
-    public function showLogin()
+    public function getLogin()
     {
-    	return view('admin/login.php');
+    	return view('admin.login');
     }
-    
-
 }

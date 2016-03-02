@@ -39,7 +39,7 @@
 								<!-- Display flashdata -->
 
 								<!-- Login Form Starts -->
-								{!! Form::open(array('url' => 'auth/login', 'role' => 'form', 'id' => 'login-form')) !!}
+								{!! Form::open(array('url' => 'auth/userlogin', 'role' => 'form', 'id' => 'login-form')) !!}
 								{!! csrf_field() !!}
 
 									<div class="form-group">
@@ -83,7 +83,7 @@
 								<p>
 									Registration allows you to avoid filling in billing and shipping forms every time you checkout on this website
 								</p>
-									{{ Html::link('user/register', 'Register', array('class' => 'btn btn-main')) }}
+									{{ Html::link('auth/register', 'Register', array('class' => 'btn btn-main')) }}
 									<!-- Register Form link -->
 							</div>
 						</div>

@@ -95,11 +95,29 @@ class AuthController extends Controller
         $remember = $request->has('remember');
         if (Auth::attempt($credentials, $remember))
         {
-            return Redirect::to('/');
+            if(Auth::check())
+            {
+                if(Auth::user()->access != '0')
+                {
+                    return Redirect::to('/');
+                }
+                else
+                {
+                    return Redirect::to('admin/dashboard');
+                }
+            }
+            // return Redirect::to('/');
         }
         else
         {
-            return redirect('auth/login')->with('error', 'Email And Password Does Not Match');
+            if($request->get('type') == 'admin')
+            {
+                return Redirect::to('admin/adminlogin')->with('error', 'Email And Password Does Not Match');
+            }
+            else
+            {
+                return Redirect::to('auth/userlogin');
+            }
         }
     }
 
@@ -118,7 +136,7 @@ class AuthController extends Controller
         Auth::logout();
         Session::flush();
 
-        return redirect('auth/login');
+        return redirect('/');
     }
 
 }

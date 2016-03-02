@@ -238,7 +238,7 @@ select > option{
     padding-right:0px;
     padding-left:0px;
 }
-.login-panel input[type="text"],input[type="password"]{
+.login-panel input[type="text"],input[type="email"],input[type="password"]{
     border:none !important;
     box-shadow: none !important;
     background-color: #e3e3e3;

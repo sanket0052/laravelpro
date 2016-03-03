@@ -116,7 +116,7 @@ class AuthController extends Controller
             }
             else
             {
-                return Redirect::to('auth/userlogin');
+                return Redirect::to('auth/userlogin')->with('error', 'Email And Password Does Not Match');
             }
         }
     }

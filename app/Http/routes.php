@@ -45,5 +45,11 @@ Route::group(['middleware' => ['web']], function () {
 });
 
 Route::group(['prefix' => 'admin', 'middleware' => ['web', 'admin', 'auth']], function () {
-    Route::get('dashboard', 'Admin\DashboardController@showDashboard');
+
+    Route::group(array('namespace' => 'Admin'), function() {
+        Route::get('dashboard', 'DashboardController@showDashboard');
+
+        Route::resource('category', 'CategoryController');
+
+    });
 });

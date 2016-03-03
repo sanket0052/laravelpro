@@ -36,6 +36,8 @@
 		<!-- Bootstrap Core JavaScript -->
 		{{ Html::script('assets/admin/bower_components/bootstrap/dist/js/bootstrap.min.js') }}
 
+		@yield('link')
+
 		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 		<!--[if lt IE 9]>
@@ -301,16 +303,13 @@
                             <a href="#"><i class="fa fa-tags"></i> Catalog<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>	
-                                	{{ link_to('auth/logout', $title = 'Categories', $attributes = array()) }}
-                                    <a href="flot.html">Flot Charts</a>
+                                	{{ link_to('admin/category', $title = 'Categories', $attributes = array()) }}
                                 </li>
                                 <li>
-                                	{{ link_to('auth/logout', $title = 'Products', $attributes = array()) }}
-                                    <a href="morris.html">Morris.js Charts</a>
+                                	{{ link_to('product/index', $title = 'Products', $attributes = array()) }}
                                 </li>
                                 <li>
-                                	{{ link_to('auth/logout', $title = 'Brands', $attributes = array()) }}
-                                    <a href="morris.html">Morris.js Charts</a>
+                                	{{ link_to('brand/index', $title = 'Brands', $attributes = array()) }}
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
@@ -432,12 +431,16 @@
 		<!-- Morris Charts JavaScript -->
 		{{ Html::script('assets/admin/bower_components/raphael/raphael-min.js') }}
 		
+		@yield('script')
+
 		<!--<script src="<?php //echo base_url('assets/admin/bower_components/morrisjs/morris.min.js');?>"></script>
 		
 		<script src="<?php //echo base_url('assets/admin/js/morris-data.js');?>"></script>-->
 
+		@stack('scripts')
 		<!-- Custom Theme JavaScript -->
 		{{ Html::script('assets/admin/dist/js/sb-admin-2.js') }}
 		
+
 	</body>
 </html>

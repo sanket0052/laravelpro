@@ -1,3 +1,4 @@
+<!-- View stored in resources/views/auth/register.blade.php -->
 	@extends('layouts.master')
 
 	@section('title', 'Register')

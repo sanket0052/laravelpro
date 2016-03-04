@@ -1,3 +1,4 @@
+<!-- View stored in resources/views/home.blade.php -->
 	@extends('layouts.master')
 
 	@section('title', 'Home')

@@ -1,3 +1,4 @@
+<!-- View stored in resources/views/contact.blade.php -->
 	@extends('layouts.master')
 
 	@section('title', 'Contact Us')

@@ -1,10 +1,9 @@
-<!-- View stored in resources/views/admin/category/create.blade.php -->
-
+<!-- View stored in resources/views/admin/category/edit.blade.php -->
 	@extends('admin.layout.master')
 
 	@section('title', 'Category')
 	
-	@section('heading', 'Add Category')
+	@section('heading', 'Edit'.$category->name)
 		
 	@section('content')
 
@@ -31,13 +30,13 @@
 						</div>
 						<!-- Display flashdata -->
 
-						{!! Form::open(array('url' => 'admin/category', 'role' => 'form')) !!}
+						{!! Form::open(array('url' => 'admin/category/'.$category->id, 'role' => 'form', 'method' => 'PUT')) !!}
 						{!! csrf_field() !!}
 							<div class="col-md-6">
 								<div class="form-group">
 									{{ Form::label('name', 'Category Name') }}
 
-									{{ Form::text('name', '', array('class' => 'form-control', 'placeholder' => 'Add Category Name here...')) }}
+									{{ Form::text('name', $category->name, array('class' => 'form-control', 'placeholder' => 'Add Category Name here...')) }}
 								</div>
 
 								<div class="form-group">
@@ -49,7 +48,7 @@
 											$categoryList[$value->id] = $value->name;
 										}
 									?>
-									{{ Form::select('parent_id', $categoryList, '0', array('class' => 'form-control')) }}
+									{{ Form::select('parent_id', $categoryList, $category->parent_id, array('class' => 'form-control')) }}
 								</div>
 
 								<div class="form-group">
@@ -57,11 +56,11 @@
 
 									<div class="radio">
 										<label>
-											{{ Form::radio('status', '1', true) }}
+											{{ Form::radio('status', '1', ($category->status ==1) ? true : '') }}
 											Active
 										</label>
 										<label>
-											{{ Form::radio('status', '0') }}
+											{{ Form::radio('status', '0', ($category->status ==0) ? true : '') }}
 											Disable
 										</label>
 									</div>
@@ -72,19 +71,19 @@
 								<div class="form-group">
 									{{ Form::label('description', 'Category Description') }}
 
-									{{ Form::textarea('description', '', array('class' => 'form-control', 'placeholder' =>  'Add Category Description here...', 'rows' => '5', 'cols' => '25')) }}
+									{{ Form::textarea('description', $category->description, array('class' => 'form-control', 'placeholder' =>  'Add Category Description here...', 'rows' => '5', 'cols' => '25')) }}
 								</div>
 
 								<div class="form-group">
 									{{ Form::label('urlname', 'Category URL Name') }}
 
-									{{ Form::text('urlname', '', array('class' => 'form-control', 'placeholder' => 'Add Category URL Name here...')) }}
+									{{ Form::text('urlname', $category->urlname, array('class' => 'form-control', 'placeholder' => 'Add Category URL Name here...')) }}
 								</div>
 							</div>
 							<div class="clearfix"></div>
 							<hr>
 							<div class="col-md-6 form-footer">
-								{{ Form::submit('Add Category', array('class' => 'btn btn-primary')) }}
+								{{ Form::submit('Update Category', array('class' => 'btn btn-primary')) }}
 
 							</div>
 						{!! Form::close() !!}

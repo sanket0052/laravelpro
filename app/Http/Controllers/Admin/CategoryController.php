@@ -49,9 +49,10 @@ class CategoryController extends Controller
         $requestArr['description'] = $request->input('description');
         $requestArr['urlname'] = $request->input('urlname');
         $requestArr['status'] = $request->input('status');
+
         $category = Category::create($requestArr);
 
-        return Redirect::to('admin/category')->with('success', 'Category Added successfully!');
+        return Redirect::to('admin/category')->with('flash_message', 'Category Added Successfully!');
     }
 
     /**
@@ -73,7 +74,11 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $allCategories = Category::all();
+        $category = Category::find($id);
+        return view('admin.category.edit')
+            ->with('category', $category)
+            ->with('allcategory', $allCategories);
     }
 
     /**
@@ -83,9 +88,18 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CategoryRequest $request, $id)
     {
-        //
+        $requestArr['name'] = $request->input('name');
+        $requestArr['parent_id'] = $request->input('parent_id');
+        $requestArr['description'] = $request->input('description');
+        $requestArr['urlname'] = $request->input('urlname');
+        $requestArr['status'] = $request->input('status');
+
+        $category = Category::where('id', $id)
+            ->update($requestArr);
+
+        return Redirect::to('admin/category')->with('flash_message', 'Category Updated Successfully!');
     }
 
     /**
@@ -96,6 +110,6 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        
     }
 }

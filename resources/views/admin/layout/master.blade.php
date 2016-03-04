@@ -1,3 +1,4 @@
+<!-- View stored in resources/views/admin/layout/master.blade.php -->
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -306,10 +307,10 @@
                                 	{{ link_to('admin/category', $title = 'Categories', $attributes = array()) }}
                                 </li>
                                 <li>
-                                	{{ link_to('product/index', $title = 'Products', $attributes = array()) }}
+                                	{{ link_to('admin/brand', $title = 'Brands', $attributes = array()) }}
                                 </li>
                                 <li>
-                                	{{ link_to('brand/index', $title = 'Brands', $attributes = array()) }}
+                                	{{ link_to('admin/product', $title = 'Products', $attributes = array()) }}
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->

@@ -1,3 +1,4 @@
+<!-- View stored in resources/views/auth/login.blade.php -->
 	@extends('layouts.master')
 
 	@section('title', 'Login')

@@ -1,3 +1,4 @@
+<!-- View stored in resources/views/admin/category/index.blade.php -->
 	@extends('admin.layout.master')
 
 	@section('link')
@@ -24,8 +25,8 @@
 
 					@if(Session::has('flash_message'))
 						<div class="col-ms-12" > 
-					    	<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>{{ Session::get('flash_message') }}</div>
-					   	</div>
+							<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>{{ Session::get('flash_message') }}</div>
+						</div>
 					@endif
 
 					<div class="dataTable_wrapper">
@@ -51,11 +52,14 @@
 										<td>{{ $category->urlname }}</td>
 										<td>
 											@if(!is_null($category->parent_id) && $category->parent_id!=0)
-												{{ array_search($category->parent_id, $categoryList) }}
+												{{ $categoryList[$category->parent_id] }}
 											@endif
 										</td>
 										<td>
-											<a href="" class = "btn btn-outline btn-primary" data-toggle = "tooltip" title = "Edit Category" ><i class="fa fa-pencil"></i></a>
+											<!-- Update Link -->
+											<a href="{{ URL::to('admin/category/'.$category->id.'/edit') }}" class = "btn btn-outline btn-primary" data-toggle = "tooltip" title = "Edit Category" ><i class="fa fa-pencil"></i></a>
+											<!-- Delete Link -->
+											<a href="{{ URL::to('admin/category/'.$category->id) }}" class = "btn btn-outline btn-danger" data-toggle = "tooltip" title = "Delete Category" ><i class="fa fa-times"></i></a>
 										</td>
 									</tr>
 								@endforeach

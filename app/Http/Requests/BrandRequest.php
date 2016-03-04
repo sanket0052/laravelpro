@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 
-class CategoryRequest extends Request
+class BrandRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -35,7 +35,8 @@ class CategoryRequest extends Request
                 return [
                     'name' => 'required|max:50|unique:categories',
                     'description' => 'required',
-                    'urlname' => 'required',
+                    'category_list' => 'required',
+                    'logo' => 'required|mimes:jpeg,jpg,png',
                 ];
             }
             case 'PUT':
@@ -44,7 +45,8 @@ class CategoryRequest extends Request
                 return [
                     'name' => 'required|max:50',
                     'description' => 'required',
-                    'urlname' => 'required',
+                    'category_list' => 'required',
+                    'logo' => 'mimes:jpeg,jpg,png',
                 ]; 
             }
             default:break;

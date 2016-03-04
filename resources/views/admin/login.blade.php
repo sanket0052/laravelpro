@@ -1,3 +1,4 @@
+<!-- View stored in resources/views/admin/login.blade.php -->
 <!DOCTYPE html>
 <html lang="en">
 	<head>

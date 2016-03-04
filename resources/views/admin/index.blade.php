@@ -1,3 +1,4 @@
+<!-- View stored in resources/views/admin/index.blade.php -->
 	@extends('admin.layout.master')
 
 	@section('title', 'Dashboard')

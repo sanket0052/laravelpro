@@ -51,5 +51,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web', 'admin', 'auth']], fu
 
         Route::resource('category', 'CategoryController');
 
+        Route::resource('brand', 'BrandController');
     });
 });

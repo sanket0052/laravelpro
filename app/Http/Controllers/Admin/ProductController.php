@@ -5,17 +5,16 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 
 use Session;
-use Input;
 use App\Brand;
 use App\Category; 
+use App\Product; 
 use App\Http\Requests;
-use App\Http\Requests\BrandRequest;
+use App\Http\Requests\ProductRequest;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\Controller;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-
-class BrandController extends Controller
+class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -24,12 +23,14 @@ class BrandController extends Controller
      */
     public function index()
     {
-        $allCategories = Category::all(array('id', 'name'));
-        $allBrands = Brand::all();
+        $allCategories = Category::get(array('id', 'name'));
+        $allBrands = Brand::all(array('id', 'name'));
+        $allProducts = Product::all();
 
-        return view('admin.brand.index')
+        return view('admin.product.index')
             ->with('allbrands', $allBrands)
-            ->with('allcategory', $allCategories);
+            ->with('allcategory', $allCategories)
+            ->with('allproducts', $allProducts);
     }
 
     /**
@@ -40,7 +41,7 @@ class BrandController extends Controller
     public function create()
     {
         $allCategories = Category::all();
-        return view('admin.brand.create')->with('allcategory', $allCategories);
+        return view('admin.product.create')->with('allcategory', $allCategories);
     }
 
     /**
@@ -49,24 +50,33 @@ class BrandController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(BrandRequest $request)
+    public function store(ProductRequest $request)
     {
-        $brandArr['name'] = $request->input('name');
-        $brandArr['description'] = $request->input('description');
-        $brandArr['category_list'] = implode(',', $request->input('category_list'));
-        $brandArr['status'] = $request->input('status');
+        // echo '<pre>';
+        // print_r($request->all());
+        // exit;
+        $productArr['name'] = $request->input('name');
+        $productArr['category_id'] = $request->input('category_id');
+        $productArr['brand_id'] = $request->input('brand_id')=='' ? 0 : $request->input('brand_id');
+        $productArr['description'] = $request->input('description');
+        $productArr['model'] = $request->input('model');
+        $productArr['stock'] = $request->input('stock');
+        $productArr['price'] = $request->input('price');
+        $productArr['status'] = $request->input('status');
 
-        $logo = $request->file('logo');
+        $image = $request->file('image');
         // Store the brand logo in upload folder
-        $storeLogo = Brand::saveBrandLogo($logo, $brandArr['name']);
+        $storeImage = Product::saveProductImage($image, $productArr['name']);
 
-        $brandArr['logo'] = $storeLogo['logoName'];
-        $brandArr['thumb'] = $storeLogo['logoThumbName'];
-        
+        $productArr['image'] = $storeImage['imageName'];
+        $productArr['thumb'] = $storeImage['imageThumbName'];
+            
+        // print_r($productArr);
+        // exit;
         // Store data in Database
-        $brand = Brand::create($brandArr);
+        $product = Product::create($productArr);
 
-        return Redirect::to('admin/brand')->with('flash_message', 'Brand Added Successfully!');
+        return Redirect::to('admin/product')->with('flash_message', 'Product Added Successfully!');
     }
 
     /**
@@ -90,7 +100,7 @@ class BrandController extends Controller
     {
         $allCategories = Category::all();
         $brand = Brand::find($id);
-        return view('admin.brand.edit')
+        return view('admin.product.edit')
             ->with('brand', $brand)
             ->with('allcategory', $allCategories);
     }
@@ -102,7 +112,7 @@ class BrandController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(BrandRequest $request, $id)
+    public function update(Request $request, $id)
     {
         $brandArr['name'] = $request->input('name');
         $brandArr['description'] = $request->input('description');
@@ -112,17 +122,17 @@ class BrandController extends Controller
         
         if ($request->hasFile('logo'))
         {
-            $storeLogo = Brand::saveBrandLogo($logo, $brandArr['name']);
+            $storeLogo = Product::saveBrandLogo($logo, $brandArr['name']);
 
             $brandArr['logo'] = $storeLogo['logoName'];
             $brandArr['thumb'] = $storeLogo['logoThumbName'];
         }
 
         // Store data in Database
-        $brand = Brand::where('id', $id)
+        $brand = Product::where('id', $id)
                 ->update($brandArr);
 
-        return Redirect::to('admin/brand')->with('flash_message', 'Brand Updated Successfully!');
+        return Redirect::to('admin/brand')->with('flash_message', 'Product Updated Successfully!');
     }
 
     /**
@@ -133,15 +143,14 @@ class BrandController extends Controller
      */
     public function destroy($id)
     {
-        
-        $brand = Brand::deleteBrand($id);
-        if($brand)
+        $product = Product::deleteBrand($id);
+        if($product)
         {
-            return Redirect::to('admin/brand')->with('flash_message', 'Brand Deleted Successfully!');
+            return Redirect::to('admin/product')->with('flash_message', 'Product Deleted Successfully!');
         }
         else
         {
-            return Redirect::to('admin/brand')->with('flash_message', 'Error Accured While Deleting Brand. Please try again.');
+            return Redirect::to('admin/product')->with('flash_message', 'Error Accured While Deleting Brand. Please try again.');
         }
     }
 }

@@ -98,7 +98,7 @@
 						</div>
 						
 						<div class="col-md-4 pull-left">
-							<td>{{ Html::image('/uploads/brands/'.$brand->logo, '', array('class' => 'img-responsive', 'style' => 'width:200px;')) }}</td>
+							<td>{{ Html::image('assets/images/uploads/brands/'.$brand->logo, '', array('class' => 'img-responsive', 'style' => 'width:200px;')) }}</td>
 						</div>
 						<!-- /.col-lg-6 (nested) -->
 					</div>

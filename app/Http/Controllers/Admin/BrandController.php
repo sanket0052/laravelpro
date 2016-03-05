@@ -12,7 +12,8 @@ use App\Http\Requests;
 use App\Http\Requests\BrandRequest;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\Controller;
-use Intervention\Image\ImageManagerStatic as Image;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+
 
 class BrandController extends Controller
 {
@@ -54,22 +55,13 @@ class BrandController extends Controller
         $brandArr['description'] = $request->input('description');
         $brandArr['category_list'] = implode(',', $request->input('category_list'));
         $brandArr['status'] = $request->input('status');
+
         $logo = $request->file('logo');
-        
-            $destinationPath = public_path().'/assets/images/uploads/brands';
-            $destinationThumbilPath = public_path().'/assets/images/uploads/brands/thumbils';
-            $logoextension = $logo->getClientOriginalExtension();
-            $fileName = $brandArr['name'].'.'.$logoextension;
-            $logo->move($destinationPath, $fileName);
+        // Store the brand logo in upload folder
+        $storeLogo = Brand::saveBrandLogo($logo, $brandArr['name']);
 
-            $thumbilFileName = $brandArr['name'].'_thumb.'.$logoextension;
-
-            // Create Logo Thumb 
-            Image::make(file_get_contents($destinationPath.'/'.$fileName))->resize(100, 100)->save($destinationThumbilPath.'/'.$thumbilFileName);
-            
-
-        $brandArr['logo'] = $fileName;
-        $brandArr['thumb'] = $thumbilFileName;
+        $brandArr['logo'] = $storeLogo['logoName'];
+        $brandArr['thumb'] = $storeLogo['logoThumbName'];
         
         // Store data in Database
         $brand = Brand::create($brandArr);
@@ -112,34 +104,23 @@ class BrandController extends Controller
      */
     public function update(BrandRequest $request, $id)
     {
-        // echo '<pre>';
-        // print_r($request->all());
-        // exit;
         $brandArr['name'] = $request->input('name');
         $brandArr['description'] = $request->input('description');
         $brandArr['category_list'] = implode(',', $request->input('category_list'));
         $brandArr['status'] = $request->input('status');
         $logo = $request->file('logo');
         
-        if(!empty($request->file('logo')))
+        if ($request->hasFile('logo'))
         {
-            $destinationPath = public_path().'/assets/images/uploads/brands';
-            $destinationThumbilPath = public_path().'/assets/images/uploads/brands/thumbils';
-            $logoextension = $logo->getClientOriginalExtension();
-            $fileName = $brandArr['name'].'.'.$logoextension;
-            $logo->move($destinationPath, $fileName);
+            $storeLogo = Brand::saveBrandLogo($logo, $brandArr['name']);
 
-            $thumbilFileName = $brandArr['name'].'_thumb.'.$logoextension;
-
-            // Create Logo Thumb 
-            Image::make(file_get_contents($destinationPath.'/'.$fileName))->resize(100, 100)->save($destinationThumbilPath.'/'.$thumbilFileName);
-
-            $brandArr['logo'] = $fileName;
-            $brandArr['thumb'] = $thumbilFileName;
+            $brandArr['logo'] = $storeLogo['logoName'];
+            $brandArr['thumb'] = $storeLogo['logoThumbName'];
         }
 
         // Store data in Database
-        $brand = Brand::where('id', $id);
+        $brand = Brand::where('id', $id)
+                ->update($brandArr);
 
         return Redirect::to('admin/brand')->with('flash_message', 'Brand Updated Successfully!');
     }
@@ -152,6 +133,15 @@ class BrandController extends Controller
      */
     public function destroy($id)
     {
-        //
+        
+        $brand = Brand::deleteBrand($id);
+        if($brand)
+        {
+            return Redirect::to('admin/brand')->with('flash_message', 'Brand Deleted Successfully!');
+        }
+        else
+        {
+            return Redirect::to('admin/brand')->with('flash_message', 'Error Accured While Deleting Brand. Please try again.');
+        }
     }
 }

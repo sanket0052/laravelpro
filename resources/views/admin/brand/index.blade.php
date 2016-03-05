@@ -47,7 +47,10 @@
 										<td>{{ Html::image('/assets/images/uploads/brands/thumbils/'.$brand->thumb, '', array('class' => 'img-responsive') ) }}</td>
 										<td>{{ $brand->name }}</td>
 										<td>
-												<?php $categories = explode(',', $brand->category_list); ?>
+												<?php 
+													$categories = explode(',', $brand->category_list); 
+													$categoryList = array();
+												?>
 												@foreach ($allcategory as $key => $value)
 													@if(in_array($value->id, $categories))
 														<?php $categoryList[] = $value->name; ?>
@@ -67,10 +70,17 @@
 											{{ $brand->status ==1 ? 'Enable' : 'Disable' }}
 										</td>
 										<td>
-											<!-- Update Link -->
-											<a href="{{ URL::to('admin/brand/'.$brand->id.'/edit') }}" class = "btn btn-outline btn-primary" data-toggle = "tooltip" title = "Edit Brand" ><i class="fa fa-pencil"></i></a>
-											 <!-- Delete Link -->
-											<a href="{{ URL::to('admin/brand/'.$brand->id) }}" class = "btn btn-outline btn-danger" data-toggle = "tooltip" title = "Delete Brand" ><i class="fa fa-times"></i></a>
+											{!! Form::open(array('url' => 'admin/brand/'.$brand->id)) !!}
+												{{ Form::hidden('_method', 'DELETE') }}
+
+												<!-- Update Link -->
+												<a href="{{ URL::to('admin/brand/'.$brand->id.'/edit') }}" class = "btn btn-outline btn-primary" data-toggle = "tooltip" title = "Edit Brand" ><i class="fa fa-pencil"></i></a>
+												
+												<!-- Delete Link -->
+												<button type="submit" value="" class = "btn btn-outline btn-danger" data-toggle = "tooltip" title = "Delete Brand" >
+													<i class="fa fa-times"></i>
+												</button>
+											{!! Form::close() !!}
 										</td>
 									</tr> 
 								@endforeach

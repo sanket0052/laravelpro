@@ -36,7 +36,7 @@
 								<div class="form-group">
 									{{ Form::label('name', 'Brand Name', array('class' => 'col-md-2 control-label')) }}
 									<div class="col-md-8">
-										{{ Form::text('name', '', array('class' => 'form-control', 'placeholder' => 'Add Brand Name here...')) }}
+										{{ Form::text('name', '', array('class' => 'form-control', 'placeholder' => 'Add Brand Name here...', 'tab-index')) }}
 									</div>
 								</div>
 
@@ -57,6 +57,10 @@
 												{{ $category->name }}
 											</label>
 										@endforeach
+										<br/><br/>
+										<a href="{{ URL::to('admin/category/create') }}" target="_blank" class="btn btn-outline btn-info" data-toggle = "tooltip" title = "Add New Category" >
+											<i class="fa fa-plus"></i> Add New Category
+										</a>
 									</div>
 								</div>
 

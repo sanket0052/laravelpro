@@ -56,10 +56,17 @@
 											@endif
 										</td>
 										<td>
-											<!-- Update Link -->
-											<a href="{{ URL::to('admin/category/'.$category->id.'/edit') }}" class = "btn btn-outline btn-primary" data-toggle = "tooltip" title = "Edit Category" ><i class="fa fa-pencil"></i></a>
-											<!-- Delete Link -->
-											<a href="{{ URL::to('admin/category/'.$category->id) }}" class = "btn btn-outline btn-danger" data-toggle = "tooltip" title = "Delete Category" ><i class="fa fa-times"></i></a>
+											{!! Form::open(array('url' => 'admin/category/'.$category->id)) !!}
+												{{ Form::hidden('_method', 'DELETE') }}
+
+												<!-- Update Link -->
+												<a href="{{ URL::to('admin/category/'.$category->id.'/edit') }}" class = "btn btn-outline btn-primary" data-toggle = "tooltip" title = "Edit Category" ><i class="fa fa-pencil"></i></a>
+												
+												<!-- Delete Link -->
+												<button type="submit" value="" class="btn btn-outline btn-danger" data-toggle="tooltip" title = "Delete Category" >
+													<i class="fa fa-times"></i>
+												</button>
+											{!! Form::close() !!}
 										</td>
 									</tr>
 								@endforeach

@@ -110,6 +110,7 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        
+        Category::destroy($id);
+        return Redirect::to('admin/category')->with('flash_message', 'Category Deleted Successfully!');
     }
 }

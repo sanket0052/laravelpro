@@ -304,13 +304,13 @@
                             <a href="#"><i class="fa fa-tags"></i> Catalog<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>	
-                                	{{ link_to('admin/category', $title = 'Categories', $attributes = array()) }}
+                                	<a href="{{ URL::to('admin/category') }}"><i class="fa fa-angle-double-right"></i>&nbsp;&nbsp; Categories</a>
                                 </li>
                                 <li>
-                                	{{ link_to('admin/brand', $title = 'Brands', $attributes = array()) }}
+                                	<a href="{{ URL::to('admin/brand') }}"><i class="fa fa-angle-double-right"></i>&nbsp;&nbsp; Brands</a>
                                 </li>
                                 <li>
-                                	{{ link_to('admin/product', $title = 'Products', $attributes = array()) }}
+                                	<a href="{{ URL::to('admin/product') }}"><i class="fa fa-angle-double-right"></i>&nbsp;&nbsp; Products</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
@@ -418,8 +418,10 @@
 					</ul>
 				</div>
 			</div>
-			<div class="page-content row">
-				@yield('content')
+			<div class="page-content">
+				<div class="row">
+					@yield('content')
+				</div>
 			</div>
 			<!-- /#page-wrapper -->
 

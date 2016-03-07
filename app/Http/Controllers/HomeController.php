@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Category;
 use App\Contact;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Redirect;
@@ -12,8 +13,10 @@ use App\Http\Requests\StoreContactRequest;
 
 class HomeController extends Controller
 {
-	public function showHome(){
-		return view('home');
+	public function showHome()
+	{
+		$allcategory = Category::all();
+    	return view('home')->with('allcategory', $allcategory);
 	}
 	
 	public function showContact(){

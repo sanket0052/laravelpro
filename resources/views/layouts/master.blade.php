@@ -107,280 +107,93 @@
 								Categories
 								<span class="caret"></span>
 							</a>
+
+							<?php
+								foreach ($allcategory as $category)
+								{
+									if($category->parent_id == 0)
+									{
+										$categoryMainList[$category->id]['name'] = $category->name;
+										$categoryMainList[$category->id]['urlname'] = $category->urlname;
+									}
+									else
+									{
+										$categorySubList[$category->id] = $category->name;
+									}
+								}
+								foreach($allcategory as $key => $value) 
+								{
+									if($value->parent_id != 0)
+									{
+										foreach ($categoryMainList as $k => $v)
+										{
+											if($value->parent_id == $k)
+											{
+												$categoryMainList[$k]['sub'][$value->urlname]= $value->name;
+											}
+										}
+									}
+								}
+								// echo '<pre>';
+								// print_r($categoryMainList);
+								// exit();
+							?>
 							<div class="dropdown-menu" role="menu">
 								<div class="lnt-dropdown-mega-menu">
 									<!-- List of categories -->
 									<ul class="lnt-category list-unstyled">
-										<li class="active"><a href="#subcategory-home">Home, garden and tools</a></li>
-										<li><a href="#subcategory-sports">Sports and outdoors</a></li>
-										<li><a href="#subcategory-music">Digital music</a></li>
-										<li><a href="#subcategory-books">Books <span class="label label-danger">Hot</span></a></li>
-										<li><a href="#subcategory-fashion">Fashion and beauty</a></li>
-										<li><a href="#subcategory-movies">Movies and games</a></li>
+										<?php $count = 0; ?>
+										@foreach($categoryMainList as $category)
+											<li class="{{ $count == '0' ? 'active' : '' }}">
+												<a href="#subcategory-{{ $category['urlname'] }}" >{{ $category['name'] }}</a>
+											</li>
+											<?php $count++; ?>
+										@endforeach
 									</ul>
 									<!-- Subcategory and carousel wrap -->
 									<div class="lnt-subcategroy-carousel-wrap container-fluid">
-										<div id="subcategory-home" class="active">
-											<!-- Sub categories list-->
-											<div class="lnt-subcategory col-sm-8 col-md-8">
-												<h3 class="lnt-category-name">Home, garden and tools</h3>
-												<ul class="list-unstyled col-sm-6">
-													<li><a href="http://google.com">Home</a></li>
-													<li><a href="#">Kitchen</a></li>
-													<li><a href="#">Furniture</a></li>
-													<li><a href="#">Wedding</a></li>
-													<li><a href="#">Hardware</a></li>
-													<li><a href="#">Pets</a></li>
-													<li><a href="#">Bed and bath</a> <span class="label label-info">Popular</span></li>
-												</ul>
-												<ul class="list-unstyled col-sm-6">
-													<li><a href="#">Fixtures</a></li>
-													<li><a href="#">Home robots</a> <span class="label label-danger">hot</span></li>
-													<li><a href="#">Power tools</a></li>
-													<li><a href="#">Lamps</a></li>
-													<li><a href="#">Redesign</a></li>
-													<li><a href="#">Garden</a></li>
-													<li><a href="#">Decor</a></li>
-												</ul>
-											</div>
-											<!-- Carousel -->
-											<div class="col-sm-4 col-md-4">
-												<div id="carousel-category-home" class="carousel slide" data-ride="carousel">
-													<ol class="carousel-indicators">
-														<li data-target="#carousel-category-home" data-slide-to="0" class=""></li>
-														<li data-target="#carousel-category-home" data-slide-to="1" class="active"></li>
-														<li data-target="#carousel-category-home" data-slide-to="2" class=""></li>
-													</ol>
-													<div class="carousel-inner" role="listbox">
-														<div class="item active">
-															<img src="http://placehold.it/296x400" alt="Slide image">
-														</div>
-														<div class="item">
-															<img src="http://placehold.it/296x400" alt="Slide image">
-														</div>
-														<div class="item">
-															<img src="http://placehold.it/296x400" alt="Slide image">
+									<?php $count = 0; ?>
+										@foreach($categoryMainList as $key => $value) 
+											<div id="subcategory-{{ $value['urlname'] }}" class="{{ $count == '0' ? 'active' : '' }}">
+												<!-- Sub categories list-->
+												<div class="lnt-subcategory col-sm-8 col-md-8">
+													<h3 class="lnt-category-name">{{ $value['name'] }}</h3>
+													<ul class="list-unstyled col-sm-6">
+														<?php
+														if(!empty($value['sub']))
+														{
+															foreach($value['sub'] as $k => $subcategory)
+															{
+																echo '<li><a href="'.$k.'">'.$subcategory.'</a></li>';
+															}
+														}
+														?>
+													</ul>
+												</div>
+												<!-- Carousel -->
+												<div class="col-sm-4 col-md-4">
+													<div id="carousel-category-home" class="carousel slide" data-ride="carousel">
+														<ol class="carousel-indicators">
+															<li data-target="#carousel-category-home" data-slide-to="0" class=""></li>
+															<li data-target="#carousel-category-home" data-slide-to="1" class="active"></li>
+															<li data-target="#carousel-category-home" data-slide-to="2" class=""></li>
+														</ol>
+														<div class="carousel-inner" role="listbox">
+															<div class="item active">
+																<img src="http://placehold.it/296x400" alt="Slide image">
+															</div>
+															<div class="item">
+																<img src="http://placehold.it/296x400" alt="Slide image">
+															</div>
+															<div class="item">
+																<img src="http://placehold.it/296x400" alt="Slide image">
+															</div>
 														</div>
 													</div>
 												</div>
-											</div>
-										</div> <!-- /.subcategory-home -->
-										<div id="subcategory-sports">
-											<!-- Sub categories list-->
-											<div class="lnt-subcategory col-sm-8 col-md-8">
-												<h3 class="lnt-category-name">Sports and outdoors</h3>
-												<ul class="list-unstyled col-sm-6">
-													<li><a href="#">Exercise</a></li>
-													<li><a href="#">Fitness</a></li>
-													<li><a href="#">Hunting</a></li>
-													<li><a href="#">Fishing</a> <span class="label label-primary">Trending</span></li>
-													<li><a href="#">Boating</a></li>
-													<li><a href="#">Water sports</a></li>
-													<li><a href="#">Hardware</a></li>
-													<li><a href="#">Fan shop</a></li>
-													<li><a href="#">Team sports</a></li>
-												</ul>
-												<ul class="list-unstyled col-sm-6">
-													<li><a href="#">Golf</a></li>
-													<li><a href="#">Outdoor clothing</a></li>
-													<li><a href="#">Cycling</a></li>
-													<li><a href="#">Action sports</a></li>
-													<li><a href="#">Game room</a> <span class="label label-danger">Hot</span></li>
-												</ul>
-											</div>
-											<!-- Carousel -->
-											<div class="col-sm-4 col-md-4">
-												<div id="carousel-category-sports" class="carousel slide" data-ride="carousel">
-													<ol class="carousel-indicators">
-														<li data-target="#carousel-category-sports" data-slide-to="0" class=""></li>
-														<li data-target="#carousel-category-sports" data-slide-to="1" class="active"></li>
-														<li data-target="#carousel-category-sports" data-slide-to="2" class=""></li>
-													</ol>
-													<div class="carousel-inner" role="listbox">
-														<div class="item active">
-															<img src="http://placehold.it/296x400" alt="Slide image">
-														</div>
-														<div class="item">
-															<img src="http://placehold.it/296x400" alt="Slide image">
-														</div>
-														<div class="item">
-															<img src="http://placehold.it/296x400" alt="Slide image">
-														</div>
-													</div>
-												</div>
-											</div>
-										</div> <!-- /.subcategory-sports -->
-										<div id="subcategory-music">
-											<!-- Sub categories list-->
-											<div class="lnt-subcategory col-sm-8 col-md-8">
-												<h3 class="lnt-category-name">Digital music</h3>
-												<ul class="list-unstyled col-sm-6">
-													<li><a href="#">Online</a></li>
-													<li><a href="#">Best</a></li>
-													<li><a href="#">New releases</a></li>
-													<li><a href="#">Deals</a></li>
-													<li><a href="#">Top selling</a></li>
-													<li><a href="#">Top grossing</a> <span class="label label-info">Popular</span></li>
-												</ul>
-												<ul class="list-unstyled col-sm-6">
-													<li><a href="#">Pop</a></li>
-													<li><a href="#">Jazz</a> <span class="label label-danger">Hot</span></li>
-													<li><a href="#">Country</a></li>
-													<li><a href="#">Classic</a></li>
-													<li><a href="#">Rock</a></li>
-												</ul>
-											</div>
-											<!-- Carousel -->
-											<div class="col-sm-4 col-md-4">
-												<div id="carousel-category-music" class="carousel slide" data-ride="carousel">
-													<ol class="carousel-indicators">
-														<li data-target="#carousel-category-music" data-slide-to="0" class=""></li>
-														<li data-target="#carousel-category-music" data-slide-to="1" class="active"></li>
-														<li data-target="#carousel-category-music" data-slide-to="2" class=""></li>
-													</ol>
-													<div class="carousel-inner" role="listbox">
-														<div class="item active">
-															<img src="http://placehold.it/296x400" alt="Slide image">
-														</div>
-														<div class="item">
-															<img src="http://placehold.it/296x400" alt="Slide image">
-														</div>
-														<div class="item">
-															<img src="http://placehold.it/296x400" alt="Slide image">
-														</div>
-													</div>
-												</div>
-											</div>
-										</div> <!-- /.subcategory-music -->
-										<div id="subcategory-books">
-											<div class="lnt-subcategory col-sm-8 col-md-8">
-												<h3 class="lnt-category-name">Books</h3>
-												<ul class="list-unstyled col-sm-6">
-													<li><a href="#">Books</a> <span class="label label-primary">Trending</span></li>
-													<li><a href="#">Magazines</a></li>
-													<li><a href="#">Children</a></li>
-													<li><a href="#">Textbooks</a></li>
-													<li><a href="#">Kindle</a></li>
-													<li><a href="#">Audible</a></li>
-												</ul>
-												<ul class="list-unstyled col-sm-6">
-													<li><a href="#">Web development</a> <span class="label label-danger">hot</span></li>
-													<li><a href="#">Typography</a></li>
-													<li><a href="#">Design</a></li>
-													<li><a href="#">Novel</a></li>
-													<li><a href="#">Short story</a></li>
-													<li><a href="#">Action</a></li>
-													<li><a href="#">Romance</a></li>
-													<li><a href="#">Political</a></li>
-												</ul>
-											</div>
-											<!-- Carousel -->
-											<div class="col-sm-4 col-md-4">
-												<div id="carousel-category-books" class="carousel slide" data-ride="carousel">
-													<ol class="carousel-indicators">
-														<li data-target="#carousel-category-books" data-slide-to="0" class=""></li>
-														<li data-target="#carousel-category-books" data-slide-to="1" class="active"></li>
-														<li data-target="#carousel-category-books" data-slide-to="2" class=""></li>
-													</ol>
-													<div class="carousel-inner" role="listbox">
-														<div class="item active">
-															<img src="http://placehold.it/296x400" alt="Slide image">
-														</div>
-														<div class="item">
-															<img src="http://placehold.it/296x400" alt="Slide image">
-														</div>
-														<div class="item">
-															<img src="http://placehold.it/296x400" alt="Slide image">
-														</div>
-													</div>
-												</div>
-											</div>
-										</div> <!-- /.subcategory-books -->
-										<div id="subcategory-fashion">
-											<!-- Sub categories list-->
-											<div class="lnt-subcategory col-sm-8 col-md-8">
-												<h3 class="lnt-category-name">Fashion and beauty</h3>
-												<ul class="list-unstyled col-sm-6">
-													<li><a href="#">Women</a></li>
-													<li><a href="#">Men</a></li>
-													<li><a href="#">Girls</a></li>
-													<li><a href="#">Boys</a></li>
-													<li><a href="#">Baby</a></li>
-													<li><a href="#">Top selling</a> <span class="label label-info">Popular</span></li>
-													<li><a href="#">Cheap</a></li>
-												</ul>
-												<ul class="list-unstyled col-sm-6">
-													<li><a href="#">All beauty</a></li>
-													<li><a href="#">Diets</a></li>
-													<li><a href="#">Baby care</a> <span class="label label-primary">Trending</span></li>
-													<li><a href="#">Men's grooming</a></li>
-													<li><a href="#">Health</a></li>
-												</ul>
-											</div>
-											<!-- Carousel -->
-											<div class="col-sm-4 col-md-4">
-												<div id="carousel-category-fashion" class="carousel slide" data-ride="carousel">
-													<ol class="carousel-indicators">
-														<li data-target="#carousel-category-fashion" data-slide-to="0" class=""></li>
-														<li data-target="#carousel-category-fashion" data-slide-to="1" class="active"></li>
-														<li data-target="#carousel-category-fashion" data-slide-to="2" class=""></li>
-													</ol>
-													<div class="carousel-inner" role="listbox">
-														<div class="item active">
-															<img src="http://placehold.it/296x400" alt="Slide image">
-														</div>
-														<div class="item">
-															<img src="http://placehold.it/296x400" alt="Slide image">
-														</div>
-														<div class="item">
-															<img src="http://placehold.it/296x400" alt="Slide image">
-														</div>
-													</div>
-												</div>
-											</div>
-										</div> <!-- /.subcategory-fashion -->
-										<div id="subcategory-movies">
-											<!-- Sub categories list-->
-											<div class="lnt-subcategory col-sm-8 col-md-8">
-												<h3 class="lnt-category-name">Movies and games</h3>
-												<ul class="list-unstyled col-sm-6">
-													<li><a href="#">Movies and TV</a></li>
-													<li><a href="#">Blu-ray</a></li>
-													<li><a href="#">Div-ix</a> <span class="label label-info">Popular</span></li>
-													<li><a href="#">Instant movies</a></li>
-													<li><a href="#">Free movies</a></li>
-													<li><a href="#">Digital instruments</a></li>
-												</ul>
-												<ul class="list-unstyled col-sm-6">
-													<li><a href="#">Online games</a></li>
-													<li><a href="#">Trending</a> <span class="label label-danger">hot</span></li>
-													<li><a href="#">Popular</a></li>
-													<li><a href="#">Grossing</a></li>
-													<li><a href="#">Game room</a></li>
-												</ul>
-											</div>
-											<!-- Carousel -->
-											<div class="col-sm-4 col-md-4">
-												<div id="carousel-category-movies" class="carousel slide" data-ride="carousel">
-													<ol class="carousel-indicators">
-														<li data-target="#carousel-category-movies" data-slide-to="0" class=""></li>
-														<li data-target="#carousel-category-movies" data-slide-to="1" class="active"></li>
-														<li data-target="#carousel-category-movies" data-slide-to="2" class=""></li>
-													</ol>
-													<div class="carousel-inner" role="listbox">
-														<div class="item active">
-															<img src="http://placehold.it/296x400" alt="Slide image">
-														</div>
-														<div class="item">
-															<img src="http://placehold.it/296x400" alt="Slide image">
-														</div>
-														<div class="item">
-															<img src="http://placehold.it/296x400" alt="Slide image">
-														</div>
-													</div>
-												</div>
-											</div>
-										</div> <!-- /.category-movies -->
+											</div> <!-- /.subcategory-home -->
+											<?php $count++; ?>
+										@endforeach
 									</div> <!-- /.lnt-subcategroy-carousel-wrap -->
 								</div> <!-- /.lnt-dropdown-mega-menu -->
 							</div> <!-- /.dropdown-menu -->

@@ -43,13 +43,12 @@
 								<div class="form-group">
 									{{ Form::label('parent_id', 'Parent Name') }}
 									<?php 
-										$categoryList[0] = 'Select Parent Category';
 										foreach ($allcategory as $key => $value)
 										{
 											$categoryList[$value->id] = $value->name;
 										}
 									?>
-									{{ Form::select('parent_id', $categoryList, '0', array('class' => 'form-control')) }}
+									{{ Form::select('parent_id', $categoryList, '', array('class' => 'form-control', 'placeholder' => 'Pick a Parent Category...')) }}
 								</div>
 
 								<div class="form-group">

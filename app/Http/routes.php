@@ -57,5 +57,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web', 'admin', 'auth']], fu
 
         // Product routes...
         Route::resource('product', 'ProductController');
+        Route::post('product/brandlist', 'ProductController@getBrandList');
     });
 });

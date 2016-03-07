@@ -35,19 +35,35 @@
 								<tr>
 									<th>Product Logo</th>
 									<th>Product Name</th>
-									<th>Category List</th>
+									<th>Product Category </th>
+									<th>Product Brand </th>
 									<th>Product Status</th>
 									<th>Action</th>
 								</tr>
 							</thead>
 							<tbody>
-								
+								<?php
+									foreach ($allcategory as $category)
+									{
+										$categoryList[$category->id] = $category->name;
+									}
+								?>
+								<?php
+									$brandList[0] = '';
+									foreach ($allbrands as $brand)
+									{
+										$brandList[$brand->id] = $brand->name;
+									}
+								?>
 								@foreach ($allproducts as $product)
 									<tr class="odd gradeX" id="{{ $product->id }}">
-										<td>{{ Html::image('/assets/images/uploads/product/thumbils/'.$product->thumb, '', array('class' => 'img-responsive') ) }}</td>
+										<td>{{ Html::image('/assets/images/uploads/products/thumbils/'.$product->thumb, '', array('class' => 'img-responsive') ) }}</td>
 										<td>{{ $product->name }}</td>
 										<td>
-
+											{{ $categoryList[$product->category_id] }}
+										</td>
+										<td>
+											{{ $brandList[$product->brand_id] }}
 										</td>
 										<td>
 											{{ $product->status ==1 ? 'Enable' : 'Disable' }}

@@ -8,7 +8,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta name="description" content="">
 		<meta name="author" content="">
-
+		<meta name="csrf-token" content="{{ csrf_token() }}" />
 		<title>Admin - @yield('title')</title>
 		
 		<!-- Bootstrap Core CSS -->
@@ -411,13 +411,13 @@
 						</h1>
 					</div>
 				</div>
-				<div class="row">
+				<!-- <div class="row">
 					<ul class="breadcrumb breadcrumb-page">
 						<li><a href="#">Home</a></li>
 						<li class="active"><a href="#">Dashboard</a></li>
 					</ul>
-				</div>
-			</div>
+				</div> -->
+			</div>	
 			<div class="page-content">
 				<div class="row">
 					@yield('content')
@@ -440,8 +440,8 @@
 		
 		<script src="<?php //echo base_url('assets/admin/js/morris-data.js');?>"></script>-->
 
-		@stack('scripts')
 		<!-- Custom Theme JavaScript -->
+		@stack('scripts')
 		{{ Html::script('assets/admin/dist/js/sb-admin-2.js') }}
 		
 

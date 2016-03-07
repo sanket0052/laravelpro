@@ -35,7 +35,6 @@ class ProductRequest extends Request
                 return [
                     'name' => 'required|max:50|unique:products',
                     'category_id' => 'required',
-                    // 'brand_id' => 'required',
                     'description' => 'required',
                     'model' => 'required',
                     'stock' => 'required|numeric',
@@ -49,7 +48,6 @@ class ProductRequest extends Request
                 return [
                     'name' => 'required|max:50',
                     'category_id' => 'required',
-                    'brand_id' => 'required',
                     'description' => 'required',
                     'model' => 'required',
                     'stock' => 'required|numeric',

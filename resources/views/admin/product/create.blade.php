@@ -60,13 +60,13 @@
 												<div class="row">
 													<div class="col-md-9">
 														<?php 
-															$categoryList[0] = 'Select Category';
-															foreach ($allcategory as $key => $value)
+															foreach ($allcategory as $category)
 															{
-																$categoryList[$value->id] = $value->name;
+																$categoryList[$category->id] = $category->name;
 															}
 														?>
-														{{ Form::select('category_id', $categoryList, '0', array('class' => 'form-control')) }}
+														
+														{{ Form::select('category_id', $categoryList, '', array('class' => 'form-control', 'id' => 'categorylist', 'placeholder' => 'Pick a Category...')) }}
 														<em class="pull-right ">Depend on you category selection brand list will generate.</em>
 													</div>
 
@@ -83,10 +83,18 @@
 												<div class="row">
 													<div class="col-md-9">
 													<?php $brandList = array(); ?>
-														{{ Form::select('brand_id', $brandList, '0', array('class' => 'form-control', 'id' => 'brandlist')) }}
+														{{ Form::select('brand_id', $brandList, '', array('class' => 'form-control', 'id' => 'brandlist', 'disabled' => true, 'placeholder' => 'Pick a Brand...')) }}
+
 													</div>
 													<div class="col-md-3">
 														<a href="{{ URL::to('admin/brand/create') }}" target="_blank" class="btn btn-outline btn-info btn-block " data-toggle = "tooltip" title = "Add New Brand" ><i class="fa fa-plus"></i> Add New Brand</a>
+													</div>
+													<div class="col-md-12">
+														<br/>
+														<div role="alert" class="alert alert-danger alert-dismissable" id="error" style="display:none;">
+															<button aria-label="Close" data-dismiss="alert" class="close" type="button"><span aria-hidden="true">×</span></button>
+															<p></p>
+														</div>
 													</div>
 												</div>
 											</div>
@@ -185,3 +193,6 @@
 		</div>
 	</div>
 	@endsection
+	@push('scripts')
+		{{ Html::script('assets/admin/dist/js/brand-list-ajax.js') }}
+	@endpush

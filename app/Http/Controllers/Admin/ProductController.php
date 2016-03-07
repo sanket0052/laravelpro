@@ -99,10 +99,13 @@ class ProductController extends Controller
     public function edit($id)
     {
         $allCategories = Category::all();
-        $brand = Brand::find($id);
+        $allbrands = Brand::all();
+        $product = Product::find($id);
+
         return view('admin.product.edit')
-            ->with('brand', $brand)
-            ->with('allcategory', $allCategories);
+            ->with('allbrands', $allbrands)
+            ->with('allcategory', $allCategories)
+            ->with('product', $product);
     }
 
     /**
@@ -151,6 +154,24 @@ class ProductController extends Controller
         else
         {
             return Redirect::to('admin/product')->with('flash_message', 'Error Accured While Deleting Brand. Please try again.');
+        }
+    }
+
+    public function getBrandList(Request $request)
+    {   
+        $category_id = $request->input('categoryid');
+        $brandarray = Brand::where('category_list', 'LIKE', '%,'.$category_id.'%')->get(['id', 'name']);
+        foreach ($brandarray as $brandlist)
+        {
+            $brandlistarray[$brandlist->id] = $brandlist->name;
+        }
+        if(!empty($brandlistarray))
+        {
+            return $brandlistarray;
+        }
+        else
+        {
+            return 0;
         }
     }
 }

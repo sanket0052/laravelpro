@@ -1,21 +1,21 @@
-<!-- View stored in resources/views/admin/brand/edit.blade.php -->
+<!-- View stored in resources/views/admin/product/edit.blade.php -->
 
 	@extends('admin.layout.master')
 
-	@section('title', 'Brand')
+	@section('title', 'Product')
 	
-	@section('heading', 'Edit '.$brand->name)
+	@section('heading', 'Edit '.$product->name)
 		
 	@section('content')
 
 		<div class="col-md-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					Edit Brand Form
+					Edit Product Form
 				</div>
 				<div class="panel-body">
 					<div class="row">
-						<div class="col-md-8">
+						<div class="col-lg-12">
 
 							<!-- Display flashdata -->
 							@if (count($errors) > 0)
@@ -30,80 +30,179 @@
 							@endif
 							<!-- Display flashdata -->
 
-							{!! Form::open(array('url' => 'admin/brand/'.$brand->id, 'role' => 'form', 'class' => 'form-horizontal', 'files' => true, 'method' => 'PUT')) !!}
+							<!-- Nav tabs -->
+							<ul class="nav nav-tabs">
+								<li class="active">
+									<a href="#general" data-toggle="tab">General</a>
+								</li>
+								<li>
+									<a href="#data" data-toggle="tab">Data</a>
+								</li>
+							</ul>
+
+							{!! Form::open(array('url' => 'admin/product/'.$product->id, 'role' => 'form', 'class' => 'form-horizontal', 'files' => true, 'method' => 'PUT')) !!}
 							{!! csrf_field() !!}
 							
-								<div class="form-group">
-									{{ Form::label('name', 'Brand Name', array('class' => 'col-md-3 control-label')) }}
-									<div class="col-md-9">
-										{{ Form::text('name', $brand->name, array('class' => 'form-control', 'placeholder' => 'Add Brand Name here...')) }}
-									</div>
-								</div>
+								<!-- Tab panes -->
+								<div class="tab-content">
+									<div class="tab-pane fade in active" id="general">
+										<br/>
+										<div class="form-group">
+											{{ Form::label('name', 'Product Name', array('class' => 'col-md-2 control-label')) }}
+											<div class="col-md-8">
+												{{ Form::text('name', $product->name, array('class' => 'form-control', 'placeholder' => 'Add Product Name here...')) }}
+											</div>
+										</div>
 								
-								<div class="form-group">
-									{{ Form::label('description', 'Brand Description', array('class' => 'col-md-3 control-label')) }}
+										<div class="form-group">
+											{{ Form::label('category_id', 'Product Category', array('class' => 'col-md-2 control-label')) }}
+											<div class="col-md-8">
+												<div class="row">
+													<div class="col-md-9">
+														<?php 
+															foreach ($allcategory as $category)
+															{
+																$categoryList[$category->id] = $category->name;
+															}
+														?>
+														
+														{{ Form::select('category_id', $categoryList, $product->category_id, array('class' => 'form-control', 'id' => 'categorylist', 'placeholder' => 'Pick a Category...')) }}
+														<em class="pull-right ">Depend on you category selection brand list will generate.</em>
+													</div>
 
-									<div class="col-md-9">
-										{{ Form::textarea('description', $brand->description, array('class' => 'form-control', 'placeholder' =>  'Add Brand Description here...', 'rows' => '5', 'cols' => '25')) }}
+													<div class="col-md-3">
+														<a href="{{ URL::to('admin/category/create') }}" target="_blank" class="btn btn-outline btn-info btn-block" data-toggle = "tooltip" title = "Add New Category" ><i class="fa fa-plus"></i> Add New Category</a>
+													</div>
+												</div>
+											</div>
+										</div>
+
+										<div class="form-group">
+											{{ Form::label('brand_id', 'Product Brand', array('class' => 'col-md-2 control-label')) }}
+											<div class="col-md-8">
+												<div class="row">
+													<div class="col-md-9">
+													<?php 
+														foreach ($allbrands as $brand)
+														{
+															$brandList[$product->brand_id] = '';
+														}
+													?>
+														{{ Form::select('brand_id', $brandList, $product->brand_id, array('class' => 'form-control', 'id' => 'brandlist', 'disabled' => true)) }}
+
+													</div>
+													<div class="col-md-3">
+														<a href="{{ URL::to('admin/brand/create') }}" target="_blank" class="btn btn-outline btn-info btn-block " data-toggle = "tooltip" title = "Add New Brand" ><i class="fa fa-plus"></i> Add New Brand</a>
+													</div>
+													<div class="col-md-12">
+														<br/>
+														<div role="alert" class="alert alert-danger alert-dismissable" id="error" style="display:none;">
+															<button aria-label="Close" data-dismiss="alert" class="close" type="button"><span aria-hidden="true">×</span></button>
+															<p></p>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+
+										<div class="form-group">
+											{{ Form::label('description', 'Product Description', array('class' => 'col-md-2 control-label')) }}
+
+											<div class="col-md-8">
+												{{ Form::textarea('description', $product->description, array('class' => 'form-control', 'placeholder' =>  'Add Product Description here...', 'rows' => '5', 'cols' => '25')) }}
+											</div>
+										</div>
 									</div>
-								</div>
 
-								<div class="form-group">
-									{{ Form::label('category_list', 'Categories', array('class' => 'col-md-3 control-label')) }}
-									<div class="col-md-9">
+									<div class="tab-pane fade" id="data">
+										<br/>
 
-										<?php $categories = explode(',', $brand->category_list); ?>
+										<div class="form-group">
+											{{ Form::label('model', 'Product Model', array('class' => 'col-md-2 control-label')) }}
+											<div class="col-md-8">
+												{{ Form::text('model', $product->model, array('class' => 'form-control', 'placeholder' => 'Add Product Model here...', 'tab-index')) }}
+											</div>
+										</div>
 
-										@foreach ($allcategory as $category)
-											<label class="checkbox-inline">
-												{{ Form::checkbox('category_list[]', $category->id, in_array($category->id, $categories) ? true : false ) }}
-												{{ $category->name }}
-											</label>
-										@endforeach
-									</div>
-								</div>
+										<div class="row">
+											<div class="col-md-6">
+												<div class="form-group">
+													{{ Form::label('stock', 'Product Stock', array('class' => 'col-md-4 control-label')) }}
+													<div class="col-md-8">
+														<div class="col-md-12">
+															<div class="form-group input-group">
+																<span class="input-group-addon"><i class="fa fa-shopping-cart"></i></span>
+																{{ Form::text('stock', $product->stock, array('class' => 'form-control', 'placeholder' => 'Add Product Stock here...', 'tab-index')) }}
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
 
-								<div class="form-group">
-									{{ Form::label('status', 'Brand Status', array('class' => 'col-md-3 control-label')) }}
+											<div class="col-md-6">
+												<div class="form-group">
+													{{ Form::label('status', 'Product Status', array('class' => 'col-md-2 control-label')) }}
 
-									<div class="col-md-9">
-										<div class="radio">
-											<label>
-												{{ Form::radio('status', '1', ($brand->status ==1) ? true : '') }}
-												Active
-											</label>
-											<label>
-												{{ Form::radio('status', '0', ($brand->status ==0) ? true : '') }}
-												Disable
-											</label>
+													<div class="col-md-8">
+														<div class="radio">
+															<label>
+																{{ Form::radio('status', '1', ($product->status ==1) ? true : '') }}
+																Active
+															</label>
+															<label>
+																{{ Form::radio('status', '0', ($product->status ==0) ? true : '') }}
+																Disable
+															</label>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+
+										<div class="row">
+											<div class="col-md-6">
+												<div class="form-group">
+													{{ Form::label('price', 'Product Price', array('class' => 'col-md-4 control-label')) }}
+													<div class="col-md-8">
+														<div class="col-md-12">
+															<div class="form-group input-group">
+																<span class="input-group-addon"><i class="fa fa-inr"></i></span>
+																{{ Form::text('price', $product->price, array('class' => 'form-control', 'placeholder' => 'Add Product Price here...', 'tab-index')) }}
+																<span class="input-group-addon">.00</span>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+											
+										<div class="form-group">
+											{{ Form::label('image', 'Product Logo', array('class' => 'col-md-2 control-label')) }}
+
+											<div class="col-md-8">
+												{{ Form::file('image') }}
+											</div>
 										</div>
 									</div>
 								</div>
 
-								<div class="form-group">
-									{{ Form::label('logo', 'Brand Logo', array('class' => 'col-md-3 control-label')) }}
-
-									<div class="col-md-9">
-										{{ Form::file('logo') }}
-									</div>
-								</div>
-							
 								<hr>
-								<div class="col-md-offset-3">
-									{{ Form::submit('Update Brand', array('class' => 'btn btn-primary')) }}
+
+								<div class="col-md-offset-2">
+									{{ Form::submit('Update Product', array('class' => 'btn btn-primary')) }}
 								</div>
 
 							{!! Form::close() !!}
 
 						</div>
-						
-						<div class="col-md-4 pull-left">
-							<td>{{ Html::image('assets/images/uploads/brands/'.$brand->logo, '', array('class' => 'img-responsive', 'style' => 'width:200px;')) }}</td>
-						</div>
-						<!-- /.col-lg-6 (nested) -->
-					</div>
+
+					<!-- /.col-lg-6 (nested) -->
 				</div>
 			</div>
 		</div>
 	</div>
+</div>
 	@endsection
+	@push('scripts')
+		{{ Html::script('assets/admin/dist/js/brand-list-ajax.js') }}
+	@endpush

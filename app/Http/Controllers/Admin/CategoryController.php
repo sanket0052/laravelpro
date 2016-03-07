@@ -44,11 +44,7 @@ class CategoryController extends Controller
      */
     public function store(CategoryRequest $request)
     {
-        $requestArr['name'] = $request->input('name');
-        $requestArr['parent_id'] = $request->input('parent_id');
-        $requestArr['description'] = $request->input('description');
-        $requestArr['urlname'] = $request->input('urlname');
-        $requestArr['status'] = $request->input('status');
+        $data = $request->all();
 
         $category = Category::create($requestArr);
 
@@ -74,11 +70,20 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $allCategories = Category::all();
         $category = Category::find($id);
-        return view('admin.category.edit')
-            ->with('category', $category)
-            ->with('allcategory', $allCategories);
+        
+        if($category)
+        {
+            $allCategories = Category::all();
+            return view('admin.category.edit')
+                ->with('category', $category)
+                ->with('allcategory', $allCategories);        
+        }
+        else
+        {
+            abort(404);   
+        }
+        
     }
 
     /**
@@ -90,16 +95,19 @@ class CategoryController extends Controller
      */
     public function update(CategoryRequest $request, $id)
     {
-        $requestArr['name'] = $request->input('name');
-        $requestArr['parent_id'] = $request->input('parent_id');
-        $requestArr['description'] = $request->input('description');
-        $requestArr['urlname'] = $request->input('urlname');
-        $requestArr['status'] = $request->input('status');
+        $category = Category::find($id);
 
-        $category = Category::where('id', $id)
-            ->update($requestArr);
+        if($category)
+        {
+            $data = $request->all();
+            $category->update($data);
+            return Redirect::to('admin/category')->with('flash_message', 'Category Updated Successfully!');
+        }
+        else
+        {
+            abort(404);
+        }
 
-        return Redirect::to('admin/category')->with('flash_message', 'Category Updated Successfully!');
     }
 
     /**
@@ -110,7 +118,16 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        Category::destroy($id);
-        return Redirect::to('admin/category')->with('flash_message', 'Category Deleted Successfully!');
+        $category = Category::find($id);
+
+        if($category)
+        {       
+            Category::destroy($id);
+            return Redirect::to('admin/category')->with('flash_message', 'Category Deleted Successfully!');
+        }
+        else
+        {
+            abort(404);
+        }
     }
 }

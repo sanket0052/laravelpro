@@ -48,7 +48,7 @@ class CategoryController extends Controller
 
         $category = Category::create($requestArr);
 
-        return Redirect::to('admin/category')->with('flash_message', 'Category Added Successfully!');
+        return redirect('admin/category')->with('flash_message', 'Category Added Successfully!');
     }
 
     /**
@@ -70,20 +70,19 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $category = Category::find($id);
+        $allCategories = Category::all();
+
+        $category = $allCategories->find($id);
         
-        if($category)
+        if(!$category)
         {
-            $allCategories = Category::all();
-            return view('admin.category.edit')
-                ->with('category', $category)
-                ->with('allcategory', $allCategories);        
-        }
-        else
-        {
-            abort(404);   
+            abort(404);
         }
         
+        return view('admin.category.edit')
+            ->with('category', $category)
+            ->with('allcategory', $allCategories);        
+    
     }
 
     /**
@@ -97,16 +96,16 @@ class CategoryController extends Controller
     {
         $category = Category::find($id);
 
-        if($category)
-        {
-            $data = $request->all();
-            $category->update($data);
-            return Redirect::to('admin/category')->with('flash_message', 'Category Updated Successfully!');
-        }
-        else
+        if(!$category)
         {
             abort(404);
         }
+
+        $data = $request->all();
+
+        $category->update($data);
+
+        return redirect('admin/category')->with('flash_message', 'Category Updated Successfully!');
 
     }
 
@@ -120,14 +119,13 @@ class CategoryController extends Controller
     {
         $category = Category::find($id);
 
-        if($category)
-        {       
-            Category::destroy($id);
-            return Redirect::to('admin/category')->with('flash_message', 'Category Deleted Successfully!');
-        }
-        else
+        if(!$category)
         {
             abort(404);
         }
+
+        $category->destroy($id);
+
+        return redirect('admin/category')->with('flash_message', 'Category Deleted Successfully!');
     }
 }

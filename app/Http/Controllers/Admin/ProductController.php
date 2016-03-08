@@ -18,9 +18,16 @@ use Intervention\Image\ImageManagerStatic as Image;
 
 class ProductController extends Controller
 {
-
+    /**
+     * Product Image Path to public folder.
+     * @var string
+     */
     protected $productImagePath = '/assets/images/uploads/products';
 
+    /**
+     * Product Image Thumb Path
+     * @var string
+     */
     protected $productThumbPath = '/assets/images/uploads/products/thumbils';
 
     /**
@@ -48,6 +55,7 @@ class ProductController extends Controller
     public function create()
     {
         $allCategories = Category::all();
+
         return view('admin.product.create')->with('allcategory', $allCategories);
     }
 
@@ -64,8 +72,8 @@ class ProductController extends Controller
         $data['brand_id'] = $request->brand_id =='' ? 0 : $request->brand_id;
 
         $image = $request->file('image');
-        // Store the brand logo in upload folder
-        $storeImage = $this->saveProductImage($image, $productArr['name']);
+        // Store the product logo in upload folder
+        $storeImage = $this->saveProductImage($image);
 
         $data['image'] = $storeImage['imageName'];
         $data['thumb'] = $storeImage['imageThumbName'];
@@ -73,7 +81,7 @@ class ProductController extends Controller
         // Store data in Database
         $product = Product::create($data);
 
-        return Redirect::to('admin/product')->with('flash_message', 'Product Added Successfully!');
+        return redirect('admin/product')->with('flash_message', 'Product Added Successfully!');
     }
 
     /**
@@ -96,21 +104,19 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = Product::find($id);
-        if($product)
-        {
-            $allCategories = Category::all();
-            $allbrands = Brand::all();
-            $product = Product::find($id);
-    
-            return view('admin.product.edit')
-                ->with('allbrands', $allbrands)
-                ->with('allcategory', $allCategories)
-                ->with('product', $product);
-        }
-        else
+
+        if(!$product)
         {
             abort(404);
         }
+
+        $allCategories = Category::all();
+        $allbrands = Brand::all();
+
+        return view('admin.product.edit')
+            ->with('allbrands', $allbrands)
+            ->with('allcategory', $allCategories)
+            ->with('product', $product);
     }
 
     /**
@@ -126,30 +132,28 @@ class ProductController extends Controller
 
         if($product)
         {
-            $data = $request->all();
-            
-            $data['category_list'] = implode(',', $request->category_list);
-
-            $logo = $request->file('logo');
-            
-            if ($request->hasFile('logo'))
-            {
-                $storeLogo = Product::saveBrandLogo($logo, $brandArr['name']);
-
-                $data['logo'] = $storeLogo['logoName'];
-                $data['thumb'] = $storeLogo['logoThumbName'];
-            }
-
-            // Store data in Database
-            $brand = Product::where('id', $id)
-                    ->update($data);
-
-            return Redirect::to('admin/brand')->with('flash_message', 'Product Updated Successfully!');
+            abort(404);
         }
-        else
+
+        $data = $request->all();
+        
+        $data['category_list'] = implode(',', $request->category_list);
+
+        $image = $request->file('image');
+        
+        if ($request->hasFile('image'))
         {
+            $storeProductImage = $this->saveProductImage($image);
 
+            $data['logo'] = $storeProductImage['imageName'];
+            $data['thumb'] = $storeProductImage['imageThumbName'];
         }
+
+        // Store data in Database
+        $product->where('id', $id)
+                ->update($data);
+
+        return redirect('admin/product')->with('flash_message', 'Product Updated Successfully!');
         
     }
 
@@ -165,25 +169,30 @@ class ProductController extends Controller
 
         if($product)
         {
-            $product = Product::deleteBrand($id);
-            if($product)
-            {
-                return Redirect::to('admin/product')->with('flash_message', 'Product Deleted Successfully!');
-            }
-            else
-            {
-                return Redirect::to('admin/product')->with('flash_message', 'Error Accured While Deleting Brand. Please try again.');
-            }
+            abort(404);
+        }
+
+        $removeProduct = $this->deleteBrand($id);
+
+        if($removeProduct)
+        {
+            return redirect('admin/product')->with('flash_message', 'Product Deleted Successfully!');
         }
         else
         {
-            abort(404);
+            return redirect('admin/product')->with('flash_message', 'Error Accured While Deleting Brand. Please try again.');
         }
+        
     }
 
+    /**
+     * For get brand list from the given category.
+     * @param  Request $request [description]
+     * @return array         Brand List  
+     */
     public function getBrandList(Request $request)
     {   
-        $category_id = $request->input('categoryid');
+        $category_id = $request->categoryid;
         $brandarray = Brand::where('category_list', 'LIKE', '%,'.$category_id.'%')->get(['id', 'name']);
         foreach ($brandarray as $brandlist)
         {
@@ -199,6 +208,11 @@ class ProductController extends Controller
         }
     }
 
+    /**
+     * Save the product image in folder and also store that thumbnail in sub directory.
+     * @param  UploadedFile $file Files Array passin this function
+     * @return array             Image name and thumbnail name.
+     */
     protected function saveProductImage(UploadedFile $file)
     {
         $imageExtension = $file->getClientOriginalExtension();
@@ -221,15 +235,20 @@ class ProductController extends Controller
         return $filesName;
     }
 
-    protected function deleteBrand($id)
+    /**
+     * Delete the specify product and its image and thumb file. 
+     * @param  int $id pass the product id
+     * @return boolean     return the boolean true/false.
+     */
+    protected function deleteProduct($id)
     {
-        $brand = Brand::find($id);
-        $brandLogo = $brand->logo;
-        $brandThumb = $brand->thumb;
-        $brandLogoPath = public_path().$this->productImagePath."/".$brandLogo;
-        $brandThumbPath = public_path().$this->productThumbPath."/".$brandThumb;
-        File::delete($brandLogoPath, $brandThumbPath);
-        $brand->destroy($id);
+        $product = Brand::find($id);
+        $productImage = $product->image;
+        $productThumb = $product->thumb;
+        $productImagePath = public_path().$this->productImagePath."/".$productImage;
+        $productThumbPath = public_path().$this->productThumbPath."/".$productThumb;
+        File::delete($productImagePath, $productThumbPath);
+        $product->destroy($id);
         return true;
     }
 }

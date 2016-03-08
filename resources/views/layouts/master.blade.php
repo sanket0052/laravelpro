@@ -108,6 +108,10 @@
 								<span class="caret"></span>
 							</a>
 
+							@foreach()
+
+							@endforeach
+
 							<?php
 								foreach ($allcategory as $category)
 								{

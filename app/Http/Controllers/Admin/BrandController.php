@@ -17,9 +17,16 @@ use Intervention\Image\ImageManagerStatic as Image;
 
 class BrandController extends Controller
 {
-
+    /**
+     * Brand logo path to public folder.
+     * @var string
+     */
     protected $destinationLogoPath = '/assets/images/uploads/brands';
 
+    /**
+     * Brand logo thumb path.
+     * @var string
+     */
     protected $destinationLogoThumbPath = '/assets/images/uploads/brands/thumbils';
 
     /**
@@ -72,7 +79,7 @@ class BrandController extends Controller
         // Store data in Database
         $brand = Brand::create($data);
 
-        return Redirect::to('admin/brand')->with('flash_message', 'Brand Added Successfully!');
+        return redirect('admin/brand')->with('flash_message', 'Brand Added Successfully!');
     }
 
     /**
@@ -96,17 +103,16 @@ class BrandController extends Controller
     {
         $brand = Brand::find($id);
 
-        if($brand)
+        if(!$brand)
         {
-            $allCategories = Category::all();
-            return view('admin.brand.edit')
-                ->with('brand', $brand)
-                ->with('allcategory', $allCategories);
-        }
-        else
-        {
+
             abort(404);
         }
+
+        $allCategories = Category::all();
+        return view('admin.brand.edit')
+            ->with('brand', $brand)
+            ->with('allcategory', $allCategories);
     }
 
     /**
@@ -120,27 +126,25 @@ class BrandController extends Controller
     {
         $brand = Brand::find($id);
 
-        if($brand)
-        {
-            $brandArr = $request->all();
-            $brandArr['category_list'] = implode(',', $request->category_list);
-
-            $logo = $request->file('logo');
-
-            if ($request->hasFile('logo'))
-            {
-                $storeLogo = $this->saveBrandLogo($logo, $brandArr['name']);
-                $brandArr['logo'] = $storeLogo['logoName'];
-                $brandArr['thumb'] = $storeLogo['logoThumbName'];
-            }
-            // Store data in Database
-            $brand->update($brandArr);
-            return Redirect::to('admin/brand')->with('flash_message', 'Brand Updated Successfully!');
-        }
-        else
+        if(!$brand)
         {
             abort(404);
         }
+
+        $brandArr = $request->all();
+        $brandArr['category_list'] = implode(',', $request->category_list);
+
+        $logo = $request->file('logo');
+
+        if ($request->hasFile('logo'))
+        {
+            $storeLogo = $this->saveBrandLogo($logo, $brandArr['name']);
+            $brandArr['logo'] = $storeLogo['logoName'];
+            $brandArr['thumb'] = $storeLogo['logoThumbName'];
+        }
+        // Store data in Database
+        $brand->update($brandArr);
+        return redirect('admin/brand')->with('flash_message', 'Brand Updated Successfully!');
 
     }
 
@@ -154,25 +158,29 @@ class BrandController extends Controller
     {
         $brand = Brand::find($id);
 
-        if($brand)
-        {
-            $brand = $this->deleteBrand($id);
-
-            if($brand)
-            {
-                return Redirect::to('admin/brand')->with('flash_message', 'Brand Deleted Successfully!');
-            }
-            else
-            {
-                return Redirect::to('admin/brand')->with('flash_message', 'Error Accured While Deleting Brand. Please try again.');
-            }
-        }
-        else
+        if (!$brand)
         {
             abort(404);
         }
+
+        $brandResult = $this->deleteBrand($id);
+
+        if($brandResult)
+        {
+            return redirect('admin/brand')->with('flash_message', 'Brand Deleted Successfully!');
+        }
+        else
+        {
+            return redirect('admin/brand')->with('flash_message', 'Error Accured While Deleting Brand. Please try again.');
+        }
     }
 
+    /**
+     * Save the brand logo image file in folder
+     * @param  UploadedFile $file      File array
+     * @param  string       $brandName Pass the brandname
+     * @return array                  return array of the logo file name and thumb name.
+     */
     protected function saveBrandLogo(UploadedFile $file, $brandName)
     {
         $logoExtension = $file->getClientOriginalExtension();
@@ -195,6 +203,11 @@ class BrandController extends Controller
         return $filesName;
     }
 
+    /**
+     * Delete the brand and its logo and its thumb file.
+     * @param  int $id Brand id.
+     * @return boolean     return the booleand.
+     */
     protected function deleteBrand($id)
     {
         $brand = Brand::find($id);

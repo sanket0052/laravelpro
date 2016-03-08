@@ -7,11 +7,11 @@
 	
 	<div class="container contact-form">
 
-		<ol class="breadcrumb">
+		<!-- <ol class="breadcrumb">
 			<li class="active">
 				<a >home</a>
 			</li>
-		</ol>
+		</ol> -->
 
 		<!-- Main Heading Starts -->
 		<h2 class="main-heading text-center">
@@ -22,8 +22,7 @@
 		<div class="row"> 
 			<div class="col-md-12"> 
 				<div id="googleMap" style="width:100%;height:200px;"></div>
-				{{ Html::script('https://maps.googleapis.com/maps/api/js') }}
-				{{ Html::script('assets/js/googleMap.js') }}
+				
 				<div class="text-center"> 
 					<h2> We love to help. </h2>
 					<p> We like to create thing with fun, open minded people. Feel Free to say hello.</p>
@@ -31,7 +30,7 @@
 				<hr>
 			</div>
 			<div class="col-md-6"> 
-				{!! Form::open(array('url' => 'contact_request', 'role' => 'form')) !!}
+				{!! Form::open(array('url' => 'contact', 'role' => 'form', 'method' => 'POST')) !!}
 
 					@if (Session::has('success'))
 					    <div class="alert alert-success" ><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>{{ Session::get('success') }}</div>
@@ -61,3 +60,7 @@
 		<hr/>
 	</div>
 	@endsection
+	@push('scripts')
+		{{ Html::script('https://maps.googleapis.com/maps/api/js') }}
+		{{ Html::script('assets/js/googleMap.js') }}
+	@endpush

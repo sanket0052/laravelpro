@@ -9,38 +9,74 @@ use App\Contact;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreContactRequest;
+use App\Http\Requests\ContactRequest;
 
 class HomeController extends Controller
 {
-	public function showHome()
+	public function index()
 	{
-		$allcategory = Category::all();
-    	return view('home')->with('allcategory', $allcategory);
+		$mainMenu = $this->frontendMenu();
+		
+    	return view('home')->with('mainMenu', $mainMenu);
 	}
 	
-	public function showContact(){
-		return view('contactmodel');
+	public function showContact()
+	{
+		$mainMenu = $this->frontendMenu();
+
+		return view('contact')->with('mainMenu', $mainMenu);
 	}
 
-	public function getContactForm(StoreContactRequest $request){
+	public function storeContact(ContactRequest $request){
 
 		// Get all the data and store it inside Store Variable
-		$name = $request->input('name');
-		$email = $request->input('email');
-		$message = $request->input('message');
+		$contactArr = $request->all();
 
 		//Insert Data into Contact Table
-		$contactmodel = new Contact;
-		$contactmodel->name = $name;
-		$contactmodel->email = $email;
-		$contactmodel->message = $message;
-		$contactmodel->save();
-		$inserteId = $contactmodel->id;
+		$contact = Contact::create($contactArr);
 
-		if($inserteId != ''){
-			return Redirect::to('contact')->with('success', 'Submited Query Successfully.');
+		return redirect('contact')->with('success', 'Submited Query Successfully.');
+	}
+
+	public function frontendMenu()
+	{
+		$allcategory = Category::all();
+
+		$count = 0;
+		foreach ($allcategory as $category)
+		{
+			if($category->parent_id == 0)
+			{
+				$mainMenu[$count]['id'] = $category->id;
+				$mainMenu[$count]['name'] = $category->name;
+				$mainMenu[$count]['urlname'] = $category->urlname;
+				$count++;
+			}
+			else
+			{
+				$categorySubList[$category->id] = $category->name;
+			}
 		}
+		$count = 0;
+		foreach($allcategory as $key => $value)
+		{
+			if($value->parent_id != 0)
+			{
+				foreach ($mainMenu as $k => $v)
+				{
+					if($value->parent_id == $v['id'])
+					{
+						$mainMenu[$k]['sub'][] = array(
+							'id' => $value->id,
+							'name' => $value->name,
+							'urlname' => $value->urlname
+						);
+						$count++;
+					}
+				}
+			}
+		}
+		return $mainMenu;
 	}
 }
 	

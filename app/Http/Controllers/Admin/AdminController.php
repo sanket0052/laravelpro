@@ -11,12 +11,12 @@ use Illuminate\Support\Facades\Redirect;
 
 class AdminController extends Controller
 {
-    public function showDashboard()
+    public function index()
     {
         return view('admin.index');
     }
     
-    public function getLogin()
+    public function login()
     {
     	return view('admin.login');
     }

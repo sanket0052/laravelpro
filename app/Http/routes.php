@@ -27,9 +27,9 @@ Route::get('/', function () {
 */
 
 Route::group(['middleware' => ['web']], function () {
-    Route::get('/', 'HomeController@showHome')->name('home');
+    Route::get('/', 'HomeController@index')->name('home');
     Route::get('contact', 'HomeController@showContact')->name('contact');
-    Route::post('contact_request','HomeController@getContactForm')->name('contact');
+    Route::post('contact','HomeController@storeContact')->name('contact');
 
     // Authentication routes...
     Route::get('auth/userlogin', 'Auth\AuthController@getLogin');
@@ -40,14 +40,14 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('auth/register', 'Auth\AuthController@getRegister');
     Route::post('auth/register', 'Auth\AuthController@postRegister');
 
-    Route::get('admin/adminlogin', 'Admin\AdminController@getLogin');
+    Route::get('admin/adminlogin', 'Admin\AdminController@login');
     Route::post('auth/adminlogin', 'Auth\AuthController@postLogin');
 });
 
 Route::group(['prefix' => 'admin', 'middleware' => ['web', 'admin', 'auth']], function () {
 
     Route::group(array('namespace' => 'Admin'), function() {
-        Route::get('dashboard', 'DashboardController@showDashboard');
+        Route::get('dashboard', 'AdminController@index');
 
         // Category routes...
         Route::resource('category', 'CategoryController');
@@ -57,6 +57,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web', 'admin', 'auth']], fu
 
         // Product routes...
         Route::resource('product', 'ProductController');
+        
         Route::post('product/brandlist', 'ProductController@getBrandList');
     });
 });

@@ -40,7 +40,7 @@
 								<!-- Display flashdata -->
 
 								<!-- Login Form Starts -->
-								{!! Form::open(array('url' => 'auth/userlogin', 'role' => 'form', 'id' => 'login-form')) !!}
+								{!! Form::open(array('url' => 'auth/userlogin', 'role' => 'form', 'id' => 'login-form', 'method' => 'POST')) !!}
 								{!! csrf_field() !!}
 
 									<div class="form-group">
@@ -51,8 +51,8 @@
 										{{ Form::password('password', array('class' => 'form-control', 'placeholder' => 'Enter Password', 'tabindex' => '2')) }}
 									</div>
 									<div class="form-group">
-										<input type="checkbox" tabindex="3" class="" name="remember" id="remember">
-										<label for="remember"> Remember Me</label>
+										{{ Form::checkbox('remember', 'value', '',array('tabindex' => '3', 'id' => 'remember')) }}
+										{!! Form::label('rememeber', 'Remember Me') !!}
 									</div>
 									<div class="row">
 										<div class="col-md-6">
@@ -108,7 +108,5 @@
 				</div>
 			</div>
 			<!-- Login Form Section Ends -->
-
 		</div>
-		
 	@endsection

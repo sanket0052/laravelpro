@@ -33,7 +33,7 @@
 								<!-- Display flashdata -->
 
 								<!-- Register Form Starts -->
-								{!! Form::open(array('url' => 'auth/register', 'role' => 'form', 'id' => 'register-form')) !!}
+								{!! Form::open(array('url' => 'auth/register', 'role' => 'form', 'id' => 'register-form', 'method' => 'POST')) !!}
 								{!! csrf_field() !!}
 
 									<div class="form-group">

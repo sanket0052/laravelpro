@@ -15,19 +15,13 @@
 		<!-- Bootstrap core and other CSS -->
 		{{ Html::style('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css') }}
 		{{ Html::style('https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css') }}
-		{{ Html::style('https://fonts.googleapis.com/css?family=Raleway') }}
 		{{ Html::style('assets/css/line.css') }}
-		<!-- <link href="css/line.css" rel="stylesheet"> -->
 
 		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 		<!--[if lt IE 9]>
-			<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-			<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+			{{ Html::script('https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js') }}
+			{{ Html::script('https://oss.maxcdn.com/respond/1.4.2/respond.min.js') }}
 		<![endif]-->
-
-		<!-- Favicon -->
-		<link rel="apple-touch-icon" href="/apple-touch-icon.png">
-		<link rel="icon" href="/favicon.ico">
 	</head>
 
 	<body>
@@ -52,7 +46,7 @@
 						<span class="fa fa-bars"></span>
 					</button>
 					<!-- Brand image -->
-					<a class="navbar-brand" href="#">
+					<a class="navbar-brand" href="{{ URL::to('/') }}">
 						{{ Html::image('assets/images/logo.png') }}
 					</a>
 				</div>
@@ -64,8 +58,7 @@
 						<li>
 							{{ link_to('contact', $title = 'Contact', $attributes = array(), $secure = null) }}
 						</li>
-						<?php  $user = Auth::user(); ?>
-						@if(isset($user->id) && isset($user->username))
+						@if(Auth::user())
 							<li>
 								{{ link_to('auth/logout', $title = 'Logout', $attributes = array()) }}
 							</li>							
@@ -85,7 +78,6 @@
 						<button type="submit" class="btn btn-search"><span class="fa fa-search"></span></button>
 					</form>
 					<ul class="nav navbar-nav navbar-right lno-socials">
-						<li><a href="#" class="facebook"><span class=""></span></a></li>
 						<li><a href="#" class="facebook"><span class="fa fa-facebook"></span></a></li>
 						<li><a href="#" class="twitter"><span class="fa fa-twitter"></span></a></li>
 						<li><a href="#" class="google-plus"><span class="fa fa-google-plus"></span></a></li>
@@ -108,70 +100,30 @@
 								<span class="caret"></span>
 							</a>
 
-							@foreach()
 
-							@endforeach
-
-							<?php
-								foreach ($allcategory as $category)
-								{
-									if($category->parent_id == 0)
-									{
-										$categoryMainList[$category->id]['name'] = $category->name;
-										$categoryMainList[$category->id]['urlname'] = $category->urlname;
-									}
-									else
-									{
-										$categorySubList[$category->id] = $category->name;
-									}
-								}
-								foreach($allcategory as $key => $value) 
-								{
-									if($value->parent_id != 0)
-									{
-										foreach ($categoryMainList as $k => $v)
-										{
-											if($value->parent_id == $k)
-											{
-												$categoryMainList[$k]['sub'][$value->urlname]= $value->name;
-											}
-										}
-									}
-								}
-								// echo '<pre>';
-								// print_r($categoryMainList);
-								// exit();
-							?>
 							<div class="dropdown-menu" role="menu">
 								<div class="lnt-dropdown-mega-menu">
 									<!-- List of categories -->
 									<ul class="lnt-category list-unstyled">
-										<?php $count = 0; ?>
-										@foreach($categoryMainList as $category)
-											<li class="{{ $count == '0' ? 'active' : '' }}">
+										@foreach($mainMenu as $categorykey => $category)
+											<li class="{{ $categorykey == '0' ? 'active' : '' }}">
 												<a href="#subcategory-{{ $category['urlname'] }}" >{{ $category['name'] }}</a>
 											</li>
-											<?php $count++; ?>
 										@endforeach
 									</ul>
 									<!-- Subcategory and carousel wrap -->
 									<div class="lnt-subcategroy-carousel-wrap container-fluid">
-									<?php $count = 0; ?>
-										@foreach($categoryMainList as $key => $value) 
-											<div id="subcategory-{{ $value['urlname'] }}" class="{{ $count == '0' ? 'active' : '' }}">
+										@foreach($mainMenu as $key => $value) 
+											<div id="subcategory-{{ $value['urlname'] }}" class="{{ $key == '0' ? 'active' : '' }}">
 												<!-- Sub categories list-->
 												<div class="lnt-subcategory col-sm-8 col-md-8">
 													<h3 class="lnt-category-name">{{ $value['name'] }}</h3>
 													<ul class="list-unstyled col-sm-6">
-														<?php
-														if(!empty($value['sub']))
-														{
-															foreach($value['sub'] as $k => $subcategory)
-															{
-																echo '<li><a href="'.$k.'">'.$subcategory.'</a></li>';
-															}
-														}
-														?>
+														@if(!empty($value['sub']))
+															@foreach($value['sub'] as $k => $subcategory)
+																<li><a href="{{ $subcategory['id'] }}">{!! $subcategory['name'] !!}</a></li>
+															@endforeach
+														@endif
 													</ul>
 												</div>
 												<!-- Carousel -->
@@ -196,7 +148,6 @@
 													</div>
 												</div>
 											</div> <!-- /.subcategory-home -->
-											<?php $count++; ?>
 										@endforeach
 									</div> <!-- /.lnt-subcategroy-carousel-wrap -->
 								</div> <!-- /.lnt-dropdown-mega-menu -->
@@ -212,12 +163,11 @@
 										<span class="caret"></span>
 									</button>
 									<ul class="dropdown-menu" role="menu">
-										<li><a href="#">Fashion</a></li>
-										<li><a href="#">Sport</a></li>
-										<li><a href="#">Electronics</a></li>
-										<li><a href="#">Home</a></li>
-										<li><a href="#">Toys</a></li>
-										<li><a href="#">Motors</a></li>
+										@foreach($mainMenu as $category)
+											<li class="{{ $category['id'] == '0' ? 'active' : '' }}">
+												<a href="#subcategory-{{ $category['urlname'] }}" >{{ $category['name'] }}</a>
+											</li>
+										@endforeach
 									</ul>
 								</div><!-- /btn-group -->
 								<input type="text" class="form-control lnt-search-input" aria-label="Search" placeholder="Search leader">
@@ -270,16 +220,6 @@
 												<span class="lnt-product-info">
 													<span class="lnt-product-name">Leader bag</span>
 													<span class="lnt-product-price"><del>$790</del> &rarr; $600</span>
-													<button type="button" class="lnt-product-remove btn-link">Remove?</button>
-												</span>
-											</div>
-										</li>
-										<li>
-											<div class="lnt-cart-products">
-												<img src="http://placehold.it/60x60" alt="Product title">
-												<span class="lnt-product-info">
-													<span class="lnt-product-name">Awesome pack of new clothes for you</span>
-													<span class="lnt-product-price">$700</span>
 													<button type="button" class="lnt-product-remove btn-link">Remove?</button>
 												</span>
 											</div>
@@ -421,5 +361,7 @@
 		{{ Html::script('assets/js/jquery.touchSwipe.min.js') }}
 		{{ Html::script('assets/js/jquery.randomColor.js') }}
 		{{ Html::script('assets/js/line.js') }}
+		
+		@stack('scripts')
 	</body>
 </html>

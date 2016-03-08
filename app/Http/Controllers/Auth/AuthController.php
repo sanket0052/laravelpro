@@ -6,6 +6,7 @@ use Auth;
 use Hash;
 use Session;
 use App\User;
+use App\Http\Controllers\HomeController;
 use Illuminate\Routing\Controller;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\Registrar;
@@ -37,6 +38,8 @@ class AuthController extends Controller
      */
     protected $redirectTo = '/';
 
+    protected $mainMenu;
+
     /**
      * Create a new authentication controller instance.
      *
@@ -44,6 +47,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
+        $this->mainMenu = new HomeController;
         $this->middleware($this->guestMiddleware(), ['except' => 'getLogout']);
     }
 
@@ -77,6 +81,18 @@ class AuthController extends Controller
         ]);
     }
 
+    protected function getLogin()
+    {
+        $mainMenu = $this->mainMenu->frontendMenu();
+        return view('auth.login')->with('mainMenu', $mainMenu);
+    }
+    
+    protected function getRegister()
+    {
+        $mainMenu = $this->mainMenu->frontendMenu();
+        return view('auth.register')->with('mainMenu', $mainMenu);
+    }
+
     /**
      * User Login.
      * 
@@ -99,24 +115,23 @@ class AuthController extends Controller
             {
                 if(Auth::user()->access != '0')
                 {
-                    return Redirect::to('/');
+                    return redirect('/');
                 }
                 else
                 {
-                    return Redirect::to('admin/dashboard');
+                    return redirect('admin/dashboard');
                 }
             }
-            // return Redirect::to('/');
         }
         else
         {
             if($request->get('type') == 'admin')
             {
-                return Redirect::to('admin/adminlogin')->with('error', 'Email And Password Does Not Match');
+                return redirect('admin/adminlogin')->with('error', 'Email And Password Does Not Match');
             }
             else
             {
-                return Redirect::to('auth/userlogin')->with('error', 'Email And Password Does Not Match');
+                return redirect('auth/userlogin')->with('error', 'Email And Password Does Not Match');
             }
         }
     }

@@ -20,7 +20,7 @@ class CategoryController extends Controller
      */
     public function index()
     {   
-        $allCategories = Category::all();
+        $allCategories = Category::with('brands', 'product')->get();
 
         foreach ($allCategories as $key => $value)
         {

@@ -29,7 +29,7 @@ hr{
 	border-bottom: 1px solid #eeeeee;
 	margin-bottom: 0;
 	z-index: 1001;
-	min-height: 95px;
+	min-height: 72px;
 }
 .line-navbar-one .navbar-toggle {
 	border: 2px solid #333333;
@@ -96,8 +96,8 @@ hr{
 	}
 }
 .line-navbar-one .navbar-brand {
-	padding-top: 24px;
-	padding-bottom: 24px;
+	padding-top: 13px;
+	padding-bottom: 13px;
 }
 @media (max-width: 767px) {
 	.line-navbar-one .navbar-brand {
@@ -113,7 +113,7 @@ hr{
 }
 @media (min-width: 768px) {
 	.line-navbar-one .nav > li > a {
-		padding: 35px 20px;
+		padding: 23px;
 	}
 }
 @media (min-width: 768px) {
@@ -129,6 +129,9 @@ hr{
 	.line-navbar-one .nav .open > a:focus {
 		background-color: #f8f8f8;
 	}
+}
+.navbar-brand{
+	height: auto;
 }
 .line-navbar-one .navbar-right {
 	margin-right: 0;
@@ -170,8 +173,8 @@ hr{
 	}
 }
 .line-navbar-one .lno-socials {
-	padding-top: 20px;
-	padding-bottom: 20px;
+	padding-top: 8px;
+	padding-bottom: 8px;
 }
 .line-navbar-one .lno-socials li a {
 	color: #FFF;
@@ -261,6 +264,7 @@ hr{
 	background-color: #ffffff;
 	padding-top: 15px;
 	padding-bottom: 15px;
+	margin-bottom: 0px;
 }
 @media (max-width: 767px) {
 	.line-navbar-two {
@@ -1245,6 +1249,15 @@ ul.place li.by{
 	border: 2px solid #333;
 	border-radius: 0px !important;
 }
+
+/*  */
+.page-header{
+	margin-top:20px;
+	margin-bottom:10px;
+	padding: 0px;
+}
+
+/*  */
 	
 /* Slider Section Styles Starts */
 
@@ -1263,9 +1276,22 @@ ul.place li.by{
 	padding-right: 35px;
 }
 
-.thumbnail, .thumbnail .caption{
-	padding: 0px;
+.thumbnail{ 
+	padding: 5px;
 	border-radius: 0px;
+}
+.thumbnail .caption{
+	padding: 0px;
+	padding-left: 10px;
+	border-radius: 0px;
+}
+.thumbnail .caption a, .thumbnail .caption h4{
+	text-decoration: none;
+	color: #fb4e4e;
+	font-weight: bold;
+}
+.add-to-cart{
+	background-color: #fb4e4e;
 }
 
 .model-sort-desc{

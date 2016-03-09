@@ -31,6 +31,11 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('contact', 'HomeController@showContact')->name('contact');
     Route::post('contact','HomeController@storeContact')->name('contact');
 
+    // Product routes...
+    Route::resource('product', 'ProductController', ['only' => [
+        'index', 'show'
+    ]]);
+
     // Authentication routes...
     Route::get('auth/userlogin', 'Auth\AuthController@getLogin');
     Route::post('auth/userlogin', 'Auth\AuthController@postLogin');

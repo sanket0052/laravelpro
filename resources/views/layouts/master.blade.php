@@ -54,7 +54,15 @@
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse" id="line-navbar-collapse-1">
 					<ul class="nav navbar-nav">
-						<li><a href="#">Shop</a></li>
+						<li>
+							<!-- <a href="#">Shop</a> -->
+							<a class="dropdown-toggle" data-toggle="dropdown" href="#">Shop <span class="caret"></span></a>
+							<ul class="dropdown-menu">
+				            	<li><a href="#">Shop By Category</a></li>
+				            	<li><a href="#">Shop By Brand</a></li>
+				            	<li><a href="#">Shop By Product</a></li>
+				          	</ul>
+						</li>
 						<li>
 							{{ link_to('contact', $title = 'Contact', $attributes = array(), $secure = null) }}
 						</li>
@@ -237,6 +245,14 @@
 			</div> <!-- /.container -->
 		</nav> <!-- /.line-navbar-two -->
 
+		<!-- Line left navbar for secondary navbar on small devices -->
+		<div class="line-navbar-left">
+			<p class="lnl-nav-title">Categories</p>
+			<ul class="lnl-nav">
+				<!-- The list will be automatically cloned from mega menu via jQuery -->
+			</ul>
+		</div> <!-- /.line-navbar-left -->
+		
 		<section>
 			@yield('content')
 		</section>

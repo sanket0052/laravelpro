@@ -36,6 +36,7 @@
 									<th>Category Name</th>
 									<th>Category Url Name</th>
 									<th>Parent Category</th>
+									<th>Related Brands</th>
 									<th>Action</th>
 								</tr>
 							</thead>
@@ -48,6 +49,15 @@
 											@if(!is_null($category->parent_id) && $category->parent_id!=0)
 												{{ $categoryList[$category->parent_id] }}
 											@endif
+										</td>
+										<td>
+											@foreach($category->brands as $brand)
+												<span>
+													<a href="" class="label label-primary" data-toggle="tooltip" title="" data-original-title="{!! $brand->name !!}">
+														{!! $brand->name !!}
+													</a>
+												</span>&nbsp;
+											@endforeach
 										</td>
 										<td>
 											{!! Form::open(array('url' => 'admin/category/'.$category->id)) !!}

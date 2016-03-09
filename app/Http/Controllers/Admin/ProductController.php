@@ -208,11 +208,13 @@ class ProductController extends Controller
     public function getBrandList(Request $request)
     {   
         $category_id = $request->categoryid;
-        $brandarray = Brand::where('category_list', 'LIKE', '%,'.$category_id.'%')->get(['id', 'name']);
-        foreach ($brandarray as $brandlist)
-        {
-            $brandlistarray[$brandlist->id] = $brandlist->name;
+        $categoryarray = Category::with('brands')->find($category_id);
+        
+        foreach ($categoryarray->brands as $brand)
+        {   
+            $brandlistarray[$brand->id] = $brand->name;
         }
+
         if(!empty($brandlistarray))
         {
             return $brandlistarray;

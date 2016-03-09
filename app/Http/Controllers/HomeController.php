@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Category;
 use App\Contact;
+use App\Product;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\Controller;
@@ -16,7 +17,9 @@ class HomeController extends Controller
 	public function index()
 	{
 		$mainMenu = $this->frontendMenu();
-		
+		$products = Products::with('category', 'brand')->get();
+		print_r($products);
+		exit;
     	return view('home')->with('mainMenu', $mainMenu);
 	}
 	

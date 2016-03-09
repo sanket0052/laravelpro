@@ -61,7 +61,6 @@
 
 												<!-- Update Link -->
 												<a href="{{ URL::to('admin/product/'.$product->id.'/edit') }}" class = "btn btn-outline btn-primary" data-toggle = "tooltip" title = "Edit Product" ><i class="fa fa-pencil"></i></a>
-												<a href="{{ URL::to('admin/product/'.$product->id) }}" class = "btn btn-outline btn-primary" data-toggle = "tooltip" title = "View Product" ><i class="fa fa-eye"></i></a>
 												
 												<!-- Delete Link -->
 												<button type="submit" value="" class = "btn btn-outline btn-danger" data-toggle = "tooltip" title = "Delete Product" >

@@ -1287,11 +1287,22 @@ ul.place li.by{
 }
 .thumbnail .caption a, .thumbnail .caption h4{
 	text-decoration: none;
+	min-height: 32px;
+	max-height: 32px;
 	color: #fb4e4e;
+	font-size:15px;
 	font-weight: bold;
+}
+.thumbnail .caption p{
+	max-height: 50px;
+	overflow: hidden;
+	font-size:13px;
 }
 .add-to-cart{
 	background-color: #fb4e4e;
+}
+.add-to-cart:hover{
+	background-color: #1c1c1c;
 }
 
 .model-sort-desc{
@@ -1400,4 +1411,8 @@ h4.media-heading{
 }
 h4.media-heading a{
 	color: #FB4E4E;
+}
+.product-img{
+	max-height: 120px;
+	min-height: 120px;
 }

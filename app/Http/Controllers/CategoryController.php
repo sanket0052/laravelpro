@@ -4,10 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Category;
+use App\Product;
+use App\Brand;
 use App\Http\Requests;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Controller;
 
-class ProdcutController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +20,7 @@ class ProdcutController extends Controller
      */
     public function index()
     {
-        //
+        
     }
 
     /**
@@ -48,7 +52,12 @@ class ProdcutController extends Controller
      */
     public function show($id)
     {
-        
+        $mainMenu = new HomeController();
+        $mainMenu = $mainMenu->frontendMenu();
+        $categories = Category::with('product')->find($id);
+        return view('product')
+            ->with('mainMenu', $mainMenu)
+            ->with('categories', $categories);
     }
 
     /**

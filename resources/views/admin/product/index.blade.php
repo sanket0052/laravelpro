@@ -44,7 +44,7 @@
 							<tbody>
 								@foreach ($allproducts as $product)
 									<tr class="odd gradeX" id="{{ $product->id }}">
-										<td>{{ Html::image('/assets/images/uploads/products/thumbils/'.$product->thumb, '', array('class' => 'img-responsive') ) }}</td>
+										<td>{{ Html::image('/assets/images/uploads/products/thumbils/'.$product->thumb, '', array('class' => 'img-responsive')) }}</td>
 										<td>{{ $product->name }}</td>
 										<td>
 											{{ $product->category->name }}

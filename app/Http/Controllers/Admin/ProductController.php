@@ -145,14 +145,14 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
 
-        if($product)
+        if(!$product)
         {
             abort(404);
         }
 
         $data = $request->all();
-        
-        $data['category_list'] = implode(',', $request->category_list);
+        unset($data['_method']);
+        unset($data['_token']);
 
         $image = $request->file('image');
         
@@ -160,7 +160,7 @@ class ProductController extends Controller
         {
             $storeProductImage = $this->saveProductImage($image);
 
-            $data['logo'] = $storeProductImage['imageName'];
+            $data['image'] = $storeProductImage['imageName'];
             $data['thumb'] = $storeProductImage['imageThumbName'];
         }
 

@@ -17,10 +17,10 @@ class HomeController extends Controller
 	public function index()
 	{
 		$mainMenu = $this->frontendMenu();
-		$products = Products::with('category', 'brand')->get();
-		print_r($products);
-		exit;
-    	return view('home')->with('mainMenu', $mainMenu);
+		$products = Product::with('category', 'brand')->get();
+    	return view('home')
+    		->with('mainMenu', $mainMenu)
+    		->with('products', $products);
 	}
 	
 	public function showContact()

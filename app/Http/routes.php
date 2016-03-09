@@ -33,7 +33,12 @@ Route::group(['middleware' => ['web']], function () {
 
     // Product routes...
     Route::resource('product', 'ProductController', ['only' => [
-        'index', 'show'
+        'show'
+    ]]);
+
+    // Category routes...
+    Route::resource('category', 'CategoryController', ['only' => [
+        'show'
     ]]);
 
     // Authentication routes...

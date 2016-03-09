@@ -47,27 +47,16 @@
 										<td>{{ Html::image('/assets/images/uploads/brands/thumbils/'.$brand->thumb, '', array('class' => 'img-responsive') ) }}</td>
 										<td>{{ $brand->name }}</td>
 										<td>
-												<?php 
-													$categories = explode(',', $brand->category_list); 
-													$categoryList = array();
-												?>
-												@foreach ($allcategory as $key => $value)
-													@if(in_array($value->id, $categories))
-														<?php $categoryList[] = $value->name; ?>
-													@endif
-												@endforeach	
-
-												@foreach ($categoryList as $category) 
-													<span>
-														<a href="" class="label label-primary" data-toggle="tooltip" title="" data-original-title="See Product of This Category">
-															{{ $category }}
-														</a>
-													</span>&nbsp;
-												@endforeach	
-
+											@foreach($brand->categories as $category) 
+												<span>
+													<a href="" class="label label-primary" data-toggle="tooltip" title="" data-original-title="See Product of This Category">
+														{{ $category->name }}
+													</a>
+												</span>&nbsp;
+											@endforeach	
 										</td>
 										<td>
-											{{ $brand->status ==1 ? 'Enable' : 'Disable' }}
+											{{ $brand->status == 1 ? 'Enable' : 'Disable' }}
 										</td>
 										<td>
 											{!! Form::open(array('url' => 'admin/brand/'.$brand->id)) !!}

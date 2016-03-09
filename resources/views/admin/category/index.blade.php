@@ -40,12 +40,6 @@
 								</tr>
 							</thead>
 							<tbody>
-								<?php
-									foreach ($allcategory as $key => $value)
-									{
-										$categoryList[$value->id] = $value->name;
-									}
-								?>
 								@foreach ($allcategory as $category)
 									<tr class="odd gradeX" id="{{ $category->id }}">
 										<td>{{ $category->name }}</td>

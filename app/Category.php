@@ -25,4 +25,14 @@ class Category extends Model
     	'urlname',
     	'status'
     ];
+
+    public function product()
+    {
+        return $this->hasMany('App\Product');
+    }
+
+    public function brands()
+    {
+        return $this->belongsToMany('App\Category', 'brand_category', 'brand_id', 'category_id');
+    }
 }

@@ -37,14 +37,11 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $allCategories = Category::get(array('id', 'name'));
-        $allBrands = Brand::all(array('id', 'name'));
-        $allProducts = Product::all();
+
+        $product = Product::with('category', 'brand')->get();
 
         return view('admin.product.index')
-            ->with('allbrands', $allBrands)
-            ->with('allcategory', $allCategories)
-            ->with('allproducts', $allProducts);
+            ->with('allproducts', $product);
     }
 
     /**
@@ -56,7 +53,15 @@ class ProductController extends Controller
     {
         $allCategories = Category::all();
 
-        return view('admin.product.create')->with('allcategory', $allCategories);
+        foreach ($allCategories as $category)
+        {
+            $categoryList[$category->id] = $category->name;
+        }
+        $brandList = array();
+
+        return view('admin.product.create')
+            ->with('categoryList', $categoryList)
+            ->with('brandList', $brandList);
     }
 
     /**
@@ -92,7 +97,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        //
+        // 
     }
 
     /**
@@ -103,8 +108,8 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        $product = Product::find($id);
-
+        $product = Product::with('category', 'brand')->find($id);
+        
         if(!$product)
         {
             abort(404);
@@ -113,9 +118,19 @@ class ProductController extends Controller
         $allCategories = Category::all();
         $allbrands = Brand::all();
 
+        foreach ($allCategories as $category)
+        {
+            $categoryList[$category->id] = $category->name;
+        }
+
+        foreach ($allbrands as $brand)
+        {
+            $brandList[$brand->id] = $brand->name;
+        }
+
         return view('admin.product.edit')
-            ->with('allbrands', $allbrands)
-            ->with('allcategory', $allCategories)
+            ->with('brandList', $brandList)
+            ->with('categoryList', $categoryList)
             ->with('product', $product);
     }
 

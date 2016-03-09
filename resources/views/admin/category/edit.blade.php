@@ -41,13 +41,6 @@
 
 								<div class="form-group">
 									{{ Form::label('parent_id', 'Parent Name') }}
-									<?php 
-										$categoryList[0] = 'Select Parent Category';
-										foreach ($allcategory as $key => $value)
-										{
-											$categoryList[$value->id] = $value->name;
-										}
-									?>
 									{{ Form::select('parent_id', $categoryList, $category->parent_id, array('class' => 'form-control')) }}
 								</div>
 

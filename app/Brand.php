@@ -25,8 +25,18 @@ class Brand extends Model
     	'name',
     	'description',
         'status',
-        'category_list',
         'logo',
-    	'thumb',
+        'thumb',
     ];
+        // 'category_list',
+
+    public function category()
+    {
+        return $this->hasOne('App\Category');
+    }
+
+    public function categories()
+    {
+        return $this->belongsToMany('App\Category', 'brand_category', 'brand_id', 'category_id');
+    }
 }

@@ -59,13 +59,6 @@
 											<div class="col-md-8">
 												<div class="row">
 													<div class="col-md-9">
-														<?php 
-															foreach ($allcategory as $category)
-															{
-																$categoryList[$category->id] = $category->name;
-															}
-														?>
-														
 														{{ Form::select('category_id', $categoryList, '', array('class' => 'form-control', 'id' => 'categorylist', 'placeholder' => 'Pick a Category...')) }}
 														<em class="pull-right ">Depend on you category selection brand list will generate.</em>
 													</div>
@@ -82,7 +75,6 @@
 											<div class="col-md-8">
 												<div class="row">
 													<div class="col-md-9">
-													<?php $brandList = array(); ?>
 														{{ Form::select('brand_id', $brandList, '', array('class' => 'form-control', 'id' => 'brandlist', 'disabled' => true, 'placeholder' => 'Pick a Brand...')) }}
 
 													</div>

@@ -22,7 +22,14 @@ class CategoryController extends Controller
     {   
         $allCategories = Category::all();
 
-        return view('admin.category.index')->with('allcategory', $allCategories);
+        foreach ($allCategories as $key => $value)
+        {
+            $categoryList[$value->id] = $value->name;
+        }
+
+        return view('admin.category.index')
+            ->with('allcategory', $allCategories)
+            ->with('categoryList', $categoryList);
     }
 
     /**
@@ -32,8 +39,13 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $allCategories = Category::all();
-        return view('admin.category.create')->with('allcategory', $allCategories);
+        $allCategories = Category::get(['id', 'name']);
+
+        foreach ($allCategories as $key => $value)
+        {
+            $categoryList[$value->id] = $value->name;
+        }
+        return view('admin.category.create')->with('categoryList', $categoryList);
     }
 
     /**
@@ -79,9 +91,14 @@ class CategoryController extends Controller
             abort(404);
         }
         
+        foreach ($allCategories as $key => $value)
+        {
+            $categoryList[$value->id] = $value->name;
+        }
+
         return view('admin.category.edit')
             ->with('category', $category)
-            ->with('allcategory', $allCategories);        
+            ->with('categoryList', $categoryList);        
     
     }
 

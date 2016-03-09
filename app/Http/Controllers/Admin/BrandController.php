@@ -36,12 +36,10 @@ class BrandController extends Controller
      */
     public function index()
     {
-        $allCategories = Category::all(array('id', 'name'));
-        $allBrands = Brand::all();
+        $allBrands = Brand::with('categories')->get();
 
         return view('admin.brand.index')
-            ->with('allbrands', $allBrands)
-            ->with('allcategory', $allCategories);
+            ->with('allbrands', $allBrands);
     }
 
     /**
@@ -66,18 +64,20 @@ class BrandController extends Controller
 
         $data = $request->all();
 
-        $data['category_list'] = implode(',', $request->category_list);
-
+        $category_list = $request->category_list;
+        
         $logo = $request->file('logo');
 
         // Store the brand logo in upload folder
         $storeLogo = $this->saveBrandLogo($logo, $request->name);
+
 
         $data['logo'] = $storeLogo['logoName'];
         $data['thumb'] = $storeLogo['logoThumbName'];
         
         // Store data in Database
         $brand = Brand::create($data);
+        $brand->categories()->sync($category_list);
 
         return redirect('admin/brand')->with('flash_message', 'Brand Added Successfully!');
     }
@@ -101,17 +101,22 @@ class BrandController extends Controller
      */
     public function edit($id)
     {
-        $brand = Brand::find($id);
+        $brand = Brand::with('categories')->find($id);
 
         if(!$brand)
         {
-
             abort(404);
+        }
+
+        foreach ($brand->categories as $category)
+        {
+            $categories[] = $category->id;
         }
 
         $allCategories = Category::all();
         return view('admin.brand.edit')
             ->with('brand', $brand)
+            ->with('categories', $categories)
             ->with('allcategory', $allCategories);
     }
 
@@ -132,7 +137,8 @@ class BrandController extends Controller
         }
 
         $brandArr = $request->all();
-        $brandArr['category_list'] = implode(',', $request->category_list);
+
+        $categories = $request->category_list;
 
         $logo = $request->file('logo');
 
@@ -144,6 +150,8 @@ class BrandController extends Controller
         }
         // Store data in Database
         $brand->update($brandArr);
+        $brand->categories()->sync($categories);
+        
         return redirect('admin/brand')->with('flash_message', 'Brand Updated Successfully!');
 
     }

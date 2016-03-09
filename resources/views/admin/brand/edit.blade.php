@@ -35,6 +35,7 @@
 							
 								<div class="form-group">
 									{{ Form::label('name', 'Brand Name', array('class' => 'col-md-3 control-label')) }}
+									
 									<div class="col-md-9">
 										{{ Form::text('name', $brand->name, array('class' => 'form-control', 'placeholder' => 'Add Brand Name here...')) }}
 									</div>
@@ -50,14 +51,12 @@
 
 								<div class="form-group">
 									{{ Form::label('category_list', 'Categories', array('class' => 'col-md-3 control-label')) }}
+
 									<div class="col-md-9">
-
-										<?php $categories = explode(',', $brand->category_list); ?>
-
-										@foreach ($allcategory as $category)
+										@foreach ($allcategory as $key => $value)
 											<label class="checkbox-inline">
-												{{ Form::checkbox('category_list[]', $category->id, in_array($category->id, $categories) ? true : false ) }}
-												{{ $category->name }}
+												{{ Form::checkbox('category_list[]', $value->id, in_array($value->id, $categories) ? true : false ) }}
+												{{ $value->name }}
 											</label>
 										@endforeach
 									</div>
@@ -94,16 +93,13 @@
 								</div>
 
 							{!! Form::close() !!}
-
 						</div>
 						
 						<div class="col-md-4 pull-left">
 							<td>{{ Html::image('assets/images/uploads/brands/'.$brand->logo, '', array('class' => 'img-responsive', 'style' => 'width:200px;')) }}</td>
 						</div>
-						<!-- /.col-lg-6 (nested) -->
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 	@endsection

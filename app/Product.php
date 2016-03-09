@@ -6,6 +6,8 @@ use File;
 use Illuminate\Database\Eloquent\Model;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Intervention\Image\ImageManagerStatic as Image;
+use App\Category;
+use App\Brand;
 
 class Product extends Model
 {
@@ -33,4 +35,15 @@ class Product extends Model
 		'image',
 		'thumb'
     ];
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'category_id', 'id');
+    }
+
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class);
+    }
+
 }

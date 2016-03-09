@@ -59,13 +59,6 @@
 											<div class="col-md-8">
 												<div class="row">
 													<div class="col-md-9">
-														<?php 
-															foreach ($allcategory as $category)
-															{
-																$categoryList[$category->id] = $category->name;
-															}
-														?>
-														
 														{{ Form::select('category_id', $categoryList, $product->category_id, array('class' => 'form-control', 'id' => 'categorylist', 'placeholder' => 'Pick a Category...')) }}
 														<em class="pull-right ">Depend on you category selection brand list will generate.</em>
 													</div>
@@ -82,13 +75,7 @@
 											<div class="col-md-8">
 												<div class="row">
 													<div class="col-md-9">
-													<?php 
-														foreach ($allbrands as $brand)
-														{
-															$brandList[$product->brand_id] = '';
-														}
-													?>
-														{{ Form::select('brand_id', $brandList, $product->brand_id, array('class' => 'form-control', 'id' => 'brandlist', 'disabled' => true)) }}
+													{{ Form::select('brand_id', $brandList, $product->brand_id, array('class' => 'form-control', 'id' => 'brandlist', 'disabled' => true)) }}
 
 													</div>
 													<div class="col-md-3">
@@ -141,7 +128,7 @@
 
 											<div class="col-md-6">
 												<div class="form-group">
-													{{ Form::label('status', 'Product Status', array('class' => 'col-md-2 control-label')) }}
+													{{ Form::label('status', 'Product Status', array('class' => 'col-md-4 control-label')) }}
 
 													<div class="col-md-8">
 														<div class="radio">

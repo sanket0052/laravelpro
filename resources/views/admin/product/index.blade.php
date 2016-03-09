@@ -42,31 +42,18 @@
 								</tr>
 							</thead>
 							<tbody>
-								<?php
-									foreach ($allcategory as $category)
-									{
-										$categoryList[$category->id] = $category->name;
-									}
-								?>
-								<?php
-									$brandList[0] = '';
-									foreach ($allbrands as $brand)
-									{
-										$brandList[$brand->id] = $brand->name;
-									}
-								?>
 								@foreach ($allproducts as $product)
 									<tr class="odd gradeX" id="{{ $product->id }}">
 										<td>{{ Html::image('/assets/images/uploads/products/thumbils/'.$product->thumb, '', array('class' => 'img-responsive') ) }}</td>
 										<td>{{ $product->name }}</td>
 										<td>
-											{{ $categoryList[$product->category_id] }}
+											{{ $product->category->name }}
 										</td>
 										<td>
-											{{ $brandList[$product->brand_id] }}
+											{{ $product->brand_id == '0' ? '' : $product->category->name }}
 										</td>
 										<td>
-											{{ $product->status ==1 ? 'Enable' : 'Disable' }}
+											{{ $product->status == 1 ? 'Enable' : 'Disable' }}
 										</td>
 										<td>
 											{!! Form::open(array('url' => 'admin/product/'.$product->id)) !!}
@@ -74,6 +61,7 @@
 
 												<!-- Update Link -->
 												<a href="{{ URL::to('admin/product/'.$product->id.'/edit') }}" class = "btn btn-outline btn-primary" data-toggle = "tooltip" title = "Edit Product" ><i class="fa fa-pencil"></i></a>
+												<a href="{{ URL::to('admin/product/'.$product->id) }}" class = "btn btn-outline btn-primary" data-toggle = "tooltip" title = "View Product" ><i class="fa fa-eye"></i></a>
 												
 												<!-- Delete Link -->
 												<button type="submit" value="" class = "btn btn-outline btn-danger" data-toggle = "tooltip" title = "Delete Product" >

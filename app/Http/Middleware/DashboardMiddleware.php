@@ -25,11 +25,11 @@ class DashboardMiddleware
         {
             if(Auth::check())
             {
-                return Redirect::to('/');
+                return redirect('/');
             }
             else
             {
-                return Redirect::to('admin/adminlogin');
+                return redirect('admin/adminlogin');
             }
         }
     }

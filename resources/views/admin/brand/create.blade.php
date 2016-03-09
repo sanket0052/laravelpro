@@ -18,7 +18,7 @@
 						<div class="col-lg-12">
 
 							<!-- Display flashdata -->
-							@if (count($errors) > 0)
+							@if(count($errors) > 0)
 								<div class="alert alert-danger" >
 								<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 									<ul>
@@ -36,7 +36,7 @@
 								<div class="form-group">
 									{{ Form::label('name', 'Brand Name', array('class' => 'col-md-2 control-label')) }}
 									<div class="col-md-8">
-										{{ Form::text('name', '', array('class' => 'form-control', 'placeholder' => 'Add Brand Name here...', 'tab-index')) }}
+										{{ Form::text('name', '', array('class' => 'form-control', 'placeholder' => 'Add Brand Name here...')) }}
 									</div>
 								</div>
 
@@ -88,17 +88,15 @@
 										{{ Form::file('logo') }}
 									</div>
 								</div>
-							</div>
-							<hr>
-							<div class="col-md-offset-2">
-								{{ Form::submit('Add Brand', array('class' => 'btn btn-primary')) }}
 
-							</div>
-						{!! Form::close() !!}
-						<!-- /.col-lg-6 (nested) -->
+								<hr>
+								<div class="col-md-offset-2">
+									{{ Form::submit('Add Brand', array('class' => 'btn btn-primary')) }}
+								</div>
+							{!! Form::close() !!}
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 	@endsection

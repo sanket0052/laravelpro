@@ -149,15 +149,12 @@ class CartController extends Controller
         $rowid = $request->rowid;
         $qty = $request->qty;
         $sessiondata = $request->session()->get('cart_session', '0');
-        
         foreach ($sessiondata as $key => $value) {
             if($key == $rowid)
             {
                 $sessiondata[$key]['qty'] = $qty;
-                
             }
         }
-
         // print_r(session()->forget('cart_session'));
         session()->put('cart_session', $sessiondata);
         return redirect('cart');

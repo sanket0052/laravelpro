@@ -42,7 +42,7 @@
 							</thead>
 							<tbody>
 								@foreach ($allcategory as $category)
-									<tr class="odd gradeX" id="{{ $category->id }}">
+									<tr class="odd gradeX {{ $category->status == '0' ? 'error' : '' }} " id="{{ $category->id }}">
 										<td>{{ $category->name }}</td>
 										<td>{{ $category->urlname }}</td>
 										<td>

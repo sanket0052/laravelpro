@@ -129,7 +129,7 @@
 													<ul class="list-unstyled col-sm-6">
 														@if(!empty($value['sub']))
 															@foreach($value['sub'] as $k => $subcategory)
-																<li><a href="{{ $subcategory['id'] }}">{!! $subcategory['name'] !!}</a></li>
+																<li><a href="{{ URL::to('category/'.$subcategory['id']) }}">{!! $subcategory['name'] !!}</a></li>
 															@endforeach
 														@endif
 													</ul>
@@ -233,7 +233,7 @@
 											</div>
 										</li>
 										<li class="lnt-cart-actions">
-											<a href="#" class="lnt-view-cart-btn">View cart</a>
+											<a href="{{ URL::to('cart/') }}" class="lnt-view-cart-btn">View cart</a>
 											<a href="#" class="lnt-checkout-btn">Checkout</a>
 										</li>
 									</ul>

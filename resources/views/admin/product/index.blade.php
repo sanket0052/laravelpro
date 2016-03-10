@@ -50,7 +50,7 @@
 											{{ $product->category->name }}
 										</td>
 										<td>
-											{{ $product->brand_id == '0' ? '' : $product->category->name }}
+											{{ $product->brand_id == '0' ? '' : $product->brand['name'] }}
 										</td>
 										<td>
 											{{ $product->status == 1 ? 'Enable' : 'Disable' }}

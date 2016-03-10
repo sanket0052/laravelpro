@@ -20,7 +20,12 @@
 								<a href=""><h4>{!! $product->name !!}</h4></a>
 								<p>{!! $product->category->name !!}</p>
 							</div>
-								<p><a href="#" class="btn btn-primary btn-block add-to-cart" role="button">Add to cart</a></p>
+								{!! Form::open(array('url' => 'cart', 'method' => 'POST')) !!}
+									{{ Form::hidden('product_id', $product->id) }}
+									
+									<p><button type="submit" class="btn btn-primary btn-block add-to-cart" role="button">Add to cart</button></p>
+								{!! Form::close() !!}
+
 						</div>
 					</div>
 					@endforeach

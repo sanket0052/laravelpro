@@ -41,7 +41,13 @@ Route::group(['middleware' => ['web']], function () {
         'show'
     ]]);
 
+    Route::group(['middleware' => ['auth']], function () {
+            // Cart routes...
+            Route::resource('cart', 'CartController');
+    });        
+
     // Authentication routes...
+    Route::get('/login', 'Auth\AuthController@getLogin');
     Route::get('auth/userlogin', 'Auth\AuthController@getLogin');
     Route::post('auth/userlogin', 'Auth\AuthController@postLogin');
     Route::get('auth/logout', 'Auth\AuthController@getLogout');

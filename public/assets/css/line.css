@@ -1416,3 +1416,37 @@ h4.media-heading a{
 	max-height: 120px;
 	min-height: 120px;
 }
+
+/* Cart View  */
+.cart-view{
+	margin-top: 15px;
+}
+table >thead > tr{
+	border-bottom: 3px solid #333;
+}
+.media .thumbnail{
+	padding-right: 0px;
+}
+.media-object{
+	max-height: 100px !important;
+	max-width: 100px !important;
+	padding: 2px;
+}
+.cart-image{
+	max-height: 86px !important;
+	max-width: 86px !important;
+	object-fit: cover;
+}
+.media-body{
+	padding-left: 10px;
+	line-height: 2em;
+}
+h4.media-heading{
+	font-weight: bold;
+}
+h4.media-heading a{
+	color: #FB4E4E;
+}
+.cart-item{
+	height:30px !important;
+}

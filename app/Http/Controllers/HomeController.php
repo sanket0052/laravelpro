@@ -10,16 +10,32 @@ use App\Product;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\CartController;
 use App\Http\Requests\ContactRequest;
 
 class HomeController extends Controller
 {
+
+	protected $cartarray;
+
+	public function __construct()
+	{
+		$cart = new CartController();
+		$cartdata = $cart->cartdata();
+        $this->cartarray = $cartdata;
+	}
+
 	public function index()
 	{
 		$mainMenu = $this->frontendMenu();
+		$cartdata = $this->cartarray;
+		$cartarray = $cartdata['cartproduct'];
+        $total = $cartdata['total'];
 		$products = Product::with('category', 'brand')->get();
     	return view('home')
     		->with('mainMenu', $mainMenu)
+    		->with('cartarray', $cartarray)
+    		->with('total', $total)
     		->with('products', $products);
 	}
 	

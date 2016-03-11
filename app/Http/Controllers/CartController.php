@@ -11,6 +11,7 @@ use App\User;
 use Auth;
 use Session;
 use App\Http\Requests;
+use Illuminate\Support\Collection;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use App\Http\Controllers\Controller;
@@ -27,24 +28,15 @@ class CartController extends Controller
     public function index()
     {
         $mainMenu = new HomeController();
-        $sessiondata = session()->get('cart_session', '0');
-        if($sessiondata != 0)
-        {
-            $finalTotal = 0;
-            foreach ($sessiondata as $key => $value)
-            {
-                $total = $value['qty']*$value['price'];
-                $sessiondata[$key]['total'] = $total;
-                $finalTotal += $total;
-            }
-            // $sessiondata['finalTotal'] = $finalTotal;
-            $cart_array = $sessiondata;
-        }
+        $cartdata = $this->cartdata();
+        $cartarray = $cartdata['cartproduct'];
+        $total = $cartdata['total'];
+
         $mainMenu = $mainMenu->frontendMenu();
         return view('cart')
             ->with('mainMenu', $mainMenu)
-            ->with('cart_array', $cart_array)
-            ->with('final_total', $finalTotal);
+            ->with('cartarray', $cartarray)
+            ->with('total', $total);
     }
 
     /**
@@ -72,32 +64,36 @@ class CartController extends Controller
         $product_id = $request->product_id;
         $products = Product::with('brand')->find($product_id);
         $user = Auth::user();
-        
         $sessiondata = session()->get('cart_session', '0');
-        
-        // $request->session()->forget('cart_session');
+
         if($sessiondata != 0)
         {
-            foreach ($sessiondata as $key => $value) {
+            foreach ($sessiondata as $key => $value)
+            {
                 $productIdArr[] = $value['product_id'];
             }
-            $newId = sizeof($sessiondata)+1;
-            if(!in_array($products->id, $productIdArr))
-            {
+
+            $allid = collect($sessiondata);
+            $newid = $allid->count()+1;
+
+            $productIdArr = collect($productIdArr);
+
+            if(!$productIdArr->contains($products->id))
+            {   
                 $newsession = array(
                     'name' => $products->name,
                     'thumb' => $products->thumb,
                     'brand' => $products->brand['name'],
-                    'id' => $newId,
+                    'id' => $newid,
                     'product_id' => $products->id,
                     'price' => $products->price,
                     'qty' => 1
                 ); 
-            }
 
-            $collection = collect($sessiondata);
-            $collection->put(str_random(10), $newsession);
-            $request->session()->put('cart_session', $collection->all());
+                $collection = collect($sessiondata);
+                $collection->put(str_random(10), $newsession);
+                $request->session()->put('cart_session', $collection->all());
+            }
         }
         else
         {
@@ -149,13 +145,13 @@ class CartController extends Controller
         $rowid = $request->rowid;
         $qty = $request->qty;
         $sessiondata = $request->session()->get('cart_session', '0');
-        foreach ($sessiondata as $key => $value) {
+        foreach ($sessiondata as $key => $value)
+        {
             if($key == $rowid)
             {
                 $sessiondata[$key]['qty'] = $qty;
             }
         }
-        // print_r(session()->forget('cart_session'));
         session()->put('cart_session', $sessiondata);
         return redirect('cart');
     }
@@ -168,6 +164,60 @@ class CartController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $sessiondata = session()->get('cart_session', '0');
+        foreach ($sessiondata as $key => $value)
+        {
+            if($value['id'] == $id)
+            {
+                $rowid = $key;
+            }
+        }
+        array_forget($sessiondata, $rowid);
+        if(collect($sessiondata)->isEmpty())
+        {
+            session()->forget('cart_session');
+        }
+        else
+        {
+            session()->put('cart_session', $sessiondata);
+        }
+        return redirect('cart');
+    }
+
+    public function clearcart()
+    {
+        session()->forget('cart_session');
+        return redirect('cart');
+    }
+
+    public function cartdata()
+    {
+        $sessiondata = session()->get('cart_session', '0');
+        if($sessiondata != 0)
+        {
+            $finaltotal = 0;
+            foreach ($sessiondata as $key => $value)
+            {
+                $total = $value['qty']*$value['price'];
+                $sessiondata[$key]['total'] = $total;
+                $finaltotal += $total;
+            }
+            $cartarray = $sessiondata;
+            $totalproducts = collect($cartarray);
+            $totalproduct = $totalproducts->count();
+            $total = array(
+                'totalprice' => $finaltotal,
+                'totalproduct' => $totalproduct
+            );
+        }
+        else
+        {
+            $cartarray = array();
+            $total = array(
+                'totalprice' => 0,
+                'totalproduct' => 0
+            );
+        }
+        return array('total' => $total, 'cartproduct' => $cartarray);
     }
 }

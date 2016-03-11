@@ -43,6 +43,7 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::group(['middleware' => ['auth']], function () {
             // Cart routes...
+            Route::delete('cart/clear', 'CartController@clearcart');
             Route::resource('cart', 'CartController');
     });        
 

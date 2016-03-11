@@ -218,20 +218,34 @@
 									<ul class="dropdown-menu" role="menu">
 										<li>
 											<div class="lnt-cart-products">
-												2 products added. 
-												<span class="lnt-cart-total">$1400</span>
+												{{ Auth::user() == 1 ? $total['totalproduct'] : 0 }} products added. 
+												<span class="lnt-cart-total"><i class="fa fa-inr"></i>{{ Auth::user() == 1 ? $total['totalprice'] : 0 }}</span>
 											</div>
 										</li>
-										<li>
-											<div class="lnt-cart-products">
-												<img src="http://placehold.it/60x60" alt="Product title">
-												<span class="lnt-product-info">
-													<span class="lnt-product-name">Leader bag</span>
-													<span class="lnt-product-price"><del>$790</del> &rarr; $600</span>
-													<button type="button" class="lnt-product-remove btn-link">Remove?</button>
-												</span>
-											</div>
-										</li>
+										@if(Auth::user())
+											@foreach($cartarray as $key => $cartdata)
+											<li>
+												<div class="lnt-cart-products">
+													{{ Html::image('/assets/images/uploads/products/thumbils/'.$cartdata['thumb'], $cartdata['name'], array('class' => 'cart-image', 'width' => '60px', 'height' => '60px')) }}
+													<span class="lnt-product-info">
+														<span class="lnt-product-name">
+															{{ $cartdata['name'] }}
+														</span>
+														<span class="lnt-product-price">
+															<del><i class="fa fa-inr"></i> {{ $cartdata['price']+50 }} </del> 
+																&rarr; {{ $cartdata['price'] }}
+														</span>
+														{{ Form::open(array('url' => 'cart/'.$cartdata['id'])) }}
+															{{ Form::hidden('_method', 'DELETE') }}
+
+															{{ Form::button('Remove?', ['class' => 'lnt-product-remove btn-link', 'type' => 'submit'] ) }}
+															{{ Form::hidden('rowid', $key ) }}
+														{{ Form::close() }}
+													</span>
+												</div>
+											</li>
+											@endforeach
+										@endif
 										<li class="lnt-cart-actions">
 											<a href="{{ URL::to('cart/') }}" class="lnt-view-cart-btn">View cart</a>
 											<a href="#" class="lnt-checkout-btn">Checkout</a>

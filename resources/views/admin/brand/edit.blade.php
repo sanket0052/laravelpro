@@ -30,8 +30,8 @@
 							@endif
 							<!-- Display flashdata -->
 
-							{!! Form::open(array('url' => 'admin/brand/'.$brand->id, 'role' => 'form', 'class' => 'form-horizontal', 'files' => true, 'method' => 'PUT')) !!}
-							{!! csrf_field() !!}
+							{{ Form::open(array('url' => 'admin/brand/'.$brand->id, 'role' => 'form', 'class' => 'form-horizontal', 'files' => true, 'method' => 'PUT')) }}
+							{{ csrf_field() }}
 							
 								<div class="form-group">
 									{{ Form::label('name', 'Brand Name', array('class' => 'col-md-3 control-label')) }}
@@ -92,7 +92,7 @@
 									{{ Form::submit('Update Brand', array('class' => 'btn btn-primary')) }}
 								</div>
 
-							{!! Form::close() !!}
+							{{ Form::close() }}
 						</div>
 						
 						<div class="col-md-4 pull-left">

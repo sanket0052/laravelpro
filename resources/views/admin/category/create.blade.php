@@ -31,8 +31,8 @@
 						</div>
 						<!-- Display flashdata -->
 
-						{!! Form::open(array('url' => 'admin/category', 'role' => 'form')) !!}
-						{!! csrf_field() !!}
+						{{ Form::open(array('url' => 'admin/category', 'role' => 'form')) }}
+						{{ csrf_field() }}
 							<div class="col-md-6">
 								<div class="form-group">
 									{{ Form::label('name', 'Category Name') }}
@@ -81,7 +81,7 @@
 								{{ Form::submit('Add Category', array('class' => 'btn btn-primary')) }}
 
 							</div>
-						{!! Form::close() !!}
+						{{ Form::close() }}
 						<!-- /.col-lg-6 (nested) -->
 					</div>
 				</div>

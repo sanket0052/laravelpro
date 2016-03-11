@@ -35,8 +35,8 @@
 					</div>
 					<div class="panel-body">
 						
-						{!! Form::open(array('url' => 'auth/adminlogin', 'role' => 'form')) !!}
-						{!! csrf_field() !!}
+						{{ Form::open(['url' => 'auth/adminlogin', 'role' => 'form')) }}
+						{{ csrf_field() }}
 							<!-- Display flashdata -->
 
 							@if (Session::has('error'))
@@ -51,17 +51,17 @@
 							<!-- Display flashdata -->
 							
 							<div class="form-group">
-								{{ Form::email('email', '', array('class' => 'form-control', 'placeholder' => 'Email', 'autofocus' => 'autofocus')) }}
+								{{ Form::email('email', '', ['class' => 'form-control', 'placeholder' => 'Email', 'autofocus' => 'autofocus']) }}
 							</div>
 							
 							<div class="form-group">
-								{{ Form::password('password', array('class' => 'form-control', 'placeholder' => 'Password')) }}
+								{{ Form::password('password', ['class' => 'form-control', 'placeholder' => 'Password']) }}
 							</div>
 
 							{{ Form::hidden('type', 'admin') }}
-							{{ Form::submit('Login', array('class' => 'btn btn-lg btn-success btn-block')) }}
+							{{ Form::submit('Login', ['class' => 'btn btn-lg btn-success btn-block']) }}
 
-						{!! Form::close() !!}
+						{{ Form::close() }}
 					</div>
 				</div>
 			</div>

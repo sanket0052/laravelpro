@@ -40,33 +40,33 @@
 								<!-- Display flashdata -->
 
 								<!-- Login Form Starts -->
-								{!! Form::open(array('url' => 'auth/userlogin', 'role' => 'form', 'id' => 'login-form', 'method' => 'POST')) !!}
-								{!! csrf_field() !!}
+								{{ Form::open(array('url' => 'auth/userlogin', 'role' => 'form', 'id' => 'login-form', 'method' => 'POST')) }}
+								{{ csrf_field() }}
 
 									<div class="form-group">
-										{{ Form::email('email', '', array('class' => 'form-control', 'placeholder' => 'Enter Username', 'tabindex' => '1')) }}
+										{{ Form::email('email', '', ['class' => 'form-control', 'placeholder' => 'Enter Username', 'tabindex' => '1']) }}
 										<!-- Username input field  -->
 									</div>
 									<div class="form-group">
-										{{ Form::password('password', array('class' => 'form-control', 'placeholder' => 'Enter Password', 'tabindex' => '2')) }}
+										{{ Form::password('password', ['class' => 'form-control', 'placeholder' => 'Enter Password', 'tabindex' => '2']) }}
 									</div>
 									<div class="form-group">
-										{{ Form::checkbox('remember', 'value', '',array('tabindex' => '3', 'id' => 'remember')) }}
-										{!! Form::label('rememeber', 'Remember Me') !!}
+										{{ Form::checkbox('remember', 'value', '', ['tabindex' => '3', 'id' => 'remember']) }}
+										{{ Form::label('rememeber', 'Remember Me') }}
 									</div>
 									<div class="row">
 										<div class="col-md-6">
-											{{ Form::submit('Submit', array('class' => 'btn btn-main', 'id' => 'form-submit')) }}
+											{{ Form::submit('Submit', ['class' => 'btn btn-main', 'id' => 'form-submit']) }}
 											<!-- Submit button of sign in form -->
 										</div>
 										<div class="col-md-6">
 											<div class="form-group pull-right">
-												{{ Html::link('user/passwordreset', 'Forgot Password?' , array('class' => 'forgot-password')) }}
+												{{ Html::link('user/passwordreset', 'Forgot Password?' , ['class' => 'forgot-password']) }}
 											</div>
 										</div>
 									</div>
 
-								{!! Form::close() !!}
+								{{ Form::close() }}
 							<!-- Login Form Ends -->
 							</div>
 						</div>

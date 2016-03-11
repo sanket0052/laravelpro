@@ -13,9 +13,8 @@
 		<title>Line Shop - @yield('title')</title>
 
 		<!-- Bootstrap core and other CSS -->
-		{{ Html::style('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css') }}
-		{{ Html::style('https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css') }}
-		{{ Html::style('assets/css/line.css') }}
+		{{ Html::style('assets/css/library.css') }}
+		{{ Html::style('assets/css/public.css') }}
 
 		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 		<!--[if lt IE 9]>
@@ -129,7 +128,7 @@
 													<ul class="list-unstyled col-sm-6">
 														@if(!empty($value['sub']))
 															@foreach($value['sub'] as $k => $subcategory)
-																<li><a href="{{ URL::to('category/'.$subcategory['id']) }}">{!! $subcategory['name'] !!}</a></li>
+																<li><a href="{{ URL::to('category/'.$subcategory['id']) }}">{{ $subcategory['name'] }}</a></li>
 															@endforeach
 														@endif
 													</ul>
@@ -218,11 +217,11 @@
 									<ul class="dropdown-menu" role="menu">
 										<li>
 											<div class="lnt-cart-products">
-												{{ Auth::user() == 1 ? $total['totalproduct'] : 0 }} products added. 
-												<span class="lnt-cart-total"><i class="fa fa-inr"></i>{{ Auth::user() == 1 ? $total['totalprice'] : 0 }}</span>
+												{{ Auth::check() == 1 ? $total['totalproduct'] : 0 }} products added. 
+												<span class="lnt-cart-total"><i class="fa fa-inr"></i> {{ Auth::check() == 1 ? $total['totalprice'] : 0 }}</span>
 											</div>
 										</li>
-										@if(Auth::user())
+										@if(Auth::check())
 											@foreach($cartarray as $key => $cartdata)
 											<li>
 												<div class="lnt-cart-products">
@@ -385,12 +384,8 @@
 		<!-- Le javaScript
 		================================================== -->
 		<!-- Placed at the end of the document so the pages load faster -->
-		{{ Html::script('https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js') }}
-		{{ Html::script('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js') }}
-		{{ Html::script('assets/js/jquery.highlight.js') }}
-		{{ Html::script('assets/js/jquery.touchSwipe.min.js') }}
-		{{ Html::script('assets/js/jquery.randomColor.js') }}
-		{{ Html::script('assets/js/line.js') }}
+		{{ Html::script('assets/js/library.js') }}
+		{{ Html::script('assets/js/app.js') }}
 		
 		@stack('scripts')
 	</body>

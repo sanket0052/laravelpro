@@ -59,7 +59,7 @@
 											{{ $brand->status == 1 ? 'Enable' : 'Disable' }}
 										</td>
 										<td>
-											{!! Form::open(array('url' => 'admin/brand/'.$brand->id)) !!}
+											{{ Form::open(array('url' => 'admin/brand/'.$brand->id)) }}
 												{{ Form::hidden('_method', 'DELETE') }}
 
 												<!-- Update Link -->
@@ -69,7 +69,7 @@
 												<button type="submit" value="" class = "btn btn-outline btn-danger" data-toggle = "tooltip" title = "Delete Brand" >
 													<i class="fa fa-times"></i>
 												</button>
-											{!! Form::close() !!}
+											{{ Form::close() }}
 										</td>
 									</tr> 
 								@endforeach

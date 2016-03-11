@@ -53,14 +53,14 @@
 										<td>
 											@foreach($category->brands as $brand)
 												<span>
-													<a href="" class="label label-primary" data-toggle="tooltip" title="" data-original-title="{!! $brand->name !!}">
-														{!! $brand->name !!}
+													<a href="" class="label label-primary" data-toggle="tooltip" title="" data-original-title="{{ $brand->name }}">
+														{{ $brand->name }}
 													</a>
 												</span>&nbsp;
 											@endforeach
 										</td>
 										<td>
-											{!! Form::open(array('url' => 'admin/category/'.$category->id)) !!}
+											{{ Form::open(array('url' => 'admin/category/'.$category->id)) }}
 												{{ Form::hidden('_method', 'DELETE') }}
 
 												<!-- Update Link -->
@@ -70,7 +70,7 @@
 												<button type="submit" value="" class="btn btn-outline btn-danger" data-toggle="tooltip" title = "Delete Category" >
 													<i class="fa fa-times"></i>
 												</button>
-											{!! Form::close() !!}
+											{{ Form::close() }}
 										</td>
 									</tr>
 								@endforeach

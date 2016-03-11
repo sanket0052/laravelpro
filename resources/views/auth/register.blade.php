@@ -33,28 +33,28 @@
 								<!-- Display flashdata -->
 
 								<!-- Register Form Starts -->
-								{!! Form::open(array('url' => 'auth/register', 'role' => 'form', 'id' => 'register-form', 'method' => 'POST')) !!}
-								{!! csrf_field() !!}
+								{{ Form::open(['url' => 'auth/register', 'role' => 'form', 'id' => 'register-form', 'method' => 'POST']) }}
+								{{ csrf_field() }}
 
 									<div class="form-group">
-										{{ Form::text('username', '', array('class' => 'form-control', 'placeholder' => 'Enter User Name', 'tabindex' => '1')) }}
+										{{ Form::text('username', '', ['class' => 'form-control', 'placeholder' => 'Enter User Name', 'tabindex' => '1']) }}
 									</div>
 									
 									<div class="form-group">
-										{{ Form::email('email', '', array('class' => 'form-control', 'placeholder' => 'Enter Email', 'tabindex' => '2')) }}
+										{{ Form::email('email', '', ['class' => 'form-control', 'placeholder' => 'Enter Email', 'tabindex' => '2']) }}
 									</div>
 									
 									<div class="form-group">
-										{{ Form::password('password', array('class' => 'form-control', 'placeholder' => 'Enter Password', 'tabindex' => '3')) }}
+										{{ Form::password('password', ['class' => 'form-control', 'placeholder' => 'Enter Password', 'tabindex' => '3']) }}
 									</div>
 									
 									<div class="form-group">
-										{{ Form::password('password_confirmation', array('class' => 'form-control', 'placeholder' => 'Enter Confirm Password', 'tabindex' => '4')) }}
+										{{ Form::password('password_confirmation', ['class' => 'form-control', 'placeholder' => 'Enter Confirm Password', 'tabindex' => '4']) }}
 									</div>
 
-									{{ Form::submit('Register', array('class' => 'btn btn-main', 'id' => 'form-submit', 'tabindex' => '5')) }}
+									{{ Form::submit('Register', ['class' => 'btn btn-main', 'id' => 'form-submit', 'tabindex' => '5']) }}
 									
-								{!! Form::close() !!}
+								{{ Form::close() }}
 								<!-- Registration Form Ends -->
 							</div>
 						</div>

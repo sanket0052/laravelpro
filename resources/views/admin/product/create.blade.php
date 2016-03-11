@@ -40,8 +40,8 @@
 								</li>
 							</ul>
 
-							{!! Form::open(array('url' => 'admin/product', 'role' => 'form', 'class' => 'form-horizontal', 'files' => true)) !!}
-							{!! csrf_field() !!}
+							{{ Form::open(array('url' => 'admin/product', 'role' => 'form', 'class' => 'form-horizontal', 'files' => true)) }}
+							{{ csrf_field() }}
 
 								<!-- Tab panes -->
 								<div class="tab-content">
@@ -177,7 +177,7 @@
 								{{ Form::submit('Add Product', array('class' => 'btn btn-primary')) }}
 
 							</div>
-						{!! Form::close() !!}
+						{{ Form::close() }}
 						<!-- /.col-lg-6 (nested) -->
 					</div>
 				</div>

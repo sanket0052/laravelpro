@@ -40,8 +40,8 @@
 								</li>
 							</ul>
 
-							{!! Form::open(array('url' => 'admin/product/'.$product->id, 'role' => 'form', 'class' => 'form-horizontal', 'files' => true, 'method' => 'PUT')) !!}
-							{!! csrf_field() !!}
+							{{ Form::open(array('url' => 'admin/product/'.$product->id, 'role' => 'form', 'class' => 'form-horizontal', 'files' => true, 'method' => 'PUT')) }}
+							{{ csrf_field() }}
 							
 								<!-- Tab panes -->
 								<div class="tab-content">
@@ -179,7 +179,7 @@
 									{{ Form::submit('Update Product', array('class' => 'btn btn-primary')) }}
 								</div>
 
-							{!! Form::close() !!}
+							{{ Form::close() }}
 
 						</div>
 

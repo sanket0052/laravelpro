@@ -2,33 +2,10 @@
   "private": true,
   "devDependencies": {
     "gulp": "^3.8.8",
-    "gulp-concat": "^2.6.0",
-    "gulp-minify-css": "^1.2.4",
-    "gulp-sass": "^2.2.0",
-    "gulp-uglify": "^1.5.3"
+    "run-sequence": "^1.1.5"
   },
   "dependencies": {
     "laravel-elixir": "^4.0.0",
     "bootstrap-sass": "^3.0.0"
-  },
-  "name": "laravelpro",
-  "description": "[![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework) [![Total Downloads](https://poser.pugx.org/laravel/framework/d/total.svg)](https://packagist.org/packages/laravel/framework) [![Latest Stable Version](https://poser.pugx.org/laravel/framework/v/stable.svg)](https://packagist.org/packages/laravel/framework) [![Latest Unstable Version](https://poser.pugx.org/laravel/framework/v/unstable.svg)](https://packagist.org/packages/laravel/framework) [![License](https://poser.pugx.org/laravel/framework/license.svg)](https://packagist.org/packages/laravel/framework)",
-  "version": "1.0.0",
-  "main": "gulpfile.js",
-  "directories": {
-    "test": "tests"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/sanket0052/laravelpro.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/sanket0052/laravelpro/issues"
-  },
-  "homepage": "https://github.com/sanket0052/laravelpro"
+  }
 }

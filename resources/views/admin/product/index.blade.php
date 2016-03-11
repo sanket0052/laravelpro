@@ -56,7 +56,7 @@
 											{{ $product->status == 1 ? 'Enable' : 'Disable' }}
 										</td>
 										<td>
-											{!! Form::open(array('url' => 'admin/product/'.$product->id)) !!}
+											{{ Form::open(array('url' => 'admin/product/'.$product->id)) }}
 												{{ Form::hidden('_method', 'DELETE') }}
 
 												<!-- Update Link -->
@@ -66,7 +66,7 @@
 												<button type="submit" value="" class = "btn btn-outline btn-danger" data-toggle = "tooltip" title = "Delete Product" >
 													<i class="fa fa-times"></i>
 												</button>
-											{!! Form::close() !!}
+											{{ Form::close() }}
 										</td>
 									</tr> 
 								@endforeach

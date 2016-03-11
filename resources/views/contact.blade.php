@@ -30,7 +30,7 @@
 				<hr>
 			</div>
 			<div class="col-md-6"> 
-				{!! Form::open(array('url' => 'contact', 'role' => 'form', 'method' => 'POST')) !!}
+				{{ Form::open(['url' => 'contact', 'role' => 'form', 'method' => 'POST']) }}
 
 					@if (Session::has('success'))
 					    <div class="alert alert-success" ><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>{{ Session::get('success') }}</div>
@@ -54,7 +54,7 @@
 
 					{{ Form::submit('Submit', array('class' => 'btn btn-success btn-lg btn-block pull-right', 'id' => 'form-submit')) }}
 
-				{!! Form::close() !!}
+				{{ Form::close() }}
 			</div>
 		</div>
 		<hr/>

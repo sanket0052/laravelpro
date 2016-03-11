@@ -9,7 +9,7 @@
 		<div class="content-wrap" data-effect="lnl-overlay">
 			<div class="container">
 				<div class="page-header">
-					<h3>{!! $categories->name !!} <small>This month fearture products</small></h3>
+					<h3>{{ $categories->name }} <small>This month fearture products</small></h3>
 				</div>
 				<div class="row">
 					@foreach($categories->product as $product)
@@ -17,14 +17,14 @@
 						<div class="thumbnail">
 							{{ Html::image('/assets/images/uploads/products/'.$product->image, '', array('class' => 'product-img img-responsive') ) }}
 							<div class="caption">
-								<a href=""><h4>{!! $product->name !!}</h4></a>
-								<p>{!! $product->category->name !!}</p>
+								<a href=""><h4>{{ $product->name }}</h4></a>
+								<p>{{ $product->category->name }}</p>
 							</div>
-								{!! Form::open(array('url' => 'cart', 'method' => 'POST')) !!}
+								{{ Form::open(array('url' => 'cart', 'method' => 'POST')) }}
 									{{ Form::hidden('product_id', $product->id) }}
 									
 									<p><button type="submit" class="btn btn-primary btn-block add-to-cart" role="button">Add to cart</button></p>
-								{!! Form::close() !!}
+								{{ Form::close() }}
 
 						</div>
 					</div>

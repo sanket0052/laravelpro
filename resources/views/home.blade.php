@@ -15,8 +15,7 @@
 					@foreach($products as $product)
 					<div class="col-sm-6 col-md-3">
 						<div class="thumbnail">
-							{{ Html::image('/assets/images/uploads/products/'.$product->image, '', array('class' => 'product-img img-responsive') ) }}
-							<!-- <img src="" alt="product alt"> -->
+							{{ Html::image('/assets/images/uploads/products/'.$product->image, $product->name, ['class' => 'product-img img-responsive']) }}
 							<div class="caption">
 								<a href=""><h4>{!! $product->name !!}</h4></a>
 								<p>{!! $product->category->name !!}</p>

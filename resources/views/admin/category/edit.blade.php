@@ -30,8 +30,8 @@
 						</div>
 						<!-- Display flashdata -->
 
-						{!! Form::open(array('url' => 'admin/category/'.$category->id, 'role' => 'form', 'method' => 'PUT')) !!}
-						{!! csrf_field() !!}
+						{{ Form::open(array('url' => 'admin/category/'.$category->id, 'role' => 'form', 'method' => 'PUT')) }}
+						{{ csrf_field() }}
 							<div class="col-md-6">
 								<div class="form-group">
 									{{ Form::label('name', 'Category Name') }}
@@ -79,7 +79,7 @@
 								{{ Form::submit('Update Category', array('class' => 'btn btn-primary')) }}
 
 							</div>
-						{!! Form::close() !!}
+						{{ Form::close() }}
 						<!-- /.col-lg-6 (nested) -->
 					</div>
 				</div>

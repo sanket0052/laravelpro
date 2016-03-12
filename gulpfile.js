@@ -13,7 +13,7 @@ var elixir = require('laravel-elixir');
 var paths = {
     'bower' : './resources/assets/bower_components/',
     'js' : './resources/assets/js/',
-    'bootstrap' : './resources/assets/bower_components/bootstrap-sass/assets/',
+    'bootstrap_sass' : './resources/assets/bower_components/bootstrap-sass/assets/',
     'fontawesome' : './resources/assets/bower_components/components-font-awesome/'
 }
 
@@ -23,7 +23,7 @@ elixir.config.sourcemaps = false;
 
 elixir(function(mix) {
     mix.copy([
-        paths.bootstrap+'fonts/bootstrap/*',
+        paths.bootstrap_sass+'fonts/bootstrap/*',
         paths.fontawesome+'fonts/fontawesome'
         ], './public/assets/fonts' );
 

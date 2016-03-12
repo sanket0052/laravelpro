@@ -384,8 +384,8 @@
 		<!-- Le javaScript
 		================================================== -->
 		<!-- Placed at the end of the document so the pages load faster -->
+		{{ Html::script('assets/js/main.js') }}
 		{{ Html::script('assets/js/library.js') }}
-		{{ Html::script('assets/js/app.js') }}
 		
 		@stack('scripts')
 	</body>

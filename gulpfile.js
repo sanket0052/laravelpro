@@ -39,10 +39,13 @@ elixir(function(mix) {
     mix.scripts([
         paths.bower+'jquery/dist/jquery.js', 
         paths.bower+'bootstrap-sass/assets/javascripts/bootstrap.js',
-    ], 'public/assets/js/library.js');
+    ], 'public/assets/js/main.js');
 
     mix.scripts([
-        paths.js+'*.js', 
-    ], 'public/assets/js/app.js');
+        paths.js+'jquery.highlight.js', 
+        paths.js+'jquery.randomColor.js', 
+        paths.js+'jquery.touchSwipe.min.js', 
+        paths.js+'line.js', 
+    ], 'public/assets/js/library.js');
 
 });

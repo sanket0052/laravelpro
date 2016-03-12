@@ -56,7 +56,7 @@ class CategoryController extends Controller
      */
     public function store(CategoryRequest $request)
     {
-        $data = $request->all();
+        $requestArr = $request->all();
 
         $category = Category::create($requestArr);
 
@@ -119,7 +119,7 @@ class CategoryController extends Controller
         }
 
         $data = $request->all();
-
+        
         $category->update($data);
 
         return redirect('admin/category')->with('flash_message', 'Category Updated Successfully!');

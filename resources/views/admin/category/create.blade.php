@@ -41,7 +41,7 @@
 								</div>
 
 								<div class="form-group">
-									{{ Form::label('parent_id', 'Parent Name') }}
+									{{ Form::label('parent_id', 'Parent Category') }}
 									
 									{{ Form::select('parent_id', $categoryList, '', array('class' => 'form-control', 'placeholder' => 'Pick a Parent Category...')) }}
 								</div>

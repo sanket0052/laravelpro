@@ -40,8 +40,8 @@
 								</div>
 
 								<div class="form-group">
-									{{ Form::label('parent_id', 'Parent Name') }}
-									{{ Form::select('parent_id', $categoryList, $category->parent_id, array('class' => 'form-control')) }}
+									{{ Form::label('parent_id', 'Parent Category') }}
+									{{ Form::select('parent_id', $categoryList, $category->parent_id, array('class' => 'form-control', 'placeholder' => 'Pick a Parent Category...')) }}
 								</div>
 
 								<div class="form-group">

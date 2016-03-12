@@ -35,7 +35,7 @@
 					</div>
 					<div class="panel-body">
 						
-						{{ Form::open(['url' => 'auth/adminlogin', 'role' => 'form')) }}
+						{{ Form::open(['url' => 'auth/adminlogin', 'role' => 'form']) }}
 						{{ csrf_field() }}
 							<!-- Display flashdata -->
 
@@ -45,7 +45,7 @@
 
 							@if (count($errors) > 0)
 								@foreach ($errors->all() as $error)
-									<div class="alert alert-danger" ><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>{{$error}}</div>
+									<div class="alert alert-danger" ><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>{{ $error }}</div>
 								@endforeach
 							@endif
 							<!-- Display flashdata -->

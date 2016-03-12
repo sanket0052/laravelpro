@@ -42,8 +42,14 @@ class HomeController extends Controller
 	public function showContact()
 	{
 		$mainMenu = $this->frontendMenu();
+		$cartdata = $this->cartarray;
+		$cartarray = $cartdata['cartproduct'];
+        $total = $cartdata['total'];
 
-		return view('contact')->with('mainMenu', $mainMenu);
+		return view('contact')
+			->with('cartarray', $cartarray)
+    		->with('total', $total)
+			->with('mainMenu', $mainMenu);
 	}
 
 	public function storeContact(ContactRequest $request){

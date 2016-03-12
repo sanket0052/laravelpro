@@ -25,11 +25,6 @@ class BrandRequest extends Request
     {
         switch($this->method())
         {
-            case 'GET':
-            case 'DELETE':
-            {
-                return [];
-            }
             case 'POST':
             {
                 return [

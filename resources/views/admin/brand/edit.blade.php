@@ -55,8 +55,8 @@
 									<div class="col-md-9">
 										@foreach ($allcategory as $key => $value)
 											<label class="checkbox-inline">
-												{{ Form::checkbox('category_list[]', $value->id, in_array($value->id, $categories) ? true : false ) }}
-												{{ $value->name }}
+												{{ Form::checkbox('category_list[]', $key, in_array($key, $categories) ? true : false ) }}
+												{{ $value }}
 											</label>
 										@endforeach
 									</div>

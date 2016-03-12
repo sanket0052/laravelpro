@@ -38,8 +38,9 @@ class BrandController extends Controller
     {
         $allBrands = Brand::with('categories')->get();
 
-        return view('admin.brand.index')
-            ->with('allbrands', $allBrands);
+        return view('admin.brand.index', [
+                'allbrands' => $allBrands
+            ]);
     }
 
     /**
@@ -49,7 +50,7 @@ class BrandController extends Controller
      */
     public function create()
     {
-        $allCategories = Category::all();
+        $allCategories = Category::lists('name', 'id')->toArray();
         return view('admin.brand.create')->with('allcategory', $allCategories);
     }
 
@@ -79,7 +80,9 @@ class BrandController extends Controller
         $brand = Brand::create($data);
         $brand->categories()->sync($category_list);
 
-        return redirect('admin/brand')->with('flash_message', 'Brand Added Successfully!');
+        return redirect('admin/brand', [
+                'flash_message' => 'Brand Added Successfully!'
+            ]);
     }
 
     /**
@@ -113,11 +116,13 @@ class BrandController extends Controller
             $categories[] = $category->id;
         }
 
-        $allCategories = Category::all();
-        return view('admin.brand.edit')
-            ->with('brand', $brand)
-            ->with('categories', $categories)
-            ->with('allcategory', $allCategories);
+        $allCategories = Category::lists('name', 'id')->toArray();
+
+        return view('admin.brand.edit', [
+                'brand' => $brand,
+                'categories' => $categories,
+                'allcategory' => $allCategories
+            ]);
     }
 
     /**
@@ -152,8 +157,9 @@ class BrandController extends Controller
         $brand->update($brandArr);
         $brand->categories()->sync($categories);
         
-        return redirect('admin/brand')->with('flash_message', 'Brand Updated Successfully!');
-
+        return redirect('admin/brand', [
+                'flash_message' => 'Brand Updated Successfully!'
+            ]);
     }
 
     /**
@@ -175,11 +181,15 @@ class BrandController extends Controller
 
         if($brandResult)
         {
-            return redirect('admin/brand')->with('flash_message', 'Brand Deleted Successfully!');
+            return redirect('admin/brand', [
+                    'flash_message', 'Brand Deleted Successfully!'
+                ]);
         }
         else
         {
-            return redirect('admin/brand')->with('flash_message', 'Error Accured While Deleting Brand. Please try again.');
+            return redirect('admin/brand', [
+                    'flash_message', 'Error Accured While Deleting Brand. Please try again.'
+                ]);
         }
     }
 

@@ -38,19 +38,6 @@ class AuthController extends Controller
      */
     protected $redirectTo = '/';
 
-    protected $mainMenu;
-
-    /**
-     * Create a new authentication controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->mainMenu = new HomeController;
-        $this->middleware($this->guestMiddleware(), ['except' => 'getLogout']);
-    }
-
     /**
      * Get a validator for an incoming registration request.
      *
@@ -83,14 +70,17 @@ class AuthController extends Controller
 
     protected function getLogin()
     {
-        $mainMenu = $this->mainMenu->frontendMenu();
-        return view('auth.login')->with('mainMenu', $mainMenu);
+        return view('auth.login');
+    }
+    
+    protected function adminLogin()
+    {
+        return view('admin.login');
     }
     
     protected function getRegister()
     {
-        $mainMenu = $this->mainMenu->frontendMenu();
-        return view('auth.register')->with('mainMenu', $mainMenu);
+        return view('auth.register');
     }
 
     /**
@@ -99,8 +89,8 @@ class AuthController extends Controller
      * @param  UserLogin $request [description]
      * @return [type]             [description]
      */
-    protected function postLogin(UserLogin $request)
-    {
+    protected function postLogin(UserLogin $request){
+
         $email = $request->get('email');
         $password = $request->get('password');
 
@@ -109,29 +99,27 @@ class AuthController extends Controller
             'password' => $password
         ];
         $remember = $request->has('remember');
-        if (Auth::attempt($credentials, $remember))
-        {
-            if(Auth::check())
-            {
-                if(Auth::user()->access != '0')
-                {
+
+        if (Auth::attempt($credentials, $remember)){
+
+            if(Auth::check()){
+
+                if(Auth::user()->access != '0'){
                     return redirect('/');
-                }
-                else
-                {
+                } else {
                     return redirect('admin/dashboard');
                 }
             }
-        }
-        else
-        {
-            if($request->get('type') == 'admin')
-            {
-                return redirect('admin/adminlogin')->with('error', 'Email And Password Does Not Match');
-            }
-            else
-            {
-                return redirect('auth/userlogin')->with('error', 'Email And Password Does Not Match');
+        }else{
+            
+            if($request->get('type') == 'admin'){
+                return redirect('admin/adminlogin', [
+                    'error' => 'Email And Password Does Not Match'
+                ]);
+            }else{
+                return redirect('auth/userlogin', [
+                    'error' => 'Email And Password Does Not Match'
+                ]);
             }
         }
     }
@@ -140,9 +128,8 @@ class AuthController extends Controller
     {
         $request['password'] = Hash::make($request['password']);
         $user = User::create($request->all());
-
         Auth::login($user);
-
+        
         return redirect('/');
     }
 

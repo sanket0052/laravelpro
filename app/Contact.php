@@ -23,14 +23,4 @@ class Contact extends Model
     	'email',
     	'message' 
     ];
-
-    public function setUpdatedAt($value)
-	{
-	   //Do-nothing
-	}
-
-	public function getUpdatedAtColumn()
-	{
-	    //Do-nothing
-	}
 }

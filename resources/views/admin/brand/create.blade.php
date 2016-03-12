@@ -51,10 +51,10 @@
 								<div class="form-group">
 									{{ Form::label('category_list', 'Categories', array('class' => 'col-md-2 control-label')) }}
 									<div class="col-md-8">
-										@foreach ($allcategory as $category)
+										@foreach ($allcategory as $key => $value)
 											<label class="checkbox-inline">
-												{{ Form::checkbox('category_list[]', $category->id) }}
-												{{ $category->name }}
+												{{ Form::checkbox('category_list[]', $key) }}
+												{{ $value }}
 											</label>
 										@endforeach
 										<br/><br/>

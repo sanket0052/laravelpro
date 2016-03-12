@@ -15,7 +15,6 @@ use Illuminate\Support\Collection;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\HomeController;
 
 class CartController extends Controller
 {
@@ -27,16 +26,7 @@ class CartController extends Controller
      */
     public function index()
     {
-        $mainMenu = new HomeController();
-        $cartdata = $this->cartdata();
-        $cartarray = $cartdata['cartproduct'];
-        $total = $cartdata['total'];
-
-        $mainMenu = $mainMenu->frontendMenu();
-        return view('cart')
-            ->with('mainMenu', $mainMenu)
-            ->with('cartarray', $cartarray)
-            ->with('total', $total);
+        return view('cart');
     }
 
     /**
@@ -57,30 +47,27 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-        if(!Auth::check())
-        {
+        if(!Auth::check()){
             return redirect('auth/userlogin');
         }
+
         $product_id = $request->product_id;
         $products = Product::with('brand')->find($product_id);
         $user = Auth::user();
         $sessiondata = session()->get('cart_session', '0');
 
-        if($sessiondata != 0)
-        {
-            foreach ($sessiondata as $key => $value)
-            {
+        if($sessiondata != 0){
+
+            foreach ($sessiondata as $key => $value){
                 $productIdArr[] = $value['product_id'];
             }
 
-            $allid = collect($sessiondata);
-            $newid = $allid->count()+1;
+            $newid = count($sessiondata)+1;
 
             $productIdArr = collect($productIdArr);
 
-            if(!$productIdArr->contains($products->id))
-            {   
-                $newsession = array(
+            if(!$productIdArr->contains($products->id)){   
+                $newsession = [
                     'name' => $products->name,
                     'thumb' => $products->thumb,
                     'brand' => $products->brand['name'],
@@ -88,16 +75,14 @@ class CartController extends Controller
                     'product_id' => $products->id,
                     'price' => $products->price,
                     'qty' => 1
-                ); 
+                ]; 
 
                 $collection = collect($sessiondata);
                 $collection->put(str_random(10), $newsession);
                 $request->session()->put('cart_session', $collection->all());
             }
-        }
-        else
-        {
-            $cart_array[str_random(10)] = array(
+        }else{
+            $cart_array[str_random(10)] = [
                     'name' => $products->name,
                     'thumb' => $products->thumb,
                     'brand' => $products->brand['name'],
@@ -105,7 +90,7 @@ class CartController extends Controller
                     'product_id' => $products->id,
                     'price' => $products->price,
                     'qty' => 1
-                ); 
+                ]; 
             $request->session()->put('cart_session', $cart_array);
         }
         return redirect('cart');
@@ -145,10 +130,8 @@ class CartController extends Controller
         $rowid = $request->rowid;
         $qty = $request->qty;
         $sessiondata = $request->session()->get('cart_session', '0');
-        foreach ($sessiondata as $key => $value)
-        {
-            if($key == $rowid)
-            {
+        foreach ($sessiondata as $key => $value){
+            if($key == $rowid){
                 $sessiondata[$key]['qty'] = $qty;
             }
         }
@@ -165,20 +148,15 @@ class CartController extends Controller
     public function destroy($id)
     {
         $sessiondata = session()->get('cart_session', '0');
-        foreach ($sessiondata as $key => $value)
-        {
-            if($value['id'] == $id)
-            {
+        foreach ($sessiondata as $key => $value){
+            if($value['id'] == $id){
                 $rowid = $key;
             }
         }
         array_forget($sessiondata, $rowid);
-        if(collect($sessiondata)->isEmpty())
-        {
+        if(collect($sessiondata)->isEmpty()){
             session()->forget('cart_session');
-        }
-        else
-        {
+        }else{
             session()->put('cart_session', $sessiondata);
         }
         return redirect('cart');
@@ -188,36 +166,5 @@ class CartController extends Controller
     {
         session()->forget('cart_session');
         return redirect('cart');
-    }
-
-    public function cartdata()
-    {
-        $sessiondata = session()->get('cart_session', '0');
-        if($sessiondata != 0)
-        {
-            $finaltotal = 0;
-            foreach ($sessiondata as $key => $value)
-            {
-                $total = $value['qty']*$value['price'];
-                $sessiondata[$key]['total'] = $total;
-                $finaltotal += $total;
-            }
-            $cartarray = $sessiondata;
-            $totalproducts = collect($cartarray);
-            $totalproduct = $totalproducts->count();
-            $total = array(
-                'totalprice' => $finaltotal,
-                'totalproduct' => $totalproduct
-            );
-        }
-        else
-        {
-            $cartarray = array();
-            $total = array(
-                'totalprice' => 0,
-                'totalproduct' => 0
-            );
-        }
-        return array('total' => $total, 'cartproduct' => $cartarray);
     }
 }

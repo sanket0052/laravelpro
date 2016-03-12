@@ -26,7 +26,7 @@ Route::get('/', function () {
 |
 */
 
-Route::group(['middleware' => ['web']], function () {
+Route::group(['middleware' => ['web', 'menu', 'cart']], function () {
     Route::get('/', 'HomeController@index')->name('home');
     Route::get('contact', 'HomeController@showContact')->name('contact');
     Route::post('contact','HomeController@storeContact')->name('contact');
@@ -57,7 +57,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('auth/register', 'Auth\AuthController@getRegister');
     Route::post('auth/register', 'Auth\AuthController@postRegister');
 
-    Route::get('admin/adminlogin', 'Admin\AdminController@login');
+    Route::get('admin/adminlogin', 'Auth\AuthController@adminLogin');
     Route::post('auth/adminlogin', 'Auth\AuthController@postLogin');
 });
 

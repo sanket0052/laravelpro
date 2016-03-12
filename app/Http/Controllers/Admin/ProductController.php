@@ -37,10 +37,11 @@ class ProductController extends Controller
      */
     public function index()
     {
-
         $products = Product::with('category', 'brand')->get();
-        return view('admin.product.index')
-            ->with('allproducts', $products);
+
+        return view('admin.product.index', [
+                'allproducts' => $products
+            ]);
     }
 
     /**
@@ -50,17 +51,14 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $allCategories = Category::all();
+        $categoryList = Category::lists('name', 'id')->toArray();
 
-        foreach ($allCategories as $category)
-        {
-            $categoryList[$category->id] = $category->name;
-        }
-        $brandList = array();
+        $brandList = [];
 
-        return view('admin.product.create')
-            ->with('categoryList', $categoryList)
-            ->with('brandList', $brandList);
+        return view('admin.product.create',[
+                'categoryList' => $categoryList,
+                'brandList' => $brandList
+            ]);
     }
 
     /**
@@ -114,23 +112,15 @@ class ProductController extends Controller
             abort(404);
         }
 
-        $allCategories = Category::all();
-        $allbrands = Brand::all();
+        $categoryList = Category::lists('name', 'id')->toArray();
 
-        foreach ($allCategories as $category)
-        {
-            $categoryList[$category->id] = $category->name;
-        }
-
-        foreach ($allbrands as $brand)
-        {
-            $brandList[$brand->id] = $brand->name;
-        }
-
-        return view('admin.product.edit')
-            ->with('brandList', $brandList)
-            ->with('categoryList', $categoryList)
-            ->with('product', $product);
+        $brandList = Brand::lists('name', 'id')->toArray();
+        
+        return view('admin.product.edit', [
+                'brandList' => $brandList,
+                'categoryList' => $categoryList,
+                'product' => $product
+            ]);
     }
 
     /**
@@ -167,7 +157,9 @@ class ProductController extends Controller
         $product->where('id', $id)
                 ->update($data);
 
-        return redirect('admin/product')->with('flash_message', 'Product Updated Successfully!');
+        return redirect('admin/product', [
+                'flash_message' => 'Product Updated Successfully!'
+            ]);
         
     }
 
@@ -190,11 +182,15 @@ class ProductController extends Controller
 
         if($removeProduct)
         {
-            return redirect('admin/product')->with('flash_message', 'Product Deleted Successfully!');
+            return redirect('admin/product', [
+                    'flash_message' => 'Product Deleted Successfully!'
+                ]);
         }
         else
         {
-            return redirect('admin/product')->with('flash_message', 'Error Accured While Deleting Brand. Please try again.');
+            return redirect('admin/product', [
+                    'flash_message'=> 'Error Accured While Deleting Brand. Please try again.'
+                ]); 
         }
         
     }
@@ -207,13 +203,11 @@ class ProductController extends Controller
     public function getBrandList(Request $request)
     {   
         $category_id = $request->categoryid;
+
         $categoryarray = Category::with('brands')->find($category_id);
         
-        foreach ($categoryarray->brands as $brand)
-        {   
-            $brandlistarray[$brand->id] = $brand->name;
-        }
-
+        $brandlistarray = $categoryarray->brands->lists('name', 'id')->toArray();
+        
         if(!empty($brandlistarray))
         {
             return $brandlistarray;
@@ -241,7 +235,8 @@ class ProductController extends Controller
         $thumb = Image::make(file_get_contents(public_path().$this->productImagePath.'/'.$imageFileName))->resize(100, null, function ($constraint) {
                 $constraint->aspectRatio();
             });
-            $thumb->save(public_path().$this->productThumbPath.'/'.$thumbFileName);
+
+        $thumb->save(public_path().$this->productThumbPath.'/'.$thumbFileName);
 
         $filesName = array(
                 'imageName' => $imageFileName,

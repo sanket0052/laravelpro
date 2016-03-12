@@ -208,7 +208,6 @@
 									<span class="glyphicon glyphicon-shopping-cart"></span>
 									<span class="cart-item-quantity"></span>
 								</button>
-
 								<div class="btn-group" role="group">
 									<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
 										Shopping cart
@@ -217,33 +216,35 @@
 									<ul class="dropdown-menu" role="menu">
 										<li>
 											<div class="lnt-cart-products">
-												{{ Auth::check() == 1 ? $total['totalproduct'] : 0 }} products added. 
-												<span class="lnt-cart-total"><i class="fa fa-inr"></i> {{ Auth::check() == 1 ? $total['totalprice'] : 0 }}</span>
+												{{ Auth::check() == 1 ? $cartdata['total']['totalproduct'] : 0 }} products added. 
+												<span class="lnt-cart-total"><i class="fa fa-inr"></i> {{ Auth::check() == 1 ? $cartdata['total']['totalprice'] : 0 }}</span>
 											</div>
 										</li>
 										@if(Auth::check())
-											@foreach($cartarray as $key => $cartdata)
-											<li>
-												<div class="lnt-cart-products">
-													{{ Html::image('/assets/images/uploads/products/thumbils/'.$cartdata['thumb'], $cartdata['name'], array('class' => 'cart-image', 'width' => '60px', 'height' => '60px')) }}
-													<span class="lnt-product-info">
-														<span class="lnt-product-name">
-															{{ $cartdata['name'] }}
-														</span>
-														<span class="lnt-product-price">
-															<del><i class="fa fa-inr"></i> {{ $cartdata['price']+50 }} </del> 
-																&rarr; {{ $cartdata['price'] }}
-														</span>
-														{{ Form::open(array('url' => 'cart/'.$cartdata['id'])) }}
-															{{ Form::hidden('_method', 'DELETE') }}
+											@if(!is_null($cartdata))
+												@foreach($cartdata['cartproduct'] as $key => $cartvalue)
+												<li>
+													<div class="lnt-cart-products">
+														{{ Html::image('/assets/images/uploads/products/thumbils/'.$cartvalue['thumb'], $cartvalue['name'], array('class' => 'cart-image', 'width' => '60px', 'height' => '60px')) }}
+														<span class="lnt-product-info">
+															<span class="lnt-product-name">
+																{{ $cartvalue['name'] }}
+															</span>
+															<span class="lnt-product-price">
+																<del><i class="fa fa-inr"></i> {{ $cartvalue['price']+50 }} </del> 
+																	&rarr; {{ $cartvalue['price'] }}
+															</span>
+															{{ Form::open(array('url' => 'cart/'.$cartvalue['id'])) }}
+																{{ Form::hidden('_method', 'DELETE') }}
 
-															{{ Form::button('Remove?', ['class' => 'lnt-product-remove btn-link', 'type' => 'submit'] ) }}
-															{{ Form::hidden('rowid', $key ) }}
-														{{ Form::close() }}
-													</span>
-												</div>
-											</li>
-											@endforeach
+																{{ Form::button('Remove?', ['class' => 'lnt-product-remove btn-link', 'type' => 'submit'] ) }}
+																{{ Form::hidden('rowid', $key ) }}
+															{{ Form::close() }}
+														</span>
+													</div>
+												</li>
+												@endforeach
+											@endif
 										@endif
 										<li class="lnt-cart-actions">
 											<a href="{{ URL::to('cart/') }}" class="lnt-view-cart-btn">View cart</a>

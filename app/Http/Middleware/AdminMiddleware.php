@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
 
-class DashboardMiddleware
+class AdminMiddleware
 {
     /**
      * Handle an incoming request.
@@ -17,18 +17,12 @@ class DashboardMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if(Auth::check() && Auth::user()->isAdmin() )
-        {
+        if(Auth::check() && Auth::user()->isAdmin()){
             return $next($request);
-        }
-        else
-        {
-            if(Auth::check())
-            {
+        }else{
+            if(Auth::check()){
                 return redirect('/');
-            }
-            else
-            {
+            }else{
                 return redirect('admin/adminlogin');
             }
         }

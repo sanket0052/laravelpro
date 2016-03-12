@@ -14,8 +14,6 @@ class Brand extends Model
      */
     protected $table = 'brands'; // put your table name here
 
-    
-
      /**
      * The attributes that are mass assignable.
      *
@@ -28,7 +26,6 @@ class Brand extends Model
         'logo',
         'thumb',
     ];
-        // 'category_list',
 
     public function category()
     {

@@ -31,19 +31,19 @@
 						</div>
 						<!-- Display flashdata -->
 
-						{{ Form::open(array('url' => 'admin/category', 'role' => 'form')) }}
+						{{ Form::open(['url' => 'admin/category', 'role' => 'form']) }}
 						{{ csrf_field() }}
 							<div class="col-md-6">
 								<div class="form-group">
 									{{ Form::label('name', 'Category Name') }}
 
-									{{ Form::text('name', '', array('class' => 'form-control', 'placeholder' => 'Add Category Name here...')) }}
+									{{ Form::text('name', '', ['class' => 'form-control', 'placeholder' => 'Add Category Name here...']) }}
 								</div>
 
 								<div class="form-group">
 									{{ Form::label('parent_id', 'Parent Category') }}
 									
-									{{ Form::select('parent_id', $categoryList, '', array('class' => 'form-control', 'placeholder' => 'Pick a Parent Category...')) }}
+									{{ Form::select('parent_id', $categoryList, '', ['class' => 'form-control', 'placeholder' => 'Pick a Parent Category...']) }}
 								</div>
 
 								<div class="form-group">
@@ -66,19 +66,19 @@
 								<div class="form-group">
 									{{ Form::label('description', 'Category Description') }}
 
-									{{ Form::textarea('description', '', array('class' => 'form-control', 'placeholder' =>  'Add Category Description here...', 'rows' => '5', 'cols' => '25')) }}
+									{{ Form::textarea('description', '', ['class' => 'form-control', 'placeholder' =>  'Add Category Description here...', 'rows' => '5', 'cols' => '25']) }}
 								</div>
 
 								<div class="form-group">
 									{{ Form::label('urlname', 'Category URL Name') }}
 
-									{{ Form::text('urlname', '', array('class' => 'form-control', 'placeholder' => 'Add Category URL Name here...')) }}
+									{{ Form::text('urlname', '', ['class' => 'form-control', 'placeholder' => 'Add Category URL Name here...']) }}
 								</div>
 							</div>
 							<div class="clearfix"></div>
 							<hr>
 							<div class="col-md-6 form-footer">
-								{{ Form::submit('Add Category', array('class' => 'btn btn-primary')) }}
+								{{ Form::submit('Add Category', ['class' => 'btn btn-primary']) }}
 
 							</div>
 						{{ Form::close() }}

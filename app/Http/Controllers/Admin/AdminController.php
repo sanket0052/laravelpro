@@ -21,13 +21,4 @@ class AdminController extends Controller
     {
         return view('admin.index');
     }
-    
-    /**
-     * Admin Login 
-     * @return [type] [description]
-     */
-    public function login()
-    {
-    	return view('admin.login');
-    }
 }

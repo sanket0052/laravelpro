@@ -22,14 +22,12 @@ class CategoryController extends Controller
     {   
         $allCategories = Category::with('brands', 'product')->get();
 
-        foreach ($allCategories as $key => $value)
-        {
-            $categoryList[$value->id] = $value->name;
-        }
+        $categoryList = Category::lists('name', 'id')->toArray();
 
-        return view('admin.category.index')
-            ->with('allcategory', $allCategories)
-            ->with('categoryList', $categoryList);
+        return view('admin.category.index', [
+                'allcategory' => $allCategories,
+                'categoryList' => $categoryList
+            ]);
     }
 
     /**
@@ -39,13 +37,11 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $allCategories = Category::get(['id', 'name']);
+        $categoryList = Category::lists('name', 'id')->toArray();
 
-        foreach ($allCategories as $key => $value)
-        {
-            $categoryList[$value->id] = $value->name;
-        }
-        return view('admin.category.create')->with('categoryList', $categoryList);
+        return view('admin.category.create', [
+                'categoryList' => $categoryList
+            ]);
     }
 
     /**
@@ -60,7 +56,9 @@ class CategoryController extends Controller
 
         $category = Category::create($requestArr);
 
-        return redirect('admin/category')->with('flash_message', 'Category Added Successfully!');
+        return redirect('admin/category', [
+                'flash_message' => 'Category Added Successfully!'
+            ]);
     }
 
     /**
@@ -91,15 +89,12 @@ class CategoryController extends Controller
             abort(404);
         }
         
-        foreach ($allCategories as $key => $value)
-        {
-            $categoryList[$value->id] = $value->name;
-        }
+        $categoryList = $allCategories->lists('name', 'id')->toArray();
 
-        return view('admin.category.edit')
-            ->with('category', $category)
-            ->with('categoryList', $categoryList);        
-    
+        return view('admin.category.edit', [
+                'category' => $category,
+                'categoryList' => $categoryList
+            ]);
     }
 
     /**
@@ -122,8 +117,9 @@ class CategoryController extends Controller
         
         $category->update($data);
 
-        return redirect('admin/category')->with('flash_message', 'Category Updated Successfully!');
-
+        return redirect('admin/category', [
+                'flash_message' => 'Category Updated Successfully!'
+            ]);
     }
 
     /**
@@ -143,6 +139,8 @@ class CategoryController extends Controller
 
         $category->destroy($id);
 
-        return redirect('admin/category')->with('flash_message', 'Category Deleted Successfully!');
+        return redirect('admin/category', [
+                'flash_message' => 'Category Deleted Successfully!'
+            ]);
     }
 }

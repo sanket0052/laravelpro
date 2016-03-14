@@ -87,17 +87,6 @@ class BrandController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -171,9 +160,13 @@ class BrandController extends Controller
             abort(404);
         }
 
-        $brandResult = $this->deleteBrand($id);
+        $brandLogoPath = public_path($this->destinationLogoPath."/".$brand->logo);
+        $brandThumbPath = public_path($this->destinationLogoThumbPath."/".$brand->thumb);
 
-        if($brandResult){
+        File::delete($brandLogoPath, $brandThumbPath);
+        $brand->destroy($id);
+
+        if($brand){
             return Redirect::to('admin/brand')
                 ->with('flash_message', 'Brand Deleted Successfully!');
         }else{
@@ -209,24 +202,5 @@ class BrandController extends Controller
             'logo' => $logoFileName,
             'thumb' => $thumbFileName
         ];
-    }
-
-    /**
-     * Delete the brand and its logo and its thumb file.
-     * @param  int $id Brand id.
-     * @return boolean     return the booleand.
-     */
-    protected function deleteBrand($id)
-    {
-        $brand = Brand::find($id);
-        $brandLogo = $brand->logo;
-        $brandThumb = $brand->thumb;
-
-        $brandLogoPath = public_path($this->destinationLogoPath."/".$brandLogo);
-        $brandThumbPath = public_path($this->destinationLogoThumbPath."/".$brandThumb);
-
-        File::delete($brandLogoPath, $brandThumbPath);
-        $brand->destroy($id);
-        return true;
     }
 }

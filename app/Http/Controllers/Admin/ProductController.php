@@ -85,17 +85,6 @@ class ProductController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        // 
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -170,9 +159,13 @@ class ProductController extends Controller
             abort(404);
         }
 
-        $removeProduct = $this->deleteProduct($id);
+        $productImagePath = public_path($this->productImagePath."/".$product->image);
+        $productThumbPath = public_path($this->productThumbPath."/".$product->thumb);
 
-        if($removeProduct){
+        File::delete($productImagePath, $productThumbPath);
+        $product->destroy($id);
+
+        if($product){
             return Redirect::to('admin/product')
                 ->with('flash_message', 'Product Deleted Successfully!');
         }else{
@@ -228,21 +221,3 @@ class ProductController extends Controller
             'thumb' => $thumbFileName
         ];
     }
-
-    /**
-     * Delete the specify product and its image and thumb file. 
-     * @param  int $id pass the product id
-     * @return boolean     return the boolean true/false.
-     */
-    protected function deleteProduct($id)
-    {
-        $product = Product::find($id);
-
-        $productImagePath = public_path($this->productImagePath."/".$product->image);
-        $productThumbPath = public_path($this->productThumbPath."/".$product->thumb);
-
-        File::delete($productImagePath, $productThumbPath);
-        $product->destroy($id);
-        return true;
-    }
-}

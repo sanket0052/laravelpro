@@ -70,16 +70,25 @@ class AuthController extends Controller
 
     protected function getLogin()
     {
+        if(Auth::check()){
+            return redirect('admin/dashboard');
+        }
         return view('auth.login');
     }
     
     protected function adminLogin()
     {
+        if(Auth::check()){
+            return redirect('admin/dashboard');
+        }
         return view('admin.login');
     }
     
     protected function getRegister()
     {
+        if(Auth::check()){
+            return redirect('admin/dashboard');
+        }
         return view('auth.register');
     }
 
@@ -127,6 +136,7 @@ class AuthController extends Controller
     protected function postRegister(UserRegister $request)
     {
         $request['password'] = Hash::make($request['password']);
+        
         $user = User::create($request->all());
         Auth::login($user);
         

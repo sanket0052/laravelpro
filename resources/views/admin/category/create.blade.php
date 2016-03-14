@@ -18,7 +18,7 @@
 
 						<!-- Display flashdata -->
 						<div class="col-md-12">
-							@if (count($errors) > 0)
+							@if ($errors->any())
 								<div class="alert alert-danger" >
 								<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 									<ul>

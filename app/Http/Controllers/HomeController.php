@@ -19,8 +19,8 @@ class HomeController extends Controller
 	{
 		$products = Product::with('category', 'brand')->get();
     	return view('home', [
-    			'products'=> $products,
-    		]);
+			'products'=> $products,
+		]);
 	}
 	
 	public function showContact()
@@ -31,14 +31,14 @@ class HomeController extends Controller
 	public function storeContact(ContactRequest $request){
 
 		// Get all the data and store it inside Store Variable
-		$contactArr = $request->all();
+		$data = $request->all();
 
 		// Insert Data into Contact Table
-		$contact = Contact::create($contactArr);
+		$contact = Contact::create($data);
 
 		return redirect('contact', [
-				'success' => 'Submited Query Successfully.'
-			]);
+			'success' => 'Submited Query Successfully.'
+		]);
 	}
 }
 	

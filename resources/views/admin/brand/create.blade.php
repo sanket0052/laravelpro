@@ -18,7 +18,7 @@
 						<div class="col-lg-12">
 
 							<!-- Display flashdata -->
-							@if(count($errors) > 0)
+							@if($errors->any())
 								<div class="alert alert-danger" >
 								<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 									<ul>
@@ -34,22 +34,22 @@
 							{{ csrf_field() }}
 
 								<div class="form-group">
-									{{ Form::label('name', 'Brand Name', array('class' => 'col-md-2 control-label')) }}
+									{{ Form::label('name', 'Brand Name', ['class' => 'col-md-2 control-label']) }}
 									<div class="col-md-8">
-										{{ Form::text('name', '', array('class' => 'form-control', 'placeholder' => 'Add Brand Name here...')) }}
+										{{ Form::text('name', '', ['class' => 'form-control', 'placeholder' => 'Add Brand Name here...']) }}
 									</div>
 								</div>
 
 								<div class="form-group">
-									{{ Form::label('description', 'Brand Description', array('class' => 'col-md-2 control-label')) }}
+									{{ Form::label('description', 'Brand Description', ['class' => 'col-md-2 control-label']) }}
 
 									<div class="col-md-8">
-										{{ Form::textarea('description', '', array('class' => 'form-control', 'placeholder' =>  'Add Brand Description here...', 'rows' => '5', 'cols' => '25')) }}
+										{{ Form::textarea('description', '', ['class' => 'form-control', 'placeholder' =>  'Add Brand Description here...', 'rows' => '5', 'cols' => '25']) }}
 									</div>
 								</div>
 
 								<div class="form-group">
-									{{ Form::label('category_list', 'Categories', array('class' => 'col-md-2 control-label')) }}
+									{{ Form::label('category_list', 'Categories', ['class' => 'col-md-2 control-label']) }}
 									<div class="col-md-8">
 										@foreach ($allcategory as $key => $value)
 											<label class="checkbox-inline">
@@ -65,7 +65,7 @@
 								</div>
 
 								<div class="form-group">
-									{{ Form::label('status', 'Brand Status', array('class' => 'col-md-2 control-label')) }}
+									{{ Form::label('status', 'Brand Status', ['class' => 'col-md-2 control-label']) }}
 
 									<div class="col-md-8">
 										<div class="radio">
@@ -82,7 +82,7 @@
 								</div>
 							
 								<div class="form-group">
-									{{ Form::label('logo', 'Brand Logo', array('class' => 'col-md-2 control-label')) }}
+									{{ Form::label('logo', 'Brand Logo', ['class' => 'col-md-2 control-label']) }}
 
 									<div class="col-md-8">
 										{{ Form::file('logo') }}
@@ -91,7 +91,7 @@
 
 								<hr>
 								<div class="col-md-offset-2">
-									{{ Form::submit('Add Brand', array('class' => 'btn btn-primary')) }}
+									{{ Form::submit('Add Brand', ['class' => 'btn btn-primary']) }}
 								</div>
 							{{ Form::close() }}
 						</div>

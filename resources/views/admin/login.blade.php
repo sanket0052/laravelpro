@@ -43,23 +43,32 @@
 							    <div class="alert alert-danger" ><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>{{ Session::get('error') }}</div>
 							@endif
 
-							@if (count($errors) > 0)
+							@if ($errors->any())
 								@foreach ($errors->all() as $error)
-									<div class="alert alert-danger" ><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>{{ $error }}</div>
+									<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>{{ $error }}</div>
 								@endforeach
 							@endif
 							<!-- Display flashdata -->
 							
 							<div class="form-group">
-								{{ Form::email('email', '', ['class' => 'form-control', 'placeholder' => 'Email', 'autofocus' => 'autofocus']) }}
+								{{ Form::email('email', '', [
+										'class' => 'form-control', 
+										'placeholder' => 'Email', 
+										'autofocus' => 'autofocus'
+								]) }}
 							</div>
 							
 							<div class="form-group">
-								{{ Form::password('password', ['class' => 'form-control', 'placeholder' => 'Password']) }}
+								{{ Form::password('password', [
+										'class' => 'form-control', 
+										'placeholder' => 'Password'
+								]) }}
 							</div>
 
 							{{ Form::hidden('type', 'admin') }}
-							{{ Form::submit('Login', ['class' => 'btn btn-lg btn-success btn-block']) }}
+							{{ Form::submit('Login', [
+									'class' => 'btn btn-lg btn-success btn-block'
+							]) }}
 
 						{{ Form::close() }}
 					</div>

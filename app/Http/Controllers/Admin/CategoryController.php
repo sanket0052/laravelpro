@@ -25,9 +25,9 @@ class CategoryController extends Controller
         $categoryList = Category::lists('name', 'id')->toArray();
 
         return view('admin.category.index', [
-                'allcategory' => $allCategories,
-                'categoryList' => $categoryList
-            ]);
+            'allcategory' => $allCategories,
+            'categoryList' => $categoryList
+        ]);
     }
 
     /**
@@ -40,8 +40,8 @@ class CategoryController extends Controller
         $categoryList = Category::lists('name', 'id')->toArray();
 
         return view('admin.category.create', [
-                'categoryList' => $categoryList
-            ]);
+            'categoryList' => $categoryList
+        ]);
     }
 
     /**
@@ -52,13 +52,12 @@ class CategoryController extends Controller
      */
     public function store(CategoryRequest $request)
     {
-        $requestArr = $request->all();
+        $data = $request->all();
 
-        $category = Category::create($requestArr);
+        $category = Category::create($data);
 
-        return redirect('admin/category', [
-                'flash_message' => 'Category Added Successfully!'
-            ]);
+        return Redirect::to('admin/category')
+            ->with('flash_message', 'Category Added Successfully!');
     }
 
     /**
@@ -84,17 +83,16 @@ class CategoryController extends Controller
 
         $category = $allCategories->find($id);
         
-        if(!$category)
-        {
+        if(!$category){
             abort(404);
         }
         
         $categoryList = $allCategories->lists('name', 'id')->toArray();
 
         return view('admin.category.edit', [
-                'category' => $category,
-                'categoryList' => $categoryList
-            ]);
+            'category' => $category,
+            'categoryList' => $categoryList
+        ]);
     }
 
     /**
@@ -108,8 +106,7 @@ class CategoryController extends Controller
     {
         $category = Category::find($id);
 
-        if(!$category)
-        {
+        if(!$category){
             abort(404);
         }
 
@@ -117,9 +114,8 @@ class CategoryController extends Controller
         
         $category->update($data);
 
-        return redirect('admin/category', [
-                'flash_message' => 'Category Updated Successfully!'
-            ]);
+        return Redirect::to('admin/category')
+            ->with('flash_message', 'Category Updated Successfully!');
     }
 
     /**
@@ -132,15 +128,13 @@ class CategoryController extends Controller
     {
         $category = Category::find($id);
 
-        if(!$category)
-        {
+        if(!$category){
             abort(404);
         }
 
         $category->destroy($id);
 
-        return redirect('admin/category', [
-                'flash_message' => 'Category Deleted Successfully!'
-            ]);
+        return redirect('admin/category')
+            ->with('flash_message', 'Category Deleted Successfully!');
     }
 }

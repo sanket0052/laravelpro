@@ -18,7 +18,7 @@
 						<div class="col-lg-12">
 
 							<!-- Display flashdata -->
-							@if (count($errors) > 0)
+							@if ($errors->any())
 								<div class="alert alert-danger" >
 								<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 									<ul>
@@ -48,18 +48,18 @@
 									<div class="tab-pane fade in active" id="general">
 									<br/>
 										<div class="form-group">
-											{{ Form::label('name', 'Product Name', array('class' => 'col-md-2 control-label')) }}
+											{{ Form::label('name', 'Product Name', ['class' => 'col-md-2 control-label']) }}
 											<div class="col-md-8">
-												{{ Form::text('name', '', array('class' => 'form-control', 'placeholder' => 'Add Product Name here...')) }}
+												{{ Form::text('name', '', ['class' => 'form-control', 'placeholder' => 'Add Product Name here...']) }}
 											</div>
 										</div>
 
 										<div class="form-group">
-											{{ Form::label('category_id', 'Product Category', array('class' => 'col-md-2 control-label')) }}
+											{{ Form::label('category_id', 'Product Category', ['class' => 'col-md-2 control-label']) }}
 											<div class="col-md-8">
 												<div class="row">
 													<div class="col-md-9">
-														{{ Form::select('category_id', $categoryList, '', array('class' => 'form-control', 'id' => 'categorylist', 'placeholder' => 'Pick a Category...')) }}
+														{{ Form::select('category_id', $categoryList, '', ['class' => 'form-control', 'id' => 'categorylist', 'placeholder' => 'Pick a Category...']) }}
 														<em class="pull-right ">Depend on you category selection brand list will generate.</em>
 													</div>
 
@@ -71,11 +71,11 @@
 										</div>
 
 										<div class="form-group">
-											{{ Form::label('brand_id', 'Product Brand', array('class' => 'col-md-2 control-label')) }}
+											{{ Form::label('brand_id', 'Product Brand', ['class' => 'col-md-2 control-label']) }}
 											<div class="col-md-8">
 												<div class="row">
 													<div class="col-md-9">
-														{{ Form::select('brand_id', $brandList, '', array('class' => 'form-control', 'id' => 'brandlist', 'disabled' => true, 'placeholder' => 'Pick a Brand...')) }}
+														{{ Form::select('brand_id', $brandList, '', ['class' => 'form-control', 'id' => 'brandlist', 'disabled' => true, 'placeholder' => 'Pick a Brand...']) }}
 
 													</div>
 													<div class="col-md-3">
@@ -93,10 +93,10 @@
 										</div>
 
 										<div class="form-group">
-											{{ Form::label('description', 'Product Description', array('class' => 'col-md-2 control-label')) }}
+											{{ Form::label('description', 'Product Description', ['class' => 'col-md-2 control-label']) }}
 
 											<div class="col-md-8">
-												{{ Form::textarea('description', '', array('class' => 'form-control', 'placeholder' =>  'Add Product Description here...', 'rows' => '5', 'cols' => '25')) }}
+												{{ Form::textarea('description', '', ['class' => 'form-control', 'placeholder' =>  'Add Product Description here...', 'rows' => '5', 'cols' => '25']) }}
 											</div>
 										</div>
 									</div>
@@ -105,20 +105,20 @@
 										<br/>
 
 										<div class="form-group">
-											{{ Form::label('model', 'Product Model', array('class' => 'col-md-2 control-label')) }}
+											{{ Form::label('model', 'Product Model', ['class' => 'col-md-2 control-label']) }}
 											<div class="col-md-8">
-												{{ Form::text('model', '', array('class' => 'form-control', 'placeholder' => 'Add Product Model here...', 'tab-index')) }}
+												{{ Form::text('model', '', ['class' => 'form-control', 'placeholder' => 'Add Product Model here...', 'tab-index']) }}
 											</div>
 										</div>
 										<div class="row">
 											<div class="col-md-6">
 												<div class="form-group">
-													{{ Form::label('stock', 'Product Stock', array('class' => 'col-md-4 control-label')) }}
+													{{ Form::label('stock', 'Product Stock', ['class' => 'col-md-4 control-label']) }}
 													<div class="col-md-8">
 														<div class="col-md-12">
 															<div class="form-group input-group">
 																<span class="input-group-addon"><i class="fa fa-shopping-cart"></i></span>
-																{{ Form::text('stock', '', array('class' => 'form-control', 'placeholder' => 'Add Product Stock here...', 'tab-index')) }}
+																{{ Form::text('stock', '', ['class' => 'form-control', 'placeholder' => 'Add Product Stock here...', 'tab-index']) }}
 															</div>
 														</div>
 													</div>
@@ -127,7 +127,7 @@
 
 											<div class="col-md-6">
 												<div class="form-group">
-													{{ Form::label('status', 'Product Status', array('class' => 'col-md-4 control-label')) }}
+													{{ Form::label('status', 'Product Status', ['class' => 'col-md-4 control-label']) }}
 
 													<div class="col-md-8">
 														<div class="radio">
@@ -148,12 +148,12 @@
 										<div class="row">
 											<div class="col-md-6">
 												<div class="form-group">
-													{{ Form::label('price', 'Product Price', array('class' => 'col-md-4 control-label')) }}
+													{{ Form::label('price', 'Product Price', ['class' => 'col-md-4 control-label']) }}
 													<div class="col-md-8">
 														<div class="col-md-12">
 															<div class="form-group input-group">
 																<span class="input-group-addon"><i class="fa fa-inr"></i></span>
-																{{ Form::text('price', '', array('class' => 'form-control', 'placeholder' => 'Add Product Price here...', 'tab-index')) }}
+																{{ Form::text('price', '', ['class' => 'form-control', 'placeholder' => 'Add Product Price here...', 'tab-index']) }}
 																<span class="input-group-addon">.00</span>
 															</div>
 														</div>
@@ -163,7 +163,7 @@
 										</div>
 											
 										<div class="form-group">
-											{{ Form::label('image', 'Product Image', array('class' => 'col-md-2 control-label')) }}
+											{{ Form::label('image', 'Product Image', ['class' => 'col-md-2 control-label']) }}
 
 											<div class="col-md-8">
 												{{ Form::file('image') }}
@@ -174,7 +174,7 @@
 								</div>
 							<hr>
 							<div class="col-md-offset-2">
-								{{ Form::submit('Add Product', array('class' => 'btn btn-primary')) }}
+								{{ Form::submit('Add Product', ['class' => 'btn btn-primary']) }}
 
 							</div>
 						{{ Form::close() }}

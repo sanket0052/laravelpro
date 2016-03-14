@@ -53,8 +53,8 @@ class CategoryController extends Controller
     {
         $categories = Category::with('product')->find($id);
         return view('product', [
-                'categories' => $categories
-            ]);
+            'categories' => $categories
+        ]);
     }
 
     /**

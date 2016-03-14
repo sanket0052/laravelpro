@@ -17,7 +17,7 @@
 
 						<!-- Display flashdata -->
 						<div class="col-md-12">
-							@if (count($errors) > 0)
+							@if ($errors->any())
 								<div class="alert alert-danger" >
 								<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 									<ul>
@@ -30,18 +30,18 @@
 						</div>
 						<!-- Display flashdata -->
 
-						{{ Form::open(array('url' => 'admin/category/'.$category->id, 'role' => 'form', 'method' => 'PUT')) }}
+						{{ Form::model($category, array('route' => ['admin.category.update', $category->id], 'role' => 'form', 'method' => 'PUT')) }}
 						{{ csrf_field() }}
 							<div class="col-md-6">
 								<div class="form-group">
 									{{ Form::label('name', 'Category Name') }}
 
-									{{ Form::text('name', $category->name, array('class' => 'form-control', 'placeholder' => 'Add Category Name here...')) }}
+									{{ Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Add Category Name here...']) }}
 								</div>
 
 								<div class="form-group">
 									{{ Form::label('parent_id', 'Parent Category') }}
-									{{ Form::select('parent_id', $categoryList, $category->parent_id, array('class' => 'form-control', 'placeholder' => 'Pick a Parent Category...')) }}
+									{{ Form::select('parent_id', $categoryList, null, ['class' => 'form-control', 'placeholder' => 'Pick a Parent Category...']) }}
 								</div>
 
 								<div class="form-group">
@@ -64,19 +64,19 @@
 								<div class="form-group">
 									{{ Form::label('description', 'Category Description') }}
 
-									{{ Form::textarea('description', $category->description, array('class' => 'form-control', 'placeholder' =>  'Add Category Description here...', 'rows' => '5', 'cols' => '25')) }}
+									{{ Form::textarea('description', null, ['class' => 'form-control', 'placeholder' =>  'Add Category Description here...', 'rows' => '5', 'cols' => '25']) }}
 								</div>
 
 								<div class="form-group">
 									{{ Form::label('urlname', 'Category URL Name') }}
 
-									{{ Form::text('urlname', $category->urlname, array('class' => 'form-control', 'placeholder' => 'Add Category URL Name here...')) }}
+									{{ Form::text('urlname', null, ['class' => 'form-control', 'placeholder' => 'Add Category URL Name here...']) }}
 								</div>
 							</div>
 							<div class="clearfix"></div>
 							<hr>
 							<div class="col-md-6 form-footer">
-								{{ Form::submit('Update Category', array('class' => 'btn btn-primary')) }}
+								{{ Form::submit('Update Category', ['class' => 'btn btn-primary']) }}
 
 							</div>
 						{{ Form::close() }}

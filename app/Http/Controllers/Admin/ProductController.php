@@ -40,8 +40,8 @@ class ProductController extends Controller
         $products = Product::with('category', 'brand')->get();
 
         return view('admin.product.index', [
-                'allproducts' => $products
-            ]);
+            'allproducts' => $products
+        ]);
     }
 
     /**
@@ -53,12 +53,10 @@ class ProductController extends Controller
     {
         $categoryList = Category::lists('name', 'id')->toArray();
 
-        $brandList = [];
-
         return view('admin.product.create',[
-                'categoryList' => $categoryList,
-                'brandList' => $brandList
-            ]);
+            'categoryList' => $categoryList,
+            'brandList' => []
+        ]);
     }
 
     /**
@@ -70,20 +68,20 @@ class ProductController extends Controller
     public function store(ProductRequest $request)
     {
         $data = $request->all();
+        $collection = collect($data);
 
         $data['brand_id'] = $request->brand_id =='' ? 0 : $request->brand_id;
-
         $image = $request->file('image');
-        // Store the product logo in upload folder
-        $storeImage = $this->saveProductImage($image);
 
-        $data['image'] = $storeImage['imageName'];
-        $data['thumb'] = $storeImage['imageThumbName'];
-            
+        $data = $collection
+                ->merge($this->saveProductImage($image))
+                ->toArray();
+
         // Store data in Database
         $product = Product::create($data);
 
-        return redirect('admin/product')->with('flash_message', 'Product Added Successfully!');
+        return Redirect::to('admin/product')
+            ->with('flash_message', 'Product Added Successfully!');
     }
 
     /**
@@ -107,8 +105,7 @@ class ProductController extends Controller
     {
         $product = Product::with('category', 'brand')->find($id);
         
-        if(!$product)
-        {
+        if(!$product){
             abort(404);
         }
 
@@ -117,10 +114,10 @@ class ProductController extends Controller
         $brandList = Brand::lists('name', 'id')->toArray();
         
         return view('admin.product.edit', [
-                'brandList' => $brandList,
-                'categoryList' => $categoryList,
-                'product' => $product
-            ]);
+            'brandList' => $brandList,
+            'categoryList' => $categoryList,
+            'product' => $product
+        ]);
     }
 
     /**
@@ -134,8 +131,7 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
 
-        if(!$product)
-        {
+        if(!$product){
             abort(404);
         }
 
@@ -145,22 +141,19 @@ class ProductController extends Controller
 
         $image = $request->file('image');
         
-        if ($request->hasFile('image'))
-        {
-            $storeProductImage = $this->saveProductImage($image);
-
-            $data['image'] = $storeProductImage['imageName'];
-            $data['thumb'] = $storeProductImage['imageThumbName'];
+        if ($request->hasFile('image')){
+            $collection = collect($data);
+            $data = $collection
+                    ->merge($this->saveProductImage($image))
+                    ->toArray();
         }
 
         // Store data in Database
         $product->where('id', $id)
                 ->update($data);
 
-        return redirect('admin/product', [
-                'flash_message' => 'Product Updated Successfully!'
-            ]);
-        
+        return Redirect::to('admin/product')
+            ->with('flash_message', 'Product Updated Successfully!');
     }
 
     /**
@@ -172,27 +165,20 @@ class ProductController extends Controller
     public function destroy($id)
     {
         $product = Product::find($id);
-
-        if($product)
-        {
+        
+        if(!$product){
             abort(404);
         }
 
-        $removeProduct = $this->deleteBrand($id);
+        $removeProduct = $this->deleteProduct($id);
 
-        if($removeProduct)
-        {
-            return redirect('admin/product', [
-                    'flash_message' => 'Product Deleted Successfully!'
-                ]);
+        if($removeProduct){
+            return Redirect::to('admin/product')
+                ->with('flash_message', 'Product Deleted Successfully!');
+        }else{
+            return Redirect::to('admin/product')
+                ->with('flash_message', 'Error Accured While Deleting Brand. Please try again.');
         }
-        else
-        {
-            return redirect('admin/product', [
-                    'flash_message'=> 'Error Accured While Deleting Brand. Please try again.'
-                ]); 
-        }
-        
     }
 
     /**
@@ -208,12 +194,9 @@ class ProductController extends Controller
         
         $brandlistarray = $categoryarray->brands->lists('name', 'id')->toArray();
         
-        if(!empty($brandlistarray))
-        {
+        if(!empty($brandlistarray)){
             return $brandlistarray;
-        }
-        else
-        {
+        }else{
             return 0;
         }
     }
@@ -227,23 +210,23 @@ class ProductController extends Controller
     {
         $imageExtension = $file->getClientOriginalExtension();
         $imageFileName = strtotime("now").'.'.$imageExtension;
-        $file->move(public_path().$this->productImagePath, $imageFileName);
+        $file->move(public_path($this->productImagePath, $imageFileName));
 
         $thumbFileName = strtotime("now").'_thumb.'.$imageExtension;
 
         // Create Logo Thumb 
-        $thumb = Image::make(file_get_contents(public_path().$this->productImagePath.'/'.$imageFileName))->resize(100, null, function ($constraint) {
-                $constraint->aspectRatio();
-            });
+        $thumb = Image::make(
+                file_get_contents(public_path($this->productImagePath.'/'.$imageFileName)))
+                    ->resize(100, null, function ($constraint) {
+                        $constraint->aspectRatio();
+                });
 
-        $thumb->save(public_path().$this->productThumbPath.'/'.$thumbFileName);
+        $thumb->save(public_path($this->productThumbPath.'/'.$thumbFileName));
 
-        $filesName = array(
-                'imageName' => $imageFileName,
-                'imageThumbName' => $thumbFileName
-            );
-
-        return $filesName;
+        return [
+            'image' => $imageFileName,
+            'thumb' => $thumbFileName
+        ];
     }
 
     /**
@@ -253,11 +236,11 @@ class ProductController extends Controller
      */
     protected function deleteProduct($id)
     {
-        $product = Brand::find($id);
-        $productImage = $product->image;
-        $productThumb = $product->thumb;
-        $productImagePath = public_path().$this->productImagePath."/".$productImage;
-        $productThumbPath = public_path().$this->productThumbPath."/".$productThumb;
+        $product = Product::find($id);
+
+        $productImagePath = public_path($this->productImagePath."/".$product->image);
+        $productThumbPath = public_path($this->productThumbPath."/".$product->thumb);
+
         File::delete($productImagePath, $productThumbPath);
         $product->destroy($id);
         return true;

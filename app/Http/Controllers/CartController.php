@@ -12,13 +12,10 @@ use Auth;
 use Session;
 use App\Http\Requests;
 use Illuminate\Support\Collection;
-use Illuminate\Foundation\Auth\ThrottlesLogins;
-use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use App\Http\Controllers\Controller;
 
 class CartController extends Controller
 {
-    use AuthenticatesAndRegistersUsers, ThrottlesLogins;
     /**
      * Display a listing of the resource.
      *
@@ -51,8 +48,7 @@ class CartController extends Controller
             return redirect('auth/userlogin');
         }
 
-        $product_id = $request->product_id;
-        $products = Product::with('brand')->find($product_id);
+        $products = Product::with('brand')->find($request->product_id);
         $user = Auth::user();
         $sessiondata = session()->get('cart_session', '0');
 

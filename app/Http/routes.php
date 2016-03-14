@@ -61,9 +61,12 @@ Route::group(['middleware' => ['web', 'menu', 'cart']], function () {
     Route::post('auth/adminlogin', 'Auth\AuthController@postLogin');
 });
 
-Route::group(['prefix' => 'admin', 'middleware' => ['web', 'admin', 'auth']], function () {
+Route::group([
+        'prefix' => 'admin', 
+        'middleware' => ['web', 'admin', 'auth'],
+        'namespace' => 'Admin'
+    ], function () {
 
-    Route::group(array('namespace' => 'Admin'), function() {
         Route::get('dashboard', 'AdminController@index');
 
         // Category routes...
@@ -76,5 +79,5 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web', 'admin', 'auth']], fu
         Route::resource('product', 'ProductController');
         
         Route::post('product/brandlist', 'ProductController@getBrandList');
-    });
+
 });

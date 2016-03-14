@@ -39,8 +39,8 @@ class BrandController extends Controller
         $allBrands = Brand::with('categories')->get();
 
         return view('admin.brand.index', [
-                'allbrands' => $allBrands
-            ]);
+            'allbrands' => $allBrands
+        ]);
     }
 
     /**
@@ -51,7 +51,10 @@ class BrandController extends Controller
     public function create()
     {
         $allCategories = Category::lists('name', 'id')->toArray();
-        return view('admin.brand.create')->with('allcategory', $allCategories);
+
+        return view('admin.brand.create', [
+            'allcategory' => $allCategories
+        ]);
     }
 
     /**
@@ -62,27 +65,20 @@ class BrandController extends Controller
      */
     public function store(BrandRequest $request)
     {
-
         $data = $request->all();
-
-        $category_list = $request->category_list;
-        
         $logo = $request->file('logo');
+        $collection = collect($data);
 
-        // Store the brand logo in upload folder
-        $storeLogo = $this->saveBrandLogo($logo, $request->name);
+        $data = $collection
+                ->merge($this->saveBrandLogo($logo, $request->name))
+                ->toArray();
 
-
-        $data['logo'] = $storeLogo['logoName'];
-        $data['thumb'] = $storeLogo['logoThumbName'];
-        
         // Store data in Database
         $brand = Brand::create($data);
-        $brand->categories()->sync($category_list);
+        $brand->categories()->sync($request->category_list);
 
-        return redirect('admin/brand', [
-                'flash_message' => 'Brand Added Successfully!'
-            ]);
+        return Redirect::to('admin/brand')
+            ->with('flash_message', 'Brand Added Successfully!');
     }
 
     /**
@@ -106,23 +102,21 @@ class BrandController extends Controller
     {
         $brand = Brand::with('categories')->find($id);
 
-        if(!$brand)
-        {
+        if(!$brand){
             abort(404);
         }
 
-        foreach ($brand->categories as $category)
-        {
+        foreach ($brand->categories as $category){
             $categories[] = $category->id;
         }
 
         $allCategories = Category::lists('name', 'id')->toArray();
 
         return view('admin.brand.edit', [
-                'brand' => $brand,
-                'categories' => $categories,
-                'allcategory' => $allCategories
-            ]);
+            'brand' => $brand,
+            'categories' => $categories,
+            'allcategory' => $allCategories
+        ]);
     }
 
     /**
@@ -136,30 +130,26 @@ class BrandController extends Controller
     {
         $brand = Brand::find($id);
 
-        if(!$brand)
-        {
+        if(!$brand){
             abort(404);
         }
 
-        $brandArr = $request->all();
-
-        $categories = $request->category_list;
-
+        $data = $request->all();
         $logo = $request->file('logo');
 
-        if ($request->hasFile('logo'))
-        {
-            $storeLogo = $this->saveBrandLogo($logo, $brandArr['name']);
-            $brandArr['logo'] = $storeLogo['logoName'];
-            $brandArr['thumb'] = $storeLogo['logoThumbName'];
+        if ($request->hasFile('logo')){
+            $collection = collect($data);
+            $data = $collection
+                    ->merge($this->saveBrandLogo($logo, $data['name']))
+                    ->toArray();
         }
+
         // Store data in Database
-        $brand->update($brandArr);
-        $brand->categories()->sync($categories);
+        $brand->update($data);
+        $brand->categories()->sync($request->category_list);
         
-        return redirect('admin/brand', [
-                'flash_message' => 'Brand Updated Successfully!'
-            ]);
+        return Redirect::to('admin/brand')
+            ->with('flash_message', 'Brand Updated Successfully!');
     }
 
     /**
@@ -172,24 +162,18 @@ class BrandController extends Controller
     {
         $brand = Brand::find($id);
 
-        if (!$brand)
-        {
+        if (!$brand){
             abort(404);
         }
 
         $brandResult = $this->deleteBrand($id);
 
-        if($brandResult)
-        {
-            return redirect('admin/brand', [
-                    'flash_message', 'Brand Deleted Successfully!'
-                ]);
-        }
-        else
-        {
-            return redirect('admin/brand', [
-                    'flash_message', 'Error Accured While Deleting Brand. Please try again.'
-                ]);
+        if($brandResult){
+            return Redirect::to('admin/brand')
+                ->with('flash_message', 'Brand Deleted Successfully!');
+        }else{
+            return Redirect::to('admin/brand')
+                ->with('flash_message', 'Error Accured While Deleting Brand. Please try again.');
         }
     }
 
@@ -203,22 +187,23 @@ class BrandController extends Controller
     {
         $logoExtension = $file->getClientOriginalExtension();
         $logoFileName = $brandName.'.'.$logoExtension;
-        $file->move(public_path().$this->destinationLogoPath, $logoFileName);
+
+        $file->move(public_path($this->destinationLogoPath), $logoFileName);
 
         $thumbFileName = $brandName.'_thumb.'.$logoExtension;
 
         // Create Logo Thumb 
-        $thumb = Image::make(file_get_contents(public_path().$this->destinationLogoPath.'/'.$logoFileName))->resize(100, null, function ($constraint) {
-                $constraint->aspectRatio();
-            });
-            $thumb->save(public_path().$this->destinationLogoThumbPath.'/'.$thumbFileName);
+        $thumb = Image::make(
+                file_get_contents(public_path($this->destinationLogoPath.'/'.$logoFileName)))
+                    ->resize(100, null, function ($constraint) {
+                        $constraint->aspectRatio();
+                });
+        $thumb->save(public_path($this->destinationLogoThumbPath.'/'.$thumbFileName));
 
-        $filesName = array(
-                'logoName' => $logoFileName,
-                'logoThumbName' => $thumbFileName
-            );
-
-        return $filesName;
+        return [    
+            'logo' => $logoFileName,
+            'thumb' => $thumbFileName
+        ];
     }
 
     /**
@@ -231,8 +216,10 @@ class BrandController extends Controller
         $brand = Brand::find($id);
         $brandLogo = $brand->logo;
         $brandThumb = $brand->thumb;
-        $brandLogoPath = public_path().$this->destinationLogoPath."/".$brandLogo;
-        $brandThumbPath = public_path().$this->destinationLogoThumbPath."/".$brandThumb;
+
+        $brandLogoPath = public_path($this->destinationLogoPath."/".$brandLogo);
+        $brandThumbPath = public_path($this->destinationLogoThumbPath."/".$brandThumb);
+
         File::delete($brandLogoPath, $brandThumbPath);
         $brand->destroy($id);
         return true;

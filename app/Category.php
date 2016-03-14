@@ -26,11 +26,6 @@ class Category extends Model
     	'status'
     ];
 
-    public function product()
-    {
-        return $this->hasMany('App\Product');
-    }
-
     public function brands()
     {
         return $this->belongsToMany('App\Brand', 'brand_category', 'category_id', 'brand_id');

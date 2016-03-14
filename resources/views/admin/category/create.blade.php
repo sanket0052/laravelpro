@@ -37,13 +37,13 @@
 								<div class="form-group">
 									{{ Form::label('name', 'Category Name') }}
 
-									{{ Form::text('name', '', ['class' => 'form-control', 'placeholder' => 'Add Category Name here...']) }}
+									{{ Form::text('name', old('name'), ['class' => 'form-control', 'placeholder' => 'Add Category Name here...']) }}
 								</div>
 
 								<div class="form-group">
 									{{ Form::label('parent_id', 'Parent Category') }}
 									
-									{{ Form::select('parent_id', $categoryList, '', ['class' => 'form-control', 'placeholder' => 'Pick a Parent Category...']) }}
+									{{ Form::select('parent_id', $categoryList, old('parent_id'), ['class' => 'form-control', 'placeholder' => 'Pick a Parent Category...']) }}
 								</div>
 
 								<div class="form-group">
@@ -66,13 +66,13 @@
 								<div class="form-group">
 									{{ Form::label('description', 'Category Description') }}
 
-									{{ Form::textarea('description', '', ['class' => 'form-control', 'placeholder' =>  'Add Category Description here...', 'rows' => '5', 'cols' => '25']) }}
+									{{ Form::textarea('description', old('description'), ['class' => 'form-control', 'placeholder' =>  'Add Category Description here...', 'rows' => '5', 'cols' => '25']) }}
 								</div>
 
 								<div class="form-group">
 									{{ Form::label('urlname', 'Category URL Name') }}
 
-									{{ Form::text('urlname', '', ['class' => 'form-control', 'placeholder' => 'Add Category URL Name here...']) }}
+									{{ Form::text('urlname', old('urlname'), ['class' => 'form-control', 'placeholder' => 'Add Category URL Name here...']) }}
 								</div>
 							</div>
 							<div class="clearfix"></div>

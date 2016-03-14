@@ -36,7 +36,7 @@
 								<div class="form-group">
 									{{ Form::label('name', 'Brand Name', ['class' => 'col-md-2 control-label']) }}
 									<div class="col-md-8">
-										{{ Form::text('name', '', ['class' => 'form-control', 'placeholder' => 'Add Brand Name here...']) }}
+										{{ Form::text('name', old('name'), ['class' => 'form-control', 'placeholder' => 'Add Brand Name here...']) }}
 									</div>
 								</div>
 
@@ -44,7 +44,7 @@
 									{{ Form::label('description', 'Brand Description', ['class' => 'col-md-2 control-label']) }}
 
 									<div class="col-md-8">
-										{{ Form::textarea('description', '', ['class' => 'form-control', 'placeholder' =>  'Add Brand Description here...', 'rows' => '5', 'cols' => '25']) }}
+										{{ Form::textarea('description', old('description'), ['class' => 'form-control', 'placeholder' =>  'Add Brand Description here...', 'rows' => '5', 'cols' => '25']) }}
 									</div>
 								</div>
 

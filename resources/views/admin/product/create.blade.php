@@ -50,7 +50,7 @@
 										<div class="form-group">
 											{{ Form::label('name', 'Product Name', ['class' => 'col-md-2 control-label']) }}
 											<div class="col-md-8">
-												{{ Form::text('name', '', ['class' => 'form-control', 'placeholder' => 'Add Product Name here...']) }}
+												{{ Form::text('name', old('name'), ['class' => 'form-control', 'placeholder' => 'Add Product Name here...']) }}
 											</div>
 										</div>
 
@@ -75,7 +75,7 @@
 											<div class="col-md-8">
 												<div class="row">
 													<div class="col-md-9">
-														{{ Form::select('brand_id', $brandList, '', ['class' => 'form-control', 'id' => 'brandlist', 'disabled' => true, 'placeholder' => 'Pick a Brand...']) }}
+														{{ Form::select('brand_id', $brandList, old('brand_id'), ['class' => 'form-control', 'id' => 'brandlist', 'disabled' => true, 'placeholder' => 'Pick a Brand...']) }}
 
 													</div>
 													<div class="col-md-3">
@@ -96,7 +96,7 @@
 											{{ Form::label('description', 'Product Description', ['class' => 'col-md-2 control-label']) }}
 
 											<div class="col-md-8">
-												{{ Form::textarea('description', '', ['class' => 'form-control', 'placeholder' =>  'Add Product Description here...', 'rows' => '5', 'cols' => '25']) }}
+												{{ Form::textarea('description', old('description'), ['class' => 'form-control', 'placeholder' =>  'Add Product Description here...', 'rows' => '5', 'cols' => '25']) }}
 											</div>
 										</div>
 									</div>
@@ -153,7 +153,7 @@
 														<div class="col-md-12">
 															<div class="form-group input-group">
 																<span class="input-group-addon"><i class="fa fa-inr"></i></span>
-																{{ Form::text('price', '', ['class' => 'form-control', 'placeholder' => 'Add Product Price here...', 'tab-index']) }}
+																{{ Form::text('price', old('price'), ['class' => 'form-control', 'placeholder' => 'Add Product Price here...', 'tab-index']) }}
 																<span class="input-group-addon">.00</span>
 															</div>
 														</div>

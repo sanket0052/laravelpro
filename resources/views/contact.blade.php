@@ -7,12 +7,6 @@
 	
 	<div class="container contact-form">
 
-		<!-- <ol class="breadcrumb">
-			<li class="active">
-				<a >home</a>
-			</li>
-		</ol> -->
-
 		<!-- Main Heading Starts -->
 		<h2 class="main-heading text-center">
 			Contact Us

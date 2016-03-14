@@ -61,11 +61,8 @@
 											{{ csrf_field() }}
 											<div class="col-sm-8 col-md-8">
 												{{ Form::number('qty', $cartvalue['qty'], array(
-														'type' => 'number',
 														'id' => 'input-item-'.$cartvalue['product_id'],
 														'class' => 'item form-control cart-item',
-														'type' => 'number',
-														'maxlength' => '2',
 														'min' => '1',
 														'max' => '3'
 												)) }}

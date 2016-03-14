@@ -37,11 +37,11 @@
 								{{ csrf_field() }}
 
 									<div class="form-group">
-										{{ Form::text('username', '', ['class' => 'form-control', 'placeholder' => 'Enter User Name', 'tabindex' => '1']) }}
+										{{ Form::text('username', old('username'), ['class' => 'form-control', 'placeholder' => 'Enter User Name', 'tabindex' => '1']) }}
 									</div>
 									
 									<div class="form-group">
-										{{ Form::email('email', '', ['class' => 'form-control', 'placeholder' => 'Enter Email', 'tabindex' => '2']) }}
+										{{ Form::email('email', old('email'), ['class' => 'form-control', 'placeholder' => 'Enter Email', 'tabindex' => '2']) }}
 									</div>
 									
 									<div class="form-group">

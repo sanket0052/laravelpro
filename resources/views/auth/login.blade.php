@@ -44,7 +44,7 @@
 								{{ csrf_field() }}
 
 									<div class="form-group">
-										{{ Form::email('email', '', ['class' => 'form-control', 'placeholder' => 'Enter Username', 'tabindex' => '1']) }}
+										{{ Form::email('email', old('email'), ['class' => 'form-control', 'placeholder' => 'Enter Username', 'tabindex' => '1']) }}
 										<!-- Username input field  -->
 									</div>
 									<div class="form-group">

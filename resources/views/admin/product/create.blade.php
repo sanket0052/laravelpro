@@ -59,7 +59,7 @@
 											<div class="col-md-8">
 												<div class="row">
 													<div class="col-md-9">
-														{{ Form::select('category_id', $categoryList, '', ['class' => 'form-control', 'id' => 'categorylist', 'placeholder' => 'Pick a Category...']) }}
+														{{ Form::select('category_id', $categoryList, old('category_id'), ['class' => 'form-control', 'id' => 'categorylist', 'placeholder' => 'Pick a Category...']) }}
 														<em class="pull-right ">Depend on you category selection brand list will generate.</em>
 													</div>
 
@@ -107,7 +107,7 @@
 										<div class="form-group">
 											{{ Form::label('model', 'Product Model', ['class' => 'col-md-2 control-label']) }}
 											<div class="col-md-8">
-												{{ Form::text('model', '', ['class' => 'form-control', 'placeholder' => 'Add Product Model here...', 'tab-index']) }}
+												{{ Form::text('model', old('model'), ['class' => 'form-control', 'placeholder' => 'Add Product Model here...', 'tab-index']) }}
 											</div>
 										</div>
 										<div class="row">
@@ -118,7 +118,7 @@
 														<div class="col-md-12">
 															<div class="form-group input-group">
 																<span class="input-group-addon"><i class="fa fa-shopping-cart"></i></span>
-																{{ Form::text('stock', '', ['class' => 'form-control', 'placeholder' => 'Add Product Stock here...', 'tab-index']) }}
+																{{ Form::text('stock', old('stock'), ['class' => 'form-control', 'placeholder' => 'Add Product Stock here...', 'tab-index']) }}
 															</div>
 														</div>
 													</div>

@@ -37,13 +37,13 @@
 					@endif
 
 					<div class="form-group">
-						{{ Form::text('name', '', array('class' => 'form-control', 'placeholder' => 'Enter Name')) }}
+						{{ Form::text('name', old('name'), array('class' => 'form-control', 'placeholder' => 'Enter Name')) }}
 					</div>
 					<div class="form-group">
-						{{ Form::email('email', '', array('class' => 'form-control', 'placeholder' => 'Enter Email')) }}
+						{{ Form::email('email', old('email'), array('class' => 'form-control', 'placeholder' => 'Enter Email')) }}
 					</div>
 					<div class="form-group">
-						{{ Form::textarea('message', '', array('class' => 'form-control', 'placeholder' => 'Enter Email', 'row' => '5')) }}
+						{{ Form::textarea('message', old('message'), array('class' => 'form-control', 'placeholder' => 'Enter Email', 'row' => '5')) }}
 					</div>
 
 					{{ Form::submit('Submit', array('class' => 'btn btn-success btn-lg btn-block pull-right', 'id' => 'form-submit')) }}

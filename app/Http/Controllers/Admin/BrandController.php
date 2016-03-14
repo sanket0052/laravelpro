@@ -77,8 +77,13 @@ class BrandController extends Controller
         $brand = Brand::create($data);
         $brand->categories()->sync($request->category_list);
 
-        return Redirect::to('admin/brand')
-            ->with('flash_message', 'Brand Added Successfully!');
+        if($brand){
+            return Redirect::to('admin/brand')
+                ->with('flash_message', 'Brand Added Successfully!');    
+        }else{
+            return Redirect::to('admin/brand')
+                ->with('flash_message', 'Error Accured While Adding Record!');      
+        }
     }
 
     /**

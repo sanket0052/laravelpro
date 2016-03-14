@@ -44,10 +44,6 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-        if(!Auth::check()){
-            return redirect('auth/userlogin');
-        }
-
         $products = Product::with('brand')->find($request->product_id);
         $user = Auth::user();
         $sessiondata = session()->get('cart_session', '0');
